@@ -2,12 +2,13 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PiHoleDisablerMultiplatform.Views.DisablePage"
-             Title="Pi-hole Disabler">
+             Title="Pi-hole Disabler"
+             BackgroundColor="{DynamicResource PageBackgroundColor}">
             
     <ContentPage.Content>
         <StackLayout>
             <Label x:Name="piHoleStatusText" Text="Pi-hole status: enabled" 
-               HorizontalOptions="Center" TextColor="Black" FontSize="30"/>
+               HorizontalOptions="Center" TextColor="{DynamicResource PrimaryTextColor}" FontSize="30"/>
             <Grid Padding="0,20,0,0" IsVisible="True">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="150"/>
