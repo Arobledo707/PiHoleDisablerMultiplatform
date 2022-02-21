@@ -19,7 +19,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
         private async void OnSaveButtonClicked(object obj) 
         {
             //await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
-            await Shell.Current.GoToAsync($"//{nameof(AboutPage)}");
+            //await Shell.Current.GoToAsync($"//{nameof(DisablePage)}");
         }
         //public ICommand OpenWebCommand { get; }
     }
