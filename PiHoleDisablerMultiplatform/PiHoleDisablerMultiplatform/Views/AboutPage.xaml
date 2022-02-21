@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PiHoleDisablerMultiplatform.Views.AboutPage"
+             xmlns:vm="clr-namespace:PiHoleDisablerMultiplatform.ViewModels"
+             Title="{Binding Title}">
+    
+    <ContentPage.BindingContext>
+        <vm:AboutViewModel />
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Accent">#96d1ff</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <!--<StackLayout BackgroundColor="{StaticResource Accent}" VerticalOptions="FillAndExpand" HorizontalOptions="Fill">
+        </StackLayout>-->
+        <Label x:Name="enterPiholeInfo" Text="Enter Pi-hole Info:" 
+               HorizontalOptions="Center" Grid.Row="0" TextColor="Black" FontSize="30"/>
+        <StackLayout Orientation="Horizontal" Spacing="10"  HorizontalOptions="StartAndExpand" Grid.Row="1">
+            <Label x:Name="piholeAddressText" Text="Pi-hole Address: " TextColor="Black" FontSize="20" Padding="0, 6, 0,0"/>
+            <Entry x:Name="piholeAddress" TextColor="Black" 
+                   Placeholder="http://pi.hole" PlaceholderColor="Gray"/>
+        </StackLayout>
+
+        <StackLayout Orientation="Horizontal" Spacing="10"  HorizontalOptions="StartAndExpand" Grid.Row="2">
+            <Label x:Name="tokenEnteredText" Text="Token: " TextColor="Black" FontSize="20" Padding="0, 6, 0,0"/>
+            <Entry x:Name="tokenEntered" TextColor="Black" 
+                   Placeholder="4329TJD842498428FAD" PlaceholderColor="Gray"/>
+        </StackLayout>
+        
+        <Button x:Name="saveButton" Text="Save" Grid.Row="3" Margin="0,10,0,0"
+                HorizontalOptions="Center" Command="{Binding SaveInfoCommand}" />
+        <Label x:Name="savedInfo" Text="Saved Info" Grid.Row="4" HorizontalOptions="Center" 
+               FontSize="30" TextColor="Black" Margin="0,80,0,0"/>
+        <StackLayout Orientation="Horizontal" Spacing="10"  HorizontalOptions="StartAndExpand" Grid.Row="5" >
+            <Label x:Name="piholeAddressText2" Text="Pi-hole Address: " TextColor="Black" FontSize="20"/>
+            <Label x:Name="savedPiholeAddress" TextColor="Black" Text="http://pi.hole" Padding="0,6,0,0"/>
+        </StackLayout>
+
+        <StackLayout Orientation="Horizontal" Spacing="10"  HorizontalOptions="StartAndExpand" Grid.Row="6" >
+            <Label x:Name="savedTokenEnteredText" Text="Token: " TextColor="Black" FontSize="20"/>
+            <Label x:Name="savedtoken" TextColor="Black" Text="4329TJD842498428FAD" Padding="0,6,0,0"/>
+        </StackLayout>
+
+        <Button x:Name="clearButton" Text="Clear" Grid.Row="7" Margin="0,10,0,0"
+                HorizontalOptions="Center" Clicked="clearButton_Clicked"/>
+    </Grid>
+
+</ContentPage>
