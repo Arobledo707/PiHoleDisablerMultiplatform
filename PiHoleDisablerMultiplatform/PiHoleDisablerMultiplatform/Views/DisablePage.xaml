@@ -28,5 +28,6 @@
                     HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Command="{Binding DisableCommand}"/>
             </StackLayout>
         </StackLayout>
+        
     </ContentPage.Content>
 </ContentPage>

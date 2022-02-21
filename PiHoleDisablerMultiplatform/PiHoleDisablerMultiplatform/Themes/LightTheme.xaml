@@ -2,7 +2,7 @@
 <ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                     x:Class="PiHoleDisablerMultiplatform.LightTheme">
-
+    <Color x:Key="CommandBarBackgroundColor">#4e1511</Color>
     <Color x:Key="PageBackgroundColor">White</Color>
     <Color x:Key="NavigationBarColor">#4e1511</Color>
     <Color x:Key="PrimaryColor">#c3352b</Color>
@@ -11,5 +11,6 @@
     <Color x:Key="SecondaryTextColor">White</Color>
     <Color x:Key="TertiaryTextColor">Gray</Color>
     <Color x:Key="TransparentColor">Transparent</Color>
-
+    <!--<SolidColorBrush x:Key="CommandBarBackgroundColor" Color="Orange" />
+    <SolidColorBrush x:Key="CommandBarTextColor" Color="Blue" />-->
 </ResourceDictionary>
