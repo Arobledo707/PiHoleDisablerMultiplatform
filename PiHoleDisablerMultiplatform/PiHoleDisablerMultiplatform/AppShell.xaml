@@ -30,7 +30,7 @@
     </Shell.Resources>
 
     <TabBar>
-        <ShellContent Title="Pi-hole Info" Icon="icon_about.png" Route="AboutPage" ContentTemplate="{DataTemplate local:AboutPage}" />
+        <ShellContent Title="Pi-hole Info" Icon="icon_about.png" Route="PiholeInfoPage" ContentTemplate="{DataTemplate local:PiholeInfoPage}" />
         <ShellContent Title="Disable" Icon="icon_feed.png" ContentTemplate="{DataTemplate local:DisablePage}" />
     </TabBar>
 

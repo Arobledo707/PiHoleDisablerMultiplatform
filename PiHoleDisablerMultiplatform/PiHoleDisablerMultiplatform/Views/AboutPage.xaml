@@ -15,7 +15,7 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <Grid>
+    <!--<Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -26,8 +26,8 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <!--<StackLayout BackgroundColor="{StaticResource Accent}" VerticalOptions="FillAndExpand" HorizontalOptions="Fill">
-        </StackLayout>-->
+        --><!--<StackLayout BackgroundColor="{StaticResource Accent}" VerticalOptions="FillAndExpand" HorizontalOptions="Fill">
+        </StackLayout>--><!--
         <Label x:Name="enterPiholeInfo" Text="Enter Pi-hole Info:" 
                HorizontalOptions="Center" Grid.Row="0" TextColor="Black" FontSize="30"/>
         <StackLayout Orientation="Horizontal" Spacing="10"  HorizontalOptions="StartAndExpand" Grid.Row="1">
@@ -58,6 +58,6 @@
 
         <Button x:Name="clearButton" Text="Clear" Grid.Row="7" Margin="0,10,0,0"
                 HorizontalOptions="Center" Clicked="clearButton_Clicked"/>
-    </Grid>
+    </Grid>-->
 
 </ContentPage>

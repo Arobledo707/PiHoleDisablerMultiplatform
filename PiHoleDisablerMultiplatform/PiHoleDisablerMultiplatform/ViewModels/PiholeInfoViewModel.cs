@@ -14,6 +14,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
         {
             SaveInfoCommand = new Command(OnSaveButtonClicked);
             ClearInfoCommand = new Command(OnClearButtonClicked);
+            //Shell.Current.FindByName<Entry>();
         }
 
         private async void OnClearButtonClicked(object obj) 
