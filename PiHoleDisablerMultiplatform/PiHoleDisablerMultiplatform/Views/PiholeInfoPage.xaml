@@ -30,7 +30,7 @@
             </StackLayout>
 
             <Button x:Name="saveButton" Text="Save" Grid.Row="3" Margin="0,10,0,0"
-                HorizontalOptions="Center" />
+                HorizontalOptions="Center" Command="{Binding SaveInfoCommand}"/>
             <Label x:Name="savedInfo" Text="Saved Info" Grid.Row="4" HorizontalOptions="Center" 
                FontSize="30" TextColor="Black" Margin="0,80,0,0"/>
             <StackLayout Orientation="Horizontal" Spacing="10"  HorizontalOptions="StartAndExpand" Grid.Row="5" >
@@ -44,7 +44,7 @@
             </StackLayout>
 
             <Button x:Name="clearButton" Text="Clear" Grid.Row="7" Margin="0,10,0,0"
-                HorizontalOptions="Center"/>
+                HorizontalOptions="Center" Command="{Binding ClearInfoCommand}"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

@@ -24,7 +24,7 @@
             </Grid>
             <StackLayout x:Name="enableData" VerticalOptions="FillAndExpand" IsVisible="False">
                 <Button x:Name="enableButton" Text="Enable" Margin="40,50,40,50" 
-                    HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
+                    HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Command="{Binding DisableCommand}"/>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>
