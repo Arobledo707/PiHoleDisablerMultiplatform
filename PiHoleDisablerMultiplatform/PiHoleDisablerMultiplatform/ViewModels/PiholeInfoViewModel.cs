@@ -12,9 +12,9 @@ namespace PiHoleDisablerMultiplatform.ViewModels
         public Command ClearInfoCommand { get; }
         public PiholeInfoViewModel() 
         {
+            Title = "Pi-hole Disabler Info";
             SaveInfoCommand = new Command(OnSaveButtonClicked);
             ClearInfoCommand = new Command(OnClearButtonClicked);
-            //Shell.Current.FindByName<Entry>();
         }
 
         private async void OnClearButtonClicked(object obj) 
