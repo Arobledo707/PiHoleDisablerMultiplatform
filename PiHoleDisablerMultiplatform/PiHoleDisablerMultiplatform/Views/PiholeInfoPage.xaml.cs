@@ -13,10 +13,16 @@ namespace PiHoleDisablerMultiplatform.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PiholeInfoPage : ContentPage
     {
+        private Entry enteredAddress;
+        private Label savedAddress;
+
+        private Entry enteredToken;
+        private Label savedToken;
         public PiholeInfoPage()
         {
             InitializeComponent();
             this.BindingContext = new PiholeInfoViewModel();
+            enteredAddress = FindByName("piholeAddress") as Entry;
         }
     }
 }
