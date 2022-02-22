@@ -21,25 +21,36 @@ namespace PiHoleDisablerMultiplatform.Services
                 FileStream stream = new FileStream(path, FileMode.Create);
                 await stream.WriteAsync(bytes, 0, bytes.Length);
                 stream.Close();
-                return true;
+                return await Task.FromResult(true);
             }
             catch (Exception ex) 
             {
-                return false;
+                return await Task.FromResult(false);
             }
         }
 
         public async static Task<bool> DeserializeData() 
         {
             string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), file);
-            if (File.Exists(path)) 
+            if (File.Exists(path))
             {
-                FileStream stream = new FileStream(path, FileMode.Open);
-                StreamReader reader = new StreamReader(stream);
-                string unformattedString = reader.ReadToEnd();
-                PiHoleData piHoleData = JsonConvert.DeserializeObject<PiHoleData>(unformattedString);
+                try
+                {
+                    FileStream stream = new FileStream(path, FileMode.Open);
+                    StreamReader reader = new StreamReader(stream);
+                    string unformattedString = await reader.ReadToEndAsync();
+                    PiHoleData piHoleData = JsonConvert.DeserializeObject<PiHoleData>(unformattedString);
+                    return await Task.FromResult(true);
+                }
+                catch (Exception ex)
+                {
+                    return await Task.FromResult(false);
+                }
             }
-            return true;
+            else 
+            {
+                return await Task.FromResult(false);
+            }
         }
     }
 }
