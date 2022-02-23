@@ -12,7 +12,8 @@ namespace PiHoleDisablerMultiplatform.Services
     {
         public static string file = "data.json";
         public async static Task<bool> SerializeData(PiHoleData piHoleData) 
-        {
+        { 
+            
             string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), file);
             string json = JsonConvert.SerializeObject(piHoleData, Formatting.Indented);
             byte[] bytes = Encoding.UTF8.GetBytes(json);
