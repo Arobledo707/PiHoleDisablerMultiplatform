@@ -30,7 +30,7 @@
 
     <TabBar>
         <ShellContent Title="Pi-hole Info" Icon="icon_about.png" Route="PiholeInfoPage" ContentTemplate="{DataTemplate local:PiholeInfoPage}" />
-        <ShellContent Title="Disable" Icon="icon_feed.png" ContentTemplate="{DataTemplate local:DisablePage}" />
+        <ShellContent Title="Disable" Icon="icon_feed.png" ContentTemplate="{DataTemplate local:DisablePage}"/>
     </TabBar>
     <!--
         If you would like to navigate to this content you can do so by calling

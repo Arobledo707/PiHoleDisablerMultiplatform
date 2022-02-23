@@ -1,4 +1,5 @@
-﻿using PiHoleDisablerMultiplatform.Views;
+﻿using PiHoleDisablerMultiplatform.Services;
+using PiHoleDisablerMultiplatform.Views;
 using System;
 using System.Windows.Input;
 using Xamarin.Essentials;
@@ -13,19 +14,15 @@ namespace PiHoleDisablerMultiplatform.ViewModels
         public Command SaveInfoCommand { get; }
         public Command ClearInfoCommand { get; }
 
-        public ObservableCollection<string> info;
-
         public string savedAddress { get; set; }
         public string savedToken { get; set; }
 
-        //private string savedAddress;
+        public bool infoCleared { get; set; }
+        public bool infoSaved { get; set; }
 
-        private readonly string saveButtonName = "saveButton";
-        private readonly string clearButtonName = "clearButton";
         public PiholeInfoViewModel() 
         {
             Title = "Pi-hole Disabler Info";
-            info = new ObservableCollection<string>();
             SaveInfoCommand = new Command(OnSaveButtonClicked);
             ClearInfoCommand = new Command(OnClearButtonClicked);
         }
@@ -33,7 +30,14 @@ namespace PiHoleDisablerMultiplatform.ViewModels
 
         private async void OnClearButtonClicked(Object obj) 
         {
-            obj.ToString();
+            if (infoCleared) 
+            {
+                bool cleared = await PiholeDataSerializer.DeleteData();
+                if (cleared) 
+                {
+                    await PiholeDataSerializer.DeleteData();
+                }
+            }
         }
         private async void OnSaveButtonClicked() 
         {

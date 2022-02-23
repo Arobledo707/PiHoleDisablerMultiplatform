@@ -14,10 +14,10 @@ namespace PiHoleDisablerMultiplatform.Views
     public partial class PiholeInfoPage : ContentPage
     {
         private Entry enteredAddress;
-        private Label savedAddress;
+        //private Label savedAddress;
 
         private Entry enteredToken;
-        private Label savedToken;
+       // private Label savedToken;
 
         PiholeInfoViewModel piViewModel;
         public PiholeInfoPage()
@@ -27,33 +27,43 @@ namespace PiHoleDisablerMultiplatform.Views
 
             enteredAddress = FindByName("piholeAddress") as Entry;
             enteredToken = FindByName("tokenEntered") as Entry;
-            savedAddress = FindByName("savedPiholeAddress") as Label;
-            savedToken = FindByName("savedtoken") as Label;
             piViewModel = this.BindingContext as PiholeInfoViewModel;
+
         }
 
-        private void clearButton_Clicked(object sender, EventArgs e)
-        {
 
+        private async void clearButton_Clicked(object sender, EventArgs e)
+        {
+            bool clearInfo = await DisplayAlert("Clear Pi-hole Info", "Are you sure?", "Yes", "No");
+            if (clearInfo)
+            {
+                if (savedPiholeAddress.Text != null)
+                {
+                    savedPiholeAddress.Text = String.Empty;
+                }
+                savedToken.Text = String.Empty;
+                piViewModel.savedToken = String.Empty;
+                piViewModel.savedAddress = String.Empty;
+            }
         }
 
         private void saveButton_Clicked(object sender, EventArgs e)
         {
-            if (enteredAddress.Text.Length == 0)
+            if (enteredAddress.Text == null)
             {
-                savedAddress.Text = enteredAddress.Placeholder.Trim();
+                savedPiholeAddress.Text = enteredAddress.Placeholder.Trim();
             }
             else 
             {
-                savedAddress.Text = enteredAddress.Text.Trim();
+                savedPiholeAddress.Text = enteredAddress.Text.Trim();
                 enteredAddress.Text = String.Empty;
             }
-            if (savedAddress.Text.Length > 0)
+            if (savedPiholeAddress.Text != null)
             {
-                piViewModel.savedAddress = savedAddress.Text;
+                piViewModel.savedAddress = savedPiholeAddress.Text;
             }
 
-            if (enteredToken.Text.Length > 0) 
+            if (enteredToken.Text != null) 
             {
                 savedToken.Text = enteredToken.Text.Trim();
                 enteredToken.Text = String.Empty;

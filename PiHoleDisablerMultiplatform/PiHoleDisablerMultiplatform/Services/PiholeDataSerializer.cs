@@ -53,5 +53,20 @@ namespace PiHoleDisablerMultiplatform.Services
                 return await Task.FromResult(false);
             }
         }
+
+        public async static Task<bool> DeleteData() 
+        {
+            try
+            {
+                File.Delete(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), file));
+                return await Task<bool>.FromResult(true);
+            }
+            catch(Exception e)
+            {
+                Console.Error.WriteLine(e.Message);
+            }
+            return await Task<bool>.FromResult(false);
+        }
     }
+
 }

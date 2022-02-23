@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using PiHoleDisablerMultiplatform.Services;
+using PiHoleDisablerMultiplatform.ViewModels;
 
 namespace PiHoleDisablerMultiplatform.Views
 {
@@ -15,6 +17,15 @@ namespace PiHoleDisablerMultiplatform.Views
         public DisablePage()
         {
             InitializeComponent();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            //PiholeHttp.CheckPiholeStatus();
+            //disableGrid
+            //enableData
+
         }
     }
 }
