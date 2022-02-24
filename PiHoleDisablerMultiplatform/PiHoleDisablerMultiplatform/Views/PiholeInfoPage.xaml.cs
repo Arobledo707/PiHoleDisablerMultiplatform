@@ -34,12 +34,6 @@ namespace PiHoleDisablerMultiplatform.Views
             enteredAddress = FindByName("piholeAddress") as Entry;
             enteredToken = FindByName("tokenEntered") as Entry;
             piViewModel = this.BindingContext as PiholeInfoViewModel;
-            MessagingCenter.Subscribe<PiholeInfoViewModel, string>(this, "testmessage", async (sender, arg) =>
-            {
-                string sendername = sender.ToString();
-                string test = arg;
-                Console.WriteLine(arg);
-            });
 
             MessagingCenter.Subscribe<PiholeInfoViewModel, bool>(this, validInfo, async (sender, arg) =>
             {
@@ -52,19 +46,6 @@ namespace PiHoleDisablerMultiplatform.Views
                     await DisplayAlert("Pi-hole unreachable", "Info is either incorrect or Pi-hole is unreachable", "Ok");
                 }
             });
-            //MessagingCenter.Subscribe<PiholeInfoViewModel>(piViewModel, "testmessage", test);
-            //testAction += OnRecieve();
-
-
-        }
-
-
-        private void OnRecieve() 
-        {
-            testAction.Invoke(piViewModel);
-           // testAction
-            //MessagingCenter.Subscribe<PiholeInfoViewModel>(this, "testmessage", testAction);
-           // MessagingCenter.Subscribe<object, string>(this, "message", (this.BindingContext, "lol", "dumb"));
         }
 
         private void MoveData() 
