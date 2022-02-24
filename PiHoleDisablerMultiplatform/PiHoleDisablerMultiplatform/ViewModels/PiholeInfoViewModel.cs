@@ -1,5 +1,7 @@
 ﻿using PiHoleDisablerMultiplatform.Services;
 using PiHoleDisablerMultiplatform.Views;
+using PiHoleDisablerMultiplatform.Models;
+using System.Collections.Generic;
 using System;
 using System.Windows.Input;
 using Xamarin.Essentials;
@@ -20,11 +22,20 @@ namespace PiHoleDisablerMultiplatform.ViewModels
         public bool infoCleared { get; set; }
         public bool infoSaved { get; set; }
 
+        private string validInfo = "validInfo";
+        private string checkInfo = "checkInfo";
+
         public PiholeInfoViewModel() 
         {
             Title = "Pi-hole Disabler Info";
             SaveInfoCommand = new Command(OnSaveButtonClicked);
             ClearInfoCommand = new Command(OnClearButtonClicked);
+            MessagingCenter.Subscribe<PiholeInfoPage, List<string>>(this, checkInfo, async (sender, arg) => 
+            {
+                ValidateInfo(arg[0], arg[1]);
+                //string result = await PiholeHttp.CheckPiholeStatus(arg[0], arg[1]);
+                //MessagingCenter.Send(this, validInfo, result != "disconnected");
+            });
         }
 
 
@@ -40,8 +51,17 @@ namespace PiHoleDisablerMultiplatform.ViewModels
         }
         private async void OnSaveButtonClicked() 
         {
-            MessagingCenter.Send(this, "testmessage", "lololololol");
+        }
 
+        private async void ValidateInfo(string address, string token) 
+        {
+            bool isValidated = await PiholeHttp.PiholeCommand(address, token, "enable", 0);
+            if (isValidated) 
+            {
+                PiHoleData pData = new PiHoleData(address, token);
+                isValidated = await PiholeDataSerializer.SerializeData(pData);
+            }
+            MessagingCenter.Send(this, validInfo, isValidated);
         }
     }
 }
