@@ -17,9 +17,12 @@ namespace PiHoleDisablerMultiplatform.Views
         //private Label savedAddress;
 
         private Entry enteredToken;
-       // private Label savedToken;
+        // private Label savedToken;
+
+        Action<PiholeInfoViewModel> testAction;
 
         PiholeInfoViewModel piViewModel;
+        string message;
         public PiholeInfoPage()
         {
             InitializeComponent();
@@ -28,8 +31,24 @@ namespace PiHoleDisablerMultiplatform.Views
             enteredAddress = FindByName("piholeAddress") as Entry;
             enteredToken = FindByName("tokenEntered") as Entry;
             piViewModel = this.BindingContext as PiholeInfoViewModel;
+            MessagingCenter.Subscribe(piViewModel, "testmessage", (object sender, string arg) =>
+            {
+                string test = arg;
+            });
+            //MessagingCenter.Subscribe<PiholeInfoViewModel>(piViewModel, "testmessage", test);
+            //testAction += OnRecieve();
+
 
         }
+
+        private void OnRecieve() 
+        {
+            testAction.Invoke(piViewModel);
+           // testAction
+            //MessagingCenter.Subscribe<PiholeInfoViewModel>(this, "testmessage", testAction);
+           // MessagingCenter.Subscribe<object, string>(this, "message", (this.BindingContext, "lol", "dumb"));
+        }
+        
 
 
         private async void clearButton_Clicked(object sender, EventArgs e)
@@ -70,5 +89,6 @@ namespace PiHoleDisablerMultiplatform.Views
                 piViewModel.savedToken = savedToken.Text;
             }
         }
+
     }
 }

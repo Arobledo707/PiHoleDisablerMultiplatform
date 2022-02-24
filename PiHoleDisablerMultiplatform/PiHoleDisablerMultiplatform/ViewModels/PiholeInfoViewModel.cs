@@ -35,12 +35,12 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                 bool cleared = await PiholeDataSerializer.DeleteData();
                 if (cleared) 
                 {
-                    await PiholeDataSerializer.DeleteData();
                 }
             }
         }
         private async void OnSaveButtonClicked() 
         {
+            MessagingCenter.Send(this, "testmessage", "lololololol");
 
         }
     }
