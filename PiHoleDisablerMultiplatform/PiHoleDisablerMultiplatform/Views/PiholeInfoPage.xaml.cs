@@ -14,15 +14,9 @@ namespace PiHoleDisablerMultiplatform.Views
     public partial class PiholeInfoPage : ContentPage
     {
         private Entry enteredAddress;
-        //private Label savedAddress;
 
         private Entry enteredToken;
-        // private Label savedToken;
-
-        Action<PiholeInfoViewModel> testAction;
-
         PiholeInfoViewModel piViewModel;
-        string message;
         private string checkInfo = "checkInfo";
         private string validInfo = "validInfo";
 

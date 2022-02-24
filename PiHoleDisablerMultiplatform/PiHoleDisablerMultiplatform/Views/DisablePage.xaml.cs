@@ -17,14 +17,30 @@ namespace PiHoleDisablerMultiplatform.Views
         public DisablePage()
         {
             InitializeComponent();
+            MessagingCenter.Subscribe<DisableViewModel, string>(this, "statusupdate", async (sender, status) =>
+            {
+                ChangeStatus(status);
+            });
+
         }
 
+        protected void ChangeStatus(string status) 
+        {
+            if (status == "active" || status == "disconnected")
+            {
+                disableGrid.IsVisible = true;
+                enableData.IsVisible = false;
+            }
+            else 
+            {
+                disableGrid.IsVisible = false;
+                enableData.IsVisible = true;
+            }
+        }
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            //PiholeHttp.CheckPiholeStatus();
-            //disableGrid
-            //enableData
+            MessagingCenter.Send(this, "refresh");
 
         }
     }
