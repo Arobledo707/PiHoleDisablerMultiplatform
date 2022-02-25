@@ -17,8 +17,8 @@ namespace PiHoleDisablerMultiplatform.Views
 
         private Entry enteredToken;
         PiholeInfoViewModel piViewModel;
-        private string checkInfo = "checkInfo";
-        private string validInfo = "validInfo";
+        private readonly string checkInfo = "checkInfo";
+        private readonly string validInfo = "validInfo";
 
         public PiholeInfoPage()
         {

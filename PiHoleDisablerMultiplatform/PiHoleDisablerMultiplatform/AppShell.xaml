@@ -32,13 +32,4 @@
         <ShellContent Title="Pi-hole Info" Icon="icon_about.png" Route="PiholeInfoPage" ContentTemplate="{DataTemplate local:PiholeInfoPage}" />
         <ShellContent Title="Disable" Icon="icon_feed.png" ContentTemplate="{DataTemplate local:DisablePage}"/>
     </TabBar>
-    <!--
-        If you would like to navigate to this content you can do so by calling
-        await Shell.Current.GoToAsync("//LoginPage");
-    -->
-    <TabBar>
-        <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate local:LoginPage}" />
-    </TabBar>
-
-
 </Shell>
