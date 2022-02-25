@@ -30,7 +30,7 @@ namespace PiHoleDisablerMultiplatform.Services
             }
         }
 
-        public async static Task<bool> DeserializeData() 
+        public async static Task<PiHoleData> DeserializeData() 
         {
             string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), file);
             if (File.Exists(path))
@@ -41,16 +41,16 @@ namespace PiHoleDisablerMultiplatform.Services
                     StreamReader reader = new StreamReader(stream);
                     string unformattedString = await reader.ReadToEndAsync();
                     PiHoleData piHoleData = JsonConvert.DeserializeObject<PiHoleData>(unformattedString);
-                    return await Task.FromResult(true);
+                    return await Task.FromResult(piHoleData);
                 }
                 catch (Exception ex)
                 {
-                    return await Task.FromResult(false);
+                    return await Task.FromResult(new PiHoleData());
                 }
             }
             else 
             {
-                return await Task.FromResult(false);
+                return await Task.FromResult(new PiHoleData());
             }
         }
 

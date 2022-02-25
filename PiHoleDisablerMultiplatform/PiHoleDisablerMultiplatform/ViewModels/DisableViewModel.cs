@@ -29,7 +29,6 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             {
                 string result = await PiholeHttp.CheckPiholeStatus(pihole.Url, pihole.Token);
                 MessagingCenter.Send(this, "statusupdate", result);
-
             });
         }
 

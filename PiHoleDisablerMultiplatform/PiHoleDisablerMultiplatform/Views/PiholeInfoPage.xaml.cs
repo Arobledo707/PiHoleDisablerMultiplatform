@@ -42,6 +42,20 @@ namespace PiHoleDisablerMultiplatform.Views
             });
         }
 
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            if (NeedsPiholeData()) 
+            {
+                MessagingCenter.Send(this, "requestSerializedInfo");
+            }
+        }
+
+        private bool NeedsPiholeData() 
+        {
+            return (savedPiholeAddress == null || savedToken == null);
+        }
+
         private void MoveData() 
         {
             if (enteredAddress.Text == null)

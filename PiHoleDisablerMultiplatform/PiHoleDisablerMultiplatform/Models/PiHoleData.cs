@@ -6,7 +6,10 @@ namespace PiHoleDisablerMultiplatform.Models
 {
     public class PiHoleData
     {
+        public PiHoleData() 
+        {
 
+        }
         public PiHoleData(string url, string token) 
         {
             Url = url;
