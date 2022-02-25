@@ -71,8 +71,8 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             bool isValidated = await PiholeHttp.PiholeCommand(address, token, "enable", 0);
             if (isValidated) 
             {
-                PiHoleData pData = new PiHoleData(address, token);
-                isValidated = await PiholeDataSerializer.SerializeData(pData);
+                CurrentPiData.piHoleData = new PiHoleData(address, token);
+                isValidated = await PiholeDataSerializer.SerializeData(CurrentPiData.piHoleData);
             }
             MessagingCenter.Send(this, validInfo, isValidated);
         }
