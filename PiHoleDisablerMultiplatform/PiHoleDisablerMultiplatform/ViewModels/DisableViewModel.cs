@@ -15,8 +15,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
 {
     public class DisableViewModel : BaseViewModel
     {
-        public Command DisableCommand { get; }
-        public Command EnableCommand { get; }
+        public Command ButtonClickCommand { get; }
 
         private readonly string statusUpdate = "statusUpdate";
         private readonly string refresh = "refresh";
@@ -24,8 +23,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
         public DisableViewModel() 
         {
             Title = "Disable";
-            DisableCommand = new Command(OnDisableButtonClicked);
-            EnableCommand = new Command(OnEnableButtonClicked);
+            ButtonClickCommand = new Command(OnButtonClicked);
 
             MessagingCenter.Subscribe<DisablePage>(this, refresh, async (sender) =>
             {
@@ -34,23 +32,26 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             });
         }
 
-        private async Task<bool> Refresh() 
-        {
-            await PiholeHttp.CheckPiholeStatus(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token);
-            return await Task.FromResult(true); 
-        }
-
-        private async void OnDisableButtonClicked(object timeString) 
+        private async void OnButtonClicked(object timeString) 
         {
             bool successfulCommand = false;
+            PiholeHttp.Command command = PiholeHttp.Command.Invalid;
             try
             {
                 int time = int.Parse(timeString.ToString());
+                if (time < 0)
+                {
+                    command = PiholeHttp.Command.Enable;
+                }
+                else 
+                {
+                    command = PiholeHttp.Command.Disable;
+                }
                 successfulCommand = await PiholeHttp.PiholeCommand(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token,
-                    PiholeHttp.Command.Disable.ToString().ToLower(), time);
+                    command.ToString().ToLower(), time);
                 if (successfulCommand) 
                 {
-                    MessagingCenter.Send(this, statusUpdate, PiholeHttp.Command.Disable.ToString().ToLower());
+                    MessagingCenter.Send(this, statusUpdate, command.ToString().ToLower() + "d");
                 }
 
             }
@@ -62,11 +63,6 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             {
                 MessagingCenter.Send(this, statusUpdate, "disconnected");
             }
-        }
-        
-        private async void OnEnableButtonClicked(object obj) 
-        {
-
         }
     }
 }

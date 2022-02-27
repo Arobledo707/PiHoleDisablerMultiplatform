@@ -32,16 +32,19 @@
 
             <Button x:Name="saveButton" Text="Save" Grid.Row="3" Margin="0,10,0,0"
                 HorizontalOptions="Center" Clicked="saveButton_Clicked" Command="{Binding SaveInfoCommand}"/>
+            
+            
             <Label x:Name="savedInfo" Text="Saved Info" Grid.Row="4" HorizontalOptions="Center" 
                FontSize="30" TextColor="{DynamicResource PrimaryTextColor}" Margin="0,80,0,0"/>
             <StackLayout Orientation="Horizontal" Spacing="10"  HorizontalOptions="StartAndExpand" Grid.Row="5" >
                 <Label x:Name="piholeAddressText2" Text="Pi-hole Address: " TextColor="{DynamicResource PrimaryTextColor}" FontSize="20"/>
-                <Label x:Name="savedPiholeAddress" TextColor="{DynamicResource PrimaryTextColor}" Text="http://pi.hole" Padding="0,6,0,0"/>
+                <Label x:Name="savedPiholeAddress" TextColor="{DynamicResource PrimaryTextColor}" Padding="0,6,0,0"/>
             </StackLayout>
 
             <StackLayout Orientation="Horizontal" Spacing="10"  HorizontalOptions="StartAndExpand" Grid.Row="6" >
-                <Label x:Name="savedTokenEnteredText" Text="Token: " TextColor="{DynamicResource PrimaryTextColor}" FontSize="20"/>
-                <Label x:Name="savedToken" TextColor="{DynamicResource PrimaryTextColor}" Text="4329TJD842498428FAD" Padding="0,6,0,0"/>
+                <Label x:Name="savedTokenEnteredText" Text="Token: " TextColor="{DynamicResource PrimaryTextColor}" FontSize="20"
+                       MaxLines="2" WidthRequest="90"/>
+                <Label x:Name="savedToken" TextColor="{DynamicResource PrimaryTextColor}" Padding="0,6,0,0"/>
             </StackLayout>
 
             <Button x:Name="clearButton" Text="Clear" Grid.Row="7" Margin="0,10,0,0"

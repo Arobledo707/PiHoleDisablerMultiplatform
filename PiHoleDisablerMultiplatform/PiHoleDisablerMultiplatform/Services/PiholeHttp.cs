@@ -13,7 +13,7 @@ namespace PiHoleDisablerMultiplatform.Services
         {
             Enable,
             Disable,
-            Status
+            Invalid
         };
         public async static Task<string> CheckPiholeStatus(string savedUrl, string currentApiToken) 
         {

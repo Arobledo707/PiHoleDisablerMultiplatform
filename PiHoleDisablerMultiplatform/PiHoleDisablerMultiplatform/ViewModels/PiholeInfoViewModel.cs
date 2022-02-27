@@ -31,14 +31,13 @@ namespace PiHoleDisablerMultiplatform.ViewModels
         public PiholeInfoViewModel() 
         {
             Title = "Pi-hole Disabler Info";
+            
 
-            SaveInfoCommand = new Command(OnSaveButtonClicked);
+            //SaveInfoCommand = new Command(OnSaveButtonClicked);
             ClearInfoCommand = new Command(OnClearButtonClicked);
             MessagingCenter.Subscribe<PiholeInfoPage, List<string>>(this, checkInfo, async (sender, arg) => 
             {
                 ValidateInfo(arg[0], arg[1]);
-                //string result = await PiholeHttp.CheckPiholeStatus(arg[0], arg[1]);
-                //MessagingCenter.Send(this, validInfo, result != "disconnected");
             });
 
             MessagingCenter.Subscribe<PiholeInfoPage, List<string>>(this, infoRequest, async (sender, arg) =>
@@ -67,9 +66,6 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                     CurrentPiData.piHoleData = null;
                 }
             }
-        }
-        private async void OnSaveButtonClicked() 
-        {
         }
 
         private async void ValidateInfo(string address, string token) 

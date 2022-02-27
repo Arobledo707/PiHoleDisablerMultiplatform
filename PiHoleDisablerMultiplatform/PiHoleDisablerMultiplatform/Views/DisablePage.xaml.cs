@@ -48,7 +48,6 @@ namespace PiHoleDisablerMultiplatform.Views
         {
             base.OnAppearing();
             MessagingCenter.Send(this, refresh);
-
         }
     }
 }
