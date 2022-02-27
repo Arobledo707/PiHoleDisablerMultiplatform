@@ -8,6 +8,7 @@ using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace PiHoleDisablerMultiplatform.ViewModels
 {
@@ -37,23 +38,25 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             ClearInfoCommand = new Command(OnClearButtonClicked);
             MessagingCenter.Subscribe<PiholeInfoPage, List<string>>(this, checkInfo, async (sender, arg) => 
             {
-                ValidateInfo(arg[0], arg[1]);
+                await ValidateInfo(arg[0], arg[1]);
             });
 
             MessagingCenter.Subscribe<PiholeInfoPage, List<string>>(this, infoRequest, async (sender, arg) =>
             {
-                SendPiholeData();
+                await SendPiholeData();
             });
         }
 
-        private async void SendPiholeData() 
+        private async Task<bool> SendPiholeData()
         {
-            if (CurrentPiData.piHoleData == null)
+            if (CurrentPiData.piHoleData.Url == String.Empty)
             {
                 CurrentPiData.piHoleData = await PiholeDataSerializer.DeserializeData();
             }
             List<string> data = new List<string> {CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token};
             MessagingCenter.Send(this, requestedData, data);
+
+            return await Task.FromResult(true);
         }
 
         private async void OnClearButtonClicked(Object obj) 
@@ -68,7 +71,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             }
         }
 
-        private async void ValidateInfo(string address, string token) 
+        private async Task<bool> ValidateInfo(string address, string token) 
         {
             bool isValidated = await PiholeHttp.PiholeCommand(address, token, "enable", 0);
             if (isValidated) 
@@ -77,6 +80,9 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                 isValidated = await PiholeDataSerializer.SerializeData(CurrentPiData.piHoleData);
             }
             MessagingCenter.Send(this, validInfo, isValidated);
+
+            return await Task.FromResult(true);
+
         }
     }
 }
