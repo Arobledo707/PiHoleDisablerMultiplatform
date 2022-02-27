@@ -8,5 +8,12 @@ namespace PiHoleDisablerMultiplatform.StaticPi
     public static class CurrentPiData
     {
         public static PiHoleData piHoleData { get; set; }
+
+        static CurrentPiData() 
+        {
+            piHoleData = new PiHoleData();
+            piHoleData.Url = String.Empty;
+            piHoleData.Token = String.Empty;
+        }
     }
 }

@@ -7,7 +7,7 @@
             
     <ContentPage.Content>
         <StackLayout>
-            <Label x:Name="piHoleStatusText" Text="Pi-hole status: enabled" 
+            <Label x:Name="piHoleStatusText" Text="Pi-hole status: " 
                HorizontalOptions="Center" TextColor="{DynamicResource PrimaryTextColor}" FontSize="30"/>
             <Grid x:Name="disableGrid" Padding="0,20,0,0" IsVisible="True">
                 <Grid.RowDefinitions>

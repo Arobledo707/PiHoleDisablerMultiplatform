@@ -19,6 +19,8 @@ namespace PiHoleDisablerMultiplatform.Views
         PiholeInfoViewModel piViewModel;
         private readonly string checkInfo = "checkInfo";
         private readonly string validInfo = "validInfo";
+        private readonly string infoRequest = "requestInfo";
+        private readonly string requestedData = "requestedData";
 
         public PiholeInfoPage()
         {
@@ -40,6 +42,12 @@ namespace PiHoleDisablerMultiplatform.Views
                     await DisplayAlert("Pi-hole unreachable", "Info is either incorrect or Pi-hole is unreachable", "Ok");
                 }
             });
+
+            MessagingCenter.Subscribe<PiholeInfoViewModel, List<string>>(this, requestedData, async(sender, infoStrings) => 
+            {
+                savedPiholeAddress.Text = infoStrings[0];
+                savedToken.Text = infoStrings[1];
+            });
         }
 
         protected override void OnAppearing()
@@ -47,7 +55,7 @@ namespace PiHoleDisablerMultiplatform.Views
             base.OnAppearing();
             if (NeedsPiholeData()) 
             {
-                MessagingCenter.Send(this, "requestSerializedInfo");
+                MessagingCenter.Send(this, infoRequest);
             }
         }
 

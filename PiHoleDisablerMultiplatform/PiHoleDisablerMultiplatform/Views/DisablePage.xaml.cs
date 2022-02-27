@@ -14,10 +14,16 @@ namespace PiHoleDisablerMultiplatform.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class DisablePage : ContentPage
     {
+        private readonly string statusUpdate = "statusUpdate";
+        private readonly string refresh = "refresh";
+        private readonly string piHoleStatusStartString = "Pi - hole status: ";
+
+
         public DisablePage()
         {
             InitializeComponent();
-            MessagingCenter.Subscribe<DisableViewModel, string>(this, "statusupdate", async (sender, status) =>
+            this.BindingContext = new DisableViewModel();
+            MessagingCenter.Subscribe<DisableViewModel, string>(this, statusUpdate, async (sender, status) =>
             {
                 ChangeStatus(status);
             });
@@ -26,6 +32,7 @@ namespace PiHoleDisablerMultiplatform.Views
 
         protected void ChangeStatus(string status) 
         {
+            piHoleStatusText.Text = piHoleStatusStartString + status;
             if (status == "active" || status == "disconnected")
             {
                 disableGrid.IsVisible = true;
@@ -40,7 +47,7 @@ namespace PiHoleDisablerMultiplatform.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            MessagingCenter.Send(this, "refresh");
+            MessagingCenter.Send(this, refresh);
 
         }
     }

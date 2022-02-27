@@ -23,9 +23,10 @@ namespace PiHoleDisablerMultiplatform.ViewModels
         public bool infoCleared { get; set; }
         public bool infoSaved { get; set; }
 
-        private string validInfo = "validInfo";
-        private string checkInfo = "checkInfo";
-        private string requestInfo = "requestSerializedInfo";
+        private readonly string validInfo = "validInfo";
+        private readonly string checkInfo = "checkInfo";
+        private readonly string infoRequest = "requestInfo";
+        private readonly string requestedData = "requestedData";
 
         public PiholeInfoViewModel() 
         {
@@ -40,16 +41,21 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                 //MessagingCenter.Send(this, validInfo, result != "disconnected");
             });
 
-            MessagingCenter.Subscribe<PiholeInfoPage, List<string>>(this, requestInfo, async (sender, arg) =>
+            MessagingCenter.Subscribe<PiholeInfoPage, List<string>>(this, infoRequest, async (sender, arg) =>
             {
-                if (CurrentPiData.piHoleData == null) 
-                {
-                    CurrentPiData.piHoleData = await PiholeDataSerializer.DeserializeData();
-                }
-
+                SendPiholeData();
             });
         }
 
+        private async void SendPiholeData() 
+        {
+            if (CurrentPiData.piHoleData == null)
+            {
+                CurrentPiData.piHoleData = await PiholeDataSerializer.DeserializeData();
+            }
+            List<string> data = new List<string> {CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token};
+            MessagingCenter.Send(this, requestedData, data);
+        }
 
         private async void OnClearButtonClicked(Object obj) 
         {

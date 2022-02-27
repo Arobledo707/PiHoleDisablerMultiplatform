@@ -6,6 +6,7 @@ using System.Text;
 using Xamarin.Forms;
 using PiHoleDisablerMultiplatform.Views;
 using PiHoleDisablerMultiplatform.Services;
+using PiHoleDisablerMultiplatform.StaticPi;
 using PiHoleDisablerMultiplatform.Models;
 using System.Threading.Tasks;
 
@@ -14,40 +15,37 @@ namespace PiHoleDisablerMultiplatform.ViewModels
 {
     public class DisableViewModel : BaseViewModel
     {
-        private PiHoleData pihole;
         public Command DisableCommand { get; }
         public Command EnableCommand { get; }
+
+        private readonly string statusUpdate = "statusUpdate";
+        private readonly string refresh = "refresh";
+
         public DisableViewModel() 
         {
             Title = "Disable";
             DisableCommand = new Command(OnDisableButtonClicked);
             EnableCommand = new Command(OnEnableButtonClicked);
 
-            LoadData();
-
-            MessagingCenter.Subscribe<DisablePage>(this, "refresh", async (sender) =>
+            MessagingCenter.Subscribe<DisablePage>(this, refresh, async (sender) =>
             {
-                string result = await PiholeHttp.CheckPiholeStatus(pihole.Url, pihole.Token);
-                MessagingCenter.Send(this, "statusupdate", result);
+                string result = await PiholeHttp.CheckPiholeStatus(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token);
+                MessagingCenter.Send(this, statusUpdate, result);
             });
         }
 
-        private bool LoadData() 
-        {
-            return true;
-        }
         private async Task<bool> Refresh() 
         {
-            await PiholeHttp.CheckPiholeStatus(pihole.Url, pihole.Token);
+            await PiholeHttp.CheckPiholeStatus(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token);
             return await Task.FromResult(true); 
         }
 
         private async void OnDisableButtonClicked(object obj) 
         {
-
+            string test = obj.ToString();
         }
 
-        private async void OnEnableButtonClicked() 
+        private async void OnEnableButtonClicked(object obj) 
         {
 
         }
