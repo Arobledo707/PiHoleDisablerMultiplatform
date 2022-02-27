@@ -61,7 +61,8 @@ namespace PiHoleDisablerMultiplatform.Views
 
         private bool NeedsPiholeData() 
         {
-            return (savedPiholeAddress.Text == String.Empty || savedToken.Text == String.Empty);
+            return ((savedPiholeAddress.Text == null || savedPiholeAddress.Text == String.Empty) ||
+                 (savedToken.Text == null || savedToken.Text == String.Empty));
         }
 
         private void MoveData() 

@@ -41,7 +41,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                 await ValidateInfo(arg[0], arg[1]);
             });
 
-            MessagingCenter.Subscribe<PiholeInfoPage, List<string>>(this, infoRequest, async (sender, arg) =>
+            MessagingCenter.Subscribe<PiholeInfoPage>(this, infoRequest, async (sender) =>
             {
                 await SendPiholeData();
             });
