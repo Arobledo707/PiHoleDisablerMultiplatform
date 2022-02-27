@@ -40,11 +40,30 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             return await Task.FromResult(true); 
         }
 
-        private async void OnDisableButtonClicked(object obj) 
+        private async void OnDisableButtonClicked(object timeString) 
         {
-            string test = obj.ToString();
-        }
+            bool successfulCommand = false;
+            try
+            {
+                int time = int.Parse(timeString.ToString());
+                successfulCommand = await PiholeHttp.PiholeCommand(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token,
+                    PiholeHttp.Command.Disable.ToString().ToLower(), time);
+                if (successfulCommand) 
+                {
+                    MessagingCenter.Send(this, statusUpdate, PiholeHttp.Command.Disable.ToString().ToLower());
+                }
 
+            }
+            catch (Exception err) 
+            {
+                Console.WriteLine(err + ": " + err.Message);
+            }
+            if (!successfulCommand) 
+            {
+                //send here
+            }
+        }
+        
         private async void OnEnableButtonClicked(object obj) 
         {
 
