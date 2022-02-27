@@ -60,7 +60,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             }
             if (!successfulCommand) 
             {
-                //send here
+                MessagingCenter.Send(this, statusUpdate, "disconnected");
             }
         }
         
