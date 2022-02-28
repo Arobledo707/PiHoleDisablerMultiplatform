@@ -43,8 +43,34 @@ namespace PiHoleDisablerMultiplatform
             }
         }
 
+        private void SetTheme() 
+        {
+            OSAppTheme theme = Application.Current.RequestedTheme;
+            if (Application.Current.UserAppTheme != theme)
+            {
+                ICollection<ResourceDictionary> mergedDictionaries = Application.Current.Resources.MergedDictionaries;
+
+                if (mergedDictionaries != null)
+                {
+                    mergedDictionaries.Clear();
+
+                    switch (theme)
+                    {
+                        case OSAppTheme.Dark:
+                            mergedDictionaries.Add(new DarkTheme());
+                            break;
+                        case OSAppTheme.Light:
+                        default:
+                            mergedDictionaries.Add(new LightTheme());
+                            break;
+                    }
+                }
+            }
+        }
+
         protected override void OnStart()
         {
+            SetTheme();
         }
 
         protected override void OnSleep()
@@ -53,6 +79,11 @@ namespace PiHoleDisablerMultiplatform
 
         protected override void OnResume()
         {
+            SetTheme();
+            //if (Application.Current.UserAppTheme != Application.Current.RequestedTheme) 
+            //{
+            //    bool lol = true;
+            //}
             //OSAppTheme currentTheme = Application.Current.RequestedTheme;
         }
     }
