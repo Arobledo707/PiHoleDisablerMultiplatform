@@ -21,7 +21,7 @@
 	<key>MinimumOSVersion</key>
 	<string>8.0</string>
 	<key>CFBundleDisplayName</key>
-	<string>PiHoleDisablerMultiplatform</string>
+	<string>PiHole Disabler</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.companyname.PiHoleDisablerMultiplatform</string>
 	<key>CFBundleVersion</key>
