@@ -24,6 +24,8 @@ namespace PiHoleDisablerMultiplatform
             OSAppTheme theme = a.RequestedTheme;
 
             ICollection<ResourceDictionary> mergedDictionaries = Application.Current.Resources.MergedDictionaries;
+            //var test = mergedDictionaries.
+            
             if (mergedDictionaries != null)
             {
                 mergedDictionaries.Clear();

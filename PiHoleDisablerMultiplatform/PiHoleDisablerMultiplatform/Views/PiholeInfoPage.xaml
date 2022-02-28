@@ -16,7 +16,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Label x:Name="enterPiholeInfo" Text="Enter Pi-hole Info:" 
+            <Label x:Name="enterPiholeInfo" Text="Enter Info" 
                HorizontalOptions="Center" Grid.Row="0" TextColor="{DynamicResource PrimaryTextColor}" FontSize="30"/>
             <StackLayout Orientation="Horizontal" Spacing="10"  HorizontalOptions="StartAndExpand" Grid.Row="1">
                 <Label x:Name="piholeAddressText" Text="Pi-hole Address: " TextColor="{DynamicResource PrimaryTextColor}" FontSize="20" Padding="0, 6, 0,0"/>
@@ -43,7 +43,7 @@
 
             <StackLayout Orientation="Horizontal" Spacing="10"  HorizontalOptions="StartAndExpand" Grid.Row="6" >
                 <Label x:Name="savedTokenEnteredText" Text="Token: " TextColor="{DynamicResource PrimaryTextColor}" FontSize="20"
-                       MaxLines="2" WidthRequest="90"/>
+                       MaxLines="2" WidthRequest="100"/>
                 <Label x:Name="savedToken" TextColor="{DynamicResource PrimaryTextColor}" Padding="0,6,0,0"/>
             </StackLayout>
 

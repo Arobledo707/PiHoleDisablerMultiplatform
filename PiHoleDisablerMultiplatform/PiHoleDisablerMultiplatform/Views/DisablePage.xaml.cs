@@ -33,7 +33,7 @@ namespace PiHoleDisablerMultiplatform.Views
         protected void ChangeStatus(string status) 
         {
             piHoleStatusText.Text = piHoleStatusStartString + status;
-            if (status == "active" || status == "disconnected")
+            if (status == "enabled" || status == "disconnected")
             {
                 disableGrid.IsVisible = true;
                 enableData.IsVisible = false;

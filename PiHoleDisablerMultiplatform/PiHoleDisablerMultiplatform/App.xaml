@@ -16,7 +16,7 @@
                         <VisualStateGroup x:Name="CommonStates">
                             <VisualState x:Name="Normal">
                                 <VisualState.Setters>
-                                <Setter Property="BackgroundColor" Value="{DynamicResource SecondaryColor}" />
+                                <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryColor}" />
                                 </VisualState.Setters>
                             </VisualState>
                             <VisualState x:Name="Disabled">
