@@ -28,6 +28,8 @@ namespace PiHoleDisablerMultiplatform.ViewModels
         private readonly string checkInfo = "checkInfo";
         private readonly string infoRequest = "requestInfo";
         private readonly string requestedData = "requestedData";
+        private readonly string clearCommand = "clear";
+
 
         public PiholeInfoViewModel() 
         {
@@ -43,8 +45,18 @@ namespace PiHoleDisablerMultiplatform.ViewModels
 
             MessagingCenter.Subscribe<PiholeInfoPage>(this, infoRequest, async (sender) =>
             {
-                await SendPiholeData();
+                bool dataSent = await SendPiholeData();
+                if (dataSent) 
+                {
+                    Console.WriteLine("Data sent successfully");
+                }
             });
+
+            MessagingCenter.Subscribe<PiholeInfoPage>(this, clearCommand, async (sender) =>
+            {
+                ClearData();
+            });
+
         }
 
         private async Task<bool> SendPiholeData()
@@ -68,6 +80,15 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                 {
                     CurrentPiData.piHoleData = null;
                 }
+            }
+        }
+
+        private async void ClearData() 
+        {
+            bool cleared = await PiholeDataSerializer.DeleteData();
+            if (cleared)
+            {
+                CurrentPiData.piHoleData = null;
             }
         }
 

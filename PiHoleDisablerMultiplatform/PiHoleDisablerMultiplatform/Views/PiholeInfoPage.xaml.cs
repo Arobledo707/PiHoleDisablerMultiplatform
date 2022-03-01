@@ -17,10 +17,12 @@ namespace PiHoleDisablerMultiplatform.Views
 
         private Entry enteredToken;
         PiholeInfoViewModel piViewModel;
+
         private readonly string checkInfo = "checkInfo";
         private readonly string validInfo = "validInfo";
         private readonly string infoRequest = "requestInfo";
         private readonly string requestedData = "requestedData";
+        private readonly string clearCommand = "clear";
 
         public PiholeInfoPage()
         {
@@ -98,6 +100,7 @@ namespace PiHoleDisablerMultiplatform.Views
                 savedToken.Text = String.Empty;
                 piViewModel.savedToken = String.Empty;
                 piViewModel.savedAddress = String.Empty;
+                MessagingCenter.Send(this, clearCommand);
             }
         }
 
