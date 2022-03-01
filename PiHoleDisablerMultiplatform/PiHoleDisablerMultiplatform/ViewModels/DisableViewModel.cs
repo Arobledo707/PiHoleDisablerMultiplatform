@@ -16,19 +16,15 @@ namespace PiHoleDisablerMultiplatform.ViewModels
     public class DisableViewModel : BaseViewModel
     {
         public Command ButtonClickCommand { get; }
-
-        private readonly string statusUpdate = "statusUpdate";
-        private readonly string refresh = "refresh";
-
         public DisableViewModel() 
         {
             Title = "Disable";
             ButtonClickCommand = new Command(OnButtonClicked);
 
-            MessagingCenter.Subscribe<DisablePage>(this, refresh, async (sender) =>
+            MessagingCenter.Subscribe<DisablePage>(this, Commands.refresh, async (sender) =>
             {
                 string result = await PiholeHttp.CheckPiholeStatus(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token);
-                MessagingCenter.Send(this, statusUpdate, result);
+                MessagingCenter.Send(this, Commands.statusUpdate, result);
             });
         }
 
@@ -51,7 +47,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                     command.ToString().ToLower(), time);
                 if (successfulCommand) 
                 {
-                    MessagingCenter.Send(this, statusUpdate, command.ToString().ToLower() + "d");
+                    MessagingCenter.Send(this, Commands.statusUpdate, command.ToString().ToLower() + "d");
                 }
 
             }
@@ -61,7 +57,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             }
             if (!successfulCommand) 
             {
-                MessagingCenter.Send(this, statusUpdate, "disconnected");
+                MessagingCenter.Send(this, Commands.statusUpdate, "disconnected");
             }
         }
     }

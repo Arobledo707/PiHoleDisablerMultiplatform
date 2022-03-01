@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using PiHoleDisablerMultiplatform.StaticPi;
 
 namespace PiHoleDisablerMultiplatform.Views
 {
@@ -18,12 +19,6 @@ namespace PiHoleDisablerMultiplatform.Views
         private Entry enteredToken;
         PiholeInfoViewModel piViewModel;
 
-        private readonly string checkInfo = "checkInfo";
-        private readonly string validInfo = "validInfo";
-        private readonly string infoRequest = "requestInfo";
-        private readonly string requestedData = "requestedData";
-        private readonly string clearCommand = "clear";
-
         public PiholeInfoPage()
         {
             InitializeComponent();
@@ -33,7 +28,7 @@ namespace PiHoleDisablerMultiplatform.Views
             enteredToken = FindByName("tokenEntered") as Entry;
             piViewModel = this.BindingContext as PiholeInfoViewModel;
 
-            MessagingCenter.Subscribe<PiholeInfoViewModel, bool>(this, validInfo, async (sender, arg) =>
+            MessagingCenter.Subscribe<PiholeInfoViewModel, bool>(this, Commands.validInfo, async (sender, arg) =>
             {
                 if (arg)
                 {
@@ -45,10 +40,15 @@ namespace PiHoleDisablerMultiplatform.Views
                 }
             });
 
-            MessagingCenter.Subscribe<PiholeInfoViewModel, List<string>>(this, requestedData, async(sender, infoStrings) => 
+            MessagingCenter.Subscribe<PiholeInfoViewModel, List<string>>(this, Commands.requestedData, async(sender, infoStrings) => 
             {
                 savedPiholeAddress.Text = infoStrings[0];
                 savedToken.Text = infoStrings[1];
+            });
+
+            MessagingCenter.Subscribe<PiholeInfoViewModel, List<string>>(this, Commands.error, async (sender, message) => 
+            {
+                await DisplayAlert(message[0], message[1], "Ok");
             });
         }
 
@@ -57,7 +57,7 @@ namespace PiHoleDisablerMultiplatform.Views
             base.OnAppearing();
             if (NeedsPiholeData()) 
             {
-                MessagingCenter.Send(this, infoRequest);
+                MessagingCenter.Send(this, Commands.infoRequest);
             }
         }
 
@@ -98,9 +98,7 @@ namespace PiHoleDisablerMultiplatform.Views
                     savedPiholeAddress.Text = String.Empty;
                 }
                 savedToken.Text = String.Empty;
-                piViewModel.savedToken = String.Empty;
-                piViewModel.savedAddress = String.Empty;
-                MessagingCenter.Send(this, clearCommand);
+                MessagingCenter.Send(this, Commands.clear);
             }
         }
 
@@ -120,7 +118,7 @@ namespace PiHoleDisablerMultiplatform.Views
 
                 List<String> checkStrings = new List<string> { sendAddress, enteredToken.Text.Trim() };
 
-                MessagingCenter.Send(this, checkInfo, checkStrings);
+                MessagingCenter.Send(this, Commands.checkInfo, checkStrings);
             }
         }
 
