@@ -19,7 +19,7 @@ namespace PiHoleDisablerMultiplatform.Services
         {
             try
             {
-                string url = $"{savedUrl}/admin/api.php?status&auth={currentApiToken}";
+                string url = $"http://{savedUrl}/admin/api.php?status&auth={currentApiToken}";
                 HttpClient client = new HttpClient();
                 client.Timeout = TimeSpan.FromSeconds(5);
                 var message = await client.GetAsync(url);
@@ -47,7 +47,7 @@ namespace PiHoleDisablerMultiplatform.Services
                     commandString += '=';
                     commandString += timeInSeconds.ToString();
                 }
-                string url = $"{savedUrl}/admin/api.php?{commandString}&auth={currentApiToken}";
+                string url = $"http://{savedUrl}/admin/api.php?{commandString}&auth={currentApiToken}";
                 HttpClient httpClient = new HttpClient();
                 httpClient.Timeout = TimeSpan.FromSeconds(5);
                 var message = await httpClient.GetAsync(url);

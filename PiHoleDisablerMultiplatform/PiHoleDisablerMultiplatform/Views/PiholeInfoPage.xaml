@@ -21,7 +21,7 @@
             <StackLayout Orientation="Horizontal" Spacing="10"  HorizontalOptions="StartAndExpand" Grid.Row="1">
                 <Label x:Name="piholeAddressText" Text="Pi-hole Address: " TextColor="{DynamicResource PrimaryTextColor}" FontSize="20" Padding="0, 6, 0,0"/>
                 <Entry x:Name="piholeAddress" TextColor="{DynamicResource PrimaryTextColor}" 
-                       Placeholder="http://pi.hole" PlaceholderColor="Gray"/>
+                       Placeholder="pi.hole" PlaceholderColor="Gray"/>
             </StackLayout>
 
             <StackLayout Orientation="Horizontal" Spacing="10"  HorizontalOptions="StartAndExpand" Grid.Row="2">
