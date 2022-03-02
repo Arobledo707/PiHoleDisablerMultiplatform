@@ -107,7 +107,7 @@ namespace PiHoleDisablerMultiplatform.Views
             if (enteredToken.Text != null)
             {
                 string sendAddress;
-                if (enteredAddress.Text == null)
+                if (enteredAddress.Text == null || enteredAddress.Text == String.Empty)
                 {
                     sendAddress = enteredAddress.Placeholder.Trim();
                 }
