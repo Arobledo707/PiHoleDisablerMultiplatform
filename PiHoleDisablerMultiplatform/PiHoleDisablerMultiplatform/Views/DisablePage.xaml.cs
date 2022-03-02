@@ -15,7 +15,7 @@ namespace PiHoleDisablerMultiplatform.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class DisablePage : ContentPage
     {
-        private readonly string piHoleStatusStartString = "Pi - hole status: ";
+        private readonly string piHoleStatusStartString = "Pi-hole status: ";
 
         public DisablePage()
         {
