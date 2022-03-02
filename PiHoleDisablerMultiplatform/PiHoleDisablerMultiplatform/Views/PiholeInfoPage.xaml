@@ -21,13 +21,14 @@
             <StackLayout Orientation="Horizontal" Spacing="10"  HorizontalOptions="StartAndExpand" Grid.Row="1">
                 <Label x:Name="piholeAddressText" Text="Pi-hole Address: " TextColor="{DynamicResource PrimaryTextColor}" FontSize="20" Padding="0, 6, 0,0"/>
                 <Entry x:Name="piholeAddress" TextColor="{DynamicResource PrimaryTextColor}" 
-                       Placeholder="pi.hole" PlaceholderColor="Gray"/>
+                       Placeholder="pi.hole" PlaceholderColor="Gray" WidthRequest="100"/>
             </StackLayout>
 
             <StackLayout Orientation="Horizontal" Spacing="10"  HorizontalOptions="StartAndExpand" Grid.Row="2">
-                <Label x:Name="tokenEnteredText" Text="Token: " TextColor="{DynamicResource PrimaryTextColor}" FontSize="20" Padding="0, 6, 0,0" WidthRequest="110"/>
+                <Label x:Name="tokenEnteredText" Text="Token: " TextColor="{DynamicResource PrimaryTextColor}" FontSize="20" Padding="0, 6, 0,0" 
+                       MaxLines="1" WidthRequest="80"/>
                 <Entry x:Name="tokenEntered" TextColor="{DynamicResource PrimaryTextColor}" 
-                   Placeholder="Enter Token Here" PlaceholderColor="Gray"/>
+                    Placeholder="Enter Token Here" PlaceholderColor="Gray" WidthRequest="200" HorizontalOptions="StartAndExpand"/>
             </StackLayout>
 
             <Button x:Name="saveButton" Text="Save" Grid.Row="3" Margin="0,10,0,0" WidthRequest="100"

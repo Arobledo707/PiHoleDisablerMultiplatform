@@ -94,13 +94,14 @@ namespace PiHoleDisablerMultiplatform.ViewModels
         private async Task<bool> ValidateInfo(string address, string token) 
         {
             bool isValidated = await PiholeHttp.PiholeCommand(address, token, "enable", 0);
+            bool isSerialized = false;
             MessagingCenter.Send(this, Commands.validInfo, isValidated);
             if (isValidated) 
             {
                 CurrentPiData.piHoleData = new PiHoleData(address, token);
-                isValidated = await PiholeDataSerializer.SerializeData(CurrentPiData.piHoleData);
+                isSerialized = await PiholeDataSerializer.SerializeData(CurrentPiData.piHoleData);
             }
-            if (!isValidated) 
+            if (!isSerialized && isValidated) 
             {
                 MessagingCenter.Send(this, Commands.error, new List<string> { "IO Error", "Failed to serialize data"});
             }
