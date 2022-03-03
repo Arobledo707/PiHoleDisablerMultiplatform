@@ -29,8 +29,6 @@ namespace PiHoleDisablerMultiplatform.ViewModels
         {
             Title = "Pi-hole Disabler Info";
             
-
-            //SaveInfoCommand = new Command(OnSaveButtonClicked);
             ClearInfoCommand = new Command(OnClearButtonClicked);
             MessagingCenter.Subscribe<PiholeInfoPage, List<string>>(this, Commands.checkInfo, async (sender, arg) => 
             {

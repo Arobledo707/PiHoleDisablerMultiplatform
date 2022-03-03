@@ -30,7 +30,7 @@ namespace PiHoleDisablerMultiplatform.Services
             }
         }
 
-        public async static Task<PiHoleData> DeserializeData() 
+        public async static Task<PiHoleData> DeserializeData()
         {
             string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), file);
             if (File.Exists(path))
@@ -45,10 +45,12 @@ namespace PiHoleDisablerMultiplatform.Services
                 }
                 catch (Exception ex)
                 {
+                    File.Delete(path);
+                    Console.WriteLine(ex.Message);
                     return await Task.FromResult(new PiHoleData());
                 }
             }
-            else 
+            else
             {
                 return await Task.FromResult(new PiHoleData());
             }

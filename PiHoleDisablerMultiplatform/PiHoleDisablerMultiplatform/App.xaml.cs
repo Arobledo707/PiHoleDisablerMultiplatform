@@ -1,9 +1,13 @@
 ﻿using PiHoleDisablerMultiplatform.Services;
+using PiHoleDisablerMultiplatform.StaticPi;
 using PiHoleDisablerMultiplatform.Views;
 using System;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Collections.Generic;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace PiHoleDisablerMultiplatform
 {
@@ -16,16 +20,28 @@ namespace PiHoleDisablerMultiplatform
             Application.Current.RequestedThemeChanged += (OnThemeChange);
 
             DependencyService.Register<MockDataStore>();
-            MainPage = new AppShell();
+
+            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "data.json");
+            if (File.Exists(path))
+            {
+                MainPage = new AppShell();
+            }
+            //if (DataEntered().Result)
+            //{
+            //MainPage = new AppShell();
+            //}
+            else
+            {
+                MainPage = new EnterInfoPage();
+            }
         }
 
-        private void OnThemeChange(Object sender, AppThemeChangedEventArgs a) 
+        private void OnThemeChange(Object sender, AppThemeChangedEventArgs a)
         {
             OSAppTheme theme = a.RequestedTheme;
 
             ICollection<ResourceDictionary> mergedDictionaries = Application.Current.Resources.MergedDictionaries;
-            //var test = mergedDictionaries.
-            
+
             if (mergedDictionaries != null)
             {
                 mergedDictionaries.Clear();
@@ -43,7 +59,7 @@ namespace PiHoleDisablerMultiplatform
             }
         }
 
-        private void SetTheme() 
+        private void SetTheme()
         {
             OSAppTheme theme = Application.Current.RequestedTheme;
             if (Application.Current.UserAppTheme != theme)
@@ -67,6 +83,11 @@ namespace PiHoleDisablerMultiplatform
                 }
             }
         }
+        private async Task<bool> DataEntered()
+        {
+            CurrentPiData.piHoleData = await PiholeDataSerializer.DeserializeData();
+            return await Task.FromResult(CurrentPiData.piHoleData.Token != null && CurrentPiData.piHoleData.Token != String.Empty);
+        }
 
         protected override void OnStart()
         {
@@ -80,11 +101,6 @@ namespace PiHoleDisablerMultiplatform
         protected override void OnResume()
         {
             SetTheme();
-            //if (Application.Current.UserAppTheme != Application.Current.RequestedTheme) 
-            //{
-            //    bool lol = true;
-            //}
-            //OSAppTheme currentTheme = Application.Current.RequestedTheme;
         }
     }
 }

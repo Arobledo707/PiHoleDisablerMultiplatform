@@ -7,7 +7,6 @@
     -->
     <Application.Resources>
         <ResourceDictionary Source="Themes/LightTheme.xaml"/>
-        <!--<ResourceDictionary> -->
 
         <Style TargetType="Button">
                 <Setter Property="TextColor" Value="{DynamicResource SecondaryTextColor}"></Setter>
@@ -27,9 +26,6 @@
                         </VisualStateGroup>
                     </VisualStateGroupList>
                 </Setter>
-            </Style>
-        
-        <!--
-        </ResourceDictionary>-->        
+            </Style>  
     </Application.Resources>
 </Application>

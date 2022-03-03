@@ -1,4 +1,5 @@
 ﻿using PiHoleDisablerMultiplatform.ViewModels;
+using PiHoleDisablerMultiplatform.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,11 @@ namespace PiHoleDisablerMultiplatform.Views
                 if (arg)
                 {
                     MoveData();
+                    var currPage = App.Current.MainPage;
+                    if (currPage.Title != "PiHoleDisabler") 
+                    {
+                        App.Current.MainPage = new AppShell();
+                    }
                 }
                 else 
                 {
@@ -51,6 +57,8 @@ namespace PiHoleDisablerMultiplatform.Views
                 await DisplayAlert(message[0], message[1], "Ok");
             });
         }
+
+
 
         protected override void OnAppearing()
         {

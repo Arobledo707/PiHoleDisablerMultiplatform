@@ -47,5 +47,7 @@ namespace PiHoleDisablerMultiplatform.Views
             base.OnAppearing();
             MessagingCenter.Send(this, Commands.refresh);
         }
+
+
     }
 }

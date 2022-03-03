@@ -23,6 +23,10 @@ namespace PiHoleDisablerMultiplatform.ViewModels
 
             MessagingCenter.Subscribe<DisablePage>(this, Commands.refresh, async (sender) =>
             {
+                if (CurrentPiData.piHoleData.Url == String.Empty)
+                {
+                    CurrentPiData.piHoleData = await PiholeDataSerializer.DeserializeData();
+                }
                 string result = await PiholeHttp.CheckPiholeStatus(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token);
                 MessagingCenter.Send(this, Commands.statusUpdate, result);
             });
@@ -60,5 +64,6 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                 MessagingCenter.Send(this, Commands.statusUpdate, "disconnected");
             }
         }
+
     }
 }
