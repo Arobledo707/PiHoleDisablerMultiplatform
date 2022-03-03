@@ -110,23 +110,27 @@ namespace PiHoleDisablerMultiplatform.Views
             }
         }
 
-        private void saveButton_Clicked(object sender, EventArgs e)
+        private async void saveButton_Clicked(object sender, EventArgs e)
         {
-            if (enteredToken.Text != null)
+            if (enteredToken.Text != null && enteredToken.Text != String.Empty)
             {
                 string sendAddress;
                 if (enteredAddress.Text == null || enteredAddress.Text == String.Empty)
                 {
                     sendAddress = enteredAddress.Placeholder.Trim();
                 }
-                else 
+                else
                 {
-                    sendAddress = enteredAddress.Text.Trim();   
+                    sendAddress = enteredAddress.Text.Trim();
                 }
 
                 List<String> checkStrings = new List<string> { sendAddress, enteredToken.Text.Trim() };
 
                 MessagingCenter.Send(this, Commands.checkInfo, checkStrings);
+            }
+            else 
+            {
+                await DisplayAlert("Missing Token", "Enter a Token", "Ok");
             }
         }
 
