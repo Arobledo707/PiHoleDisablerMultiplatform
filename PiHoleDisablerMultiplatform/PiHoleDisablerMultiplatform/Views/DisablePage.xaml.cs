@@ -16,6 +16,8 @@ namespace PiHoleDisablerMultiplatform.Views
     public partial class DisablePage : ContentPage
     {
         private readonly string piHoleStatusStartString = "Pi-hole status: ";
+        private readonly string enabled = "enabled";
+        private readonly string disconnected = "disconnected";
 
         public DisablePage()
         {
@@ -31,7 +33,7 @@ namespace PiHoleDisablerMultiplatform.Views
         protected void ChangeStatus(string status) 
         {
             piHoleStatusText.Text = piHoleStatusStartString + status;
-            if (status == "enabled" || status == "disconnected")
+            if (status == enabled || status == disconnected)
             {
                 disableGrid.IsVisible = true;
                 enableData.IsVisible = false;

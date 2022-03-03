@@ -12,24 +12,12 @@ using System.Threading.Tasks;
 
 namespace PiHoleDisablerMultiplatform.ViewModels
 {
-    //INotifyPropertyChanged
     public class PiholeInfoViewModel : BaseViewModel
     {
-        public Command SaveInfoCommand { get; }
-        public Command ClearInfoCommand { get; }
-
-        public string savedAddress { get; set; }
-        public string savedToken { get; set; }
-
-        public bool infoCleared { get; set; }
-        public bool infoSaved { get; set; }
-
-
         public PiholeInfoViewModel() 
         {
             Title = "Pi-hole Disabler Info";
             
-            ClearInfoCommand = new Command(OnClearButtonClicked);
             MessagingCenter.Subscribe<PiholeInfoPage, List<string>>(this, Commands.checkInfo, async (sender, arg) => 
             {
                 await ValidateInfo(arg[0], arg[1]);
@@ -61,18 +49,6 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             MessagingCenter.Send(this, Commands.requestedData, data);
 
             return await Task.FromResult(true);
-        }
-
-        private async void OnClearButtonClicked(Object obj) 
-        {
-            if (infoCleared) 
-            {
-                bool cleared = await PiholeDataSerializer.DeleteData();
-                if (cleared) 
-                {
-                    CurrentPiData.piHoleData = null;
-                }
-            }
         }
 
         private async void ClearData() 

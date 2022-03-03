@@ -15,18 +15,13 @@ namespace PiHoleDisablerMultiplatform.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PiholeInfoPage : ContentPage
     {
-        private Entry enteredAddress;
-
-        private Entry enteredToken;
+        private readonly string piHoleDisablerString = "PiHoleDisabler";
         PiholeInfoViewModel piViewModel;
 
         public PiholeInfoPage()
         {
             InitializeComponent();
             this.BindingContext = new PiholeInfoViewModel();
-
-            enteredAddress = FindByName("piholeAddress") as Entry;
-            enteredToken = FindByName("tokenEntered") as Entry;
             piViewModel = this.BindingContext as PiholeInfoViewModel;
 
             MessagingCenter.Subscribe<PiholeInfoViewModel, bool>(this, Commands.validInfo, async (sender, arg) =>
@@ -34,8 +29,7 @@ namespace PiHoleDisablerMultiplatform.Views
                 if (arg)
                 {
                     MoveData();
-                    var currPage = App.Current.MainPage;
-                    if (currPage.Title != "PiHoleDisabler") 
+                    if (App.Current.MainPage.Title != piHoleDisablerString) 
                     {
                         App.Current.MainPage = new AppShell();
                     }
@@ -77,20 +71,20 @@ namespace PiHoleDisablerMultiplatform.Views
 
         private void MoveData() 
         {
-            if (enteredAddress.Text == null)
+            if (piholeAddress.Text == null)
             {
-                savedPiholeAddress.Text = enteredAddress.Placeholder.Trim();
+                savedPiholeAddress.Text = piholeAddress.Placeholder.Trim();
             }
             else
             {
-                savedPiholeAddress.Text = enteredAddress.Text.Trim();
-                enteredAddress.Text = String.Empty;
+                savedPiholeAddress.Text = piholeAddress.Text.Trim();
+                piholeAddress.Text = String.Empty;
             }
 
-            if (enteredToken.Text != null)
+            if (tokenEntered.Text != null)
             {
-                savedToken.Text = enteredToken.Text.Trim();
-                enteredToken.Text = String.Empty;
+                savedToken.Text = tokenEntered.Text.Trim();
+                tokenEntered.Text = String.Empty;
             }
         }
         
@@ -112,19 +106,19 @@ namespace PiHoleDisablerMultiplatform.Views
 
         private async void saveButton_Clicked(object sender, EventArgs e)
         {
-            if (enteredToken.Text != null && enteredToken.Text != String.Empty)
+            if (tokenEntered.Text != null && tokenEntered.Text != String.Empty)
             {
                 string sendAddress;
-                if (enteredAddress.Text == null || enteredAddress.Text == String.Empty)
+                if (piholeAddress.Text == null || piholeAddress.Text == String.Empty)
                 {
-                    sendAddress = enteredAddress.Placeholder.Trim();
+                    sendAddress = piholeAddress.Placeholder.Trim();
                 }
                 else
                 {
-                    sendAddress = enteredAddress.Text.Trim();
+                    sendAddress = piholeAddress.Text.Trim();
                 }
 
-                List<String> checkStrings = new List<string> { sendAddress, enteredToken.Text.Trim() };
+                List<String> checkStrings = new List<string> { sendAddress, tokenEntered.Text.Trim() };
 
                 MessagingCenter.Send(this, Commands.checkInfo, checkStrings);
             }

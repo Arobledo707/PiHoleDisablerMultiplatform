@@ -14,14 +14,5 @@ namespace PiHoleDisablerMultiplatform
         {
             InitializeComponent();
         }
-
-        private async void DataEntered()
-        {
-            CurrentPiData.piHoleData = await PiholeDataSerializer.DeserializeData();
-            if (CurrentPiData.piHoleData.Token != null && CurrentPiData.piHoleData.Token != String.Empty)
-            {
-                await Shell.Current.GoToAsync("//DisablePage");
-            }
-        }
     }
 }

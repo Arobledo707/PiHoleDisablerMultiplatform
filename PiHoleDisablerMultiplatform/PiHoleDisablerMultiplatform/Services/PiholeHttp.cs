@@ -31,6 +31,7 @@ namespace PiHoleDisablerMultiplatform.Services
             }
             catch (Exception err)
             {
+                Console.WriteLine(err + err.Message);
                 //Toast.MakeText(this, err + err.Message, ToastLength.Short).Show();
             }
             return "disconnected";

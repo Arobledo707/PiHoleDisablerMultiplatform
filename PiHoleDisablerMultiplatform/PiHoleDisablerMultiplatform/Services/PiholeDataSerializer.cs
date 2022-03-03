@@ -24,8 +24,9 @@ namespace PiHoleDisablerMultiplatform.Services
                 stream.Close();
                 return await Task.FromResult(true);
             }
-            catch (Exception ex) 
+            catch (Exception er) 
             {
+                Console.WriteLine(er + er.Message);
                 return await Task.FromResult(false);
             }
         }
@@ -43,10 +44,10 @@ namespace PiHoleDisablerMultiplatform.Services
                     PiHoleData piHoleData = JsonConvert.DeserializeObject<PiHoleData>(unformattedString);
                     return await Task.FromResult(piHoleData);
                 }
-                catch (Exception ex)
+                catch (Exception er)
                 {
                     File.Delete(path);
-                    Console.WriteLine(ex.Message);
+                    Console.WriteLine(er + er.Message);
                     return await Task.FromResult(new PiHoleData());
                 }
             }

@@ -26,10 +26,6 @@ namespace PiHoleDisablerMultiplatform
             {
                 MainPage = new AppShell();
             }
-            //if (DataEntered().Result)
-            //{
-            //MainPage = new AppShell();
-            //}
             else
             {
                 MainPage = new EnterInfoPage();
