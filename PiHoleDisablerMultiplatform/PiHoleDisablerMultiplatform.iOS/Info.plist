@@ -30,6 +30,8 @@
 	<string>PiHoleDisablerMultiplatform</string>
 	<key>XSAppIconAssets</key>
 	<string>iconAsset.xcassets/AppIcons.appiconset</string>
+	<key>NSCameraUsageDescription</key>
+	<string>$(PRODUCT_NAME) camera description.</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
