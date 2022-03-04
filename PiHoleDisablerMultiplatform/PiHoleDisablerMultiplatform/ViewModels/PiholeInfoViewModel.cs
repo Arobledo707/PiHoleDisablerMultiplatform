@@ -14,8 +14,12 @@ namespace PiHoleDisablerMultiplatform.ViewModels
 {
     public class PiholeInfoViewModel : BaseViewModel
     {
+        public Command ScanCommand { get; }
         public PiholeInfoViewModel() 
         {
+            ScanCommand = new Command(Scanner);
+
+
             Title = "Pi-hole Disabler Info";
             
             MessagingCenter.Subscribe<PiholeInfoPage, List<string>>(this, Commands.checkInfo, async (sender, arg) => 
@@ -37,6 +41,25 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                 ClearData();
             });
 
+        }
+
+
+        private async void Scanner(Object obj) 
+        {
+            try 
+            {
+                var scanner = DependencyService.Get<IQRScan>();
+                string result = await scanner.AsyncScan();
+                if (result != null) 
+                {
+                    Entry entry = obj as Entry;
+                    entry.Text = result;
+                }
+            }
+            catch (Exception err)
+            {
+                Console.WriteLine(err + ": " + err.Message);
+            }
         }
 
         private async Task<bool> SendPiholeData()
