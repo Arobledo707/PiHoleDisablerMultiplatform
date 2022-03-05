@@ -19,11 +19,20 @@ namespace PiHoleDisablerMultiplatform.ViewModels
         {
             ScanCommand = new Command(Scanner);
 
-
             Title = "Pi-hole Disabler Info";
             
             MessagingCenter.Subscribe<PiholeInfoPage, List<string>>(this, Commands.checkInfo, async (sender, arg) => 
             {
+                var permissionStatus = await Permissions.CheckStatusAsync<Permissions.NetworkState>();
+                if (permissionStatus != PermissionStatus.Granted)
+                {
+                    permissionStatus = await Permissions.RequestAsync<Permissions.NetworkState>();
+                }
+                if (permissionStatus != PermissionStatus.Granted)
+                {
+                    //todo send message about network state is needed
+                    return;
+                }
                 await ValidateInfo(arg[0], arg[1]);
             });
 
@@ -46,6 +55,16 @@ namespace PiHoleDisablerMultiplatform.ViewModels
 
         private async void Scanner(Object obj) 
         {
+            var permissionStatus = await Permissions.CheckStatusAsync<Permissions.Camera>();
+
+            if (permissionStatus != PermissionStatus.Granted) 
+            {
+                permissionStatus = await Permissions.RequestAsync<Permissions.Camera>();
+            }
+            if (permissionStatus != PermissionStatus.Granted) 
+            {
+                return;
+            }
             try 
             {
                 var scanner = DependencyService.Get<IQRScan>();

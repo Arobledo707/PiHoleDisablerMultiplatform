@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using PiHoleDisablerMultiplatform.StaticPi;
@@ -29,24 +29,24 @@ namespace PiHoleDisablerMultiplatform.Views
                 if (arg)
                 {
                     MoveData();
-                    if (App.Current.MainPage.Title != piHoleDisablerString) 
+                    if (App.Current.MainPage.Title != piHoleDisablerString)
                     {
                         App.Current.MainPage = new AppShell();
                     }
                 }
-                else 
+                else
                 {
                     await DisplayAlert("Pi-hole unreachable", "Info is either incorrect or Pi-hole is unreachable", "Ok");
                 }
             });
 
-            MessagingCenter.Subscribe<PiholeInfoViewModel, List<string>>(this, Commands.requestedData, async(sender, infoStrings) => 
+            MessagingCenter.Subscribe<PiholeInfoViewModel, List<string>>(this, Commands.requestedData, async (sender, infoStrings) =>
             {
                 savedPiholeAddress.Text = infoStrings[0];
                 savedToken.Text = infoStrings[1];
             });
 
-            MessagingCenter.Subscribe<PiholeInfoViewModel, List<string>>(this, Commands.error, async (sender, message) => 
+            MessagingCenter.Subscribe<PiholeInfoViewModel, List<string>>(this, Commands.error, async (sender, message) =>
             {
                 await DisplayAlert(message[0], message[1], "Ok");
             });
@@ -57,19 +57,19 @@ namespace PiHoleDisablerMultiplatform.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            if (NeedsPiholeData()) 
+            if (NeedsPiholeData())
             {
                 MessagingCenter.Send(this, Commands.infoRequest);
             }
         }
 
-        private bool NeedsPiholeData() 
+        private bool NeedsPiholeData()
         {
             return ((savedPiholeAddress.Text == null || savedPiholeAddress.Text == String.Empty) ||
                  (savedToken.Text == null || savedToken.Text == String.Empty));
         }
 
-        private void MoveData() 
+        private void MoveData()
         {
             if (piholeAddress.Text == null)
             {
@@ -87,7 +87,7 @@ namespace PiHoleDisablerMultiplatform.Views
                 tokenEntered.Text = String.Empty;
             }
         }
-        
+
 
 
         private async void clearButton_Clicked(object sender, EventArgs e)
@@ -122,7 +122,7 @@ namespace PiHoleDisablerMultiplatform.Views
 
                 MessagingCenter.Send(this, Commands.checkInfo, checkStrings);
             }
-            else 
+            else
             {
                 await DisplayAlert("Missing Token", "Enter a Token", "Ok");
             }
