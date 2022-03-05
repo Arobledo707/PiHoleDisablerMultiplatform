@@ -63,6 +63,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             }
             if (permissionStatus != PermissionStatus.Granted) 
             {
+                //
                 return;
             }
             try 

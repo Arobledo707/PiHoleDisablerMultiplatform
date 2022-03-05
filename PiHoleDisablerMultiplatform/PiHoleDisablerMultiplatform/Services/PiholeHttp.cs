@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Text;
 using System.Net.Http;
 using Newtonsoft.Json;
+using Xamarin.Essentials;
 
 namespace PiHoleDisablerMultiplatform.Services
 {
@@ -68,6 +69,7 @@ namespace PiHoleDisablerMultiplatform.Services
             }
             return await Task.FromResult(false);
         }
+
     }
 
 }
