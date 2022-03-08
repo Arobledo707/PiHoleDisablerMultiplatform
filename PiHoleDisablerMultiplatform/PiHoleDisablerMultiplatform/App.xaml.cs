@@ -29,7 +29,6 @@ namespace PiHoleDisablerMultiplatform
             }
             else
             {
-                PiholeHttp.CheckPiholeStatus("127.0.0.1", null);
                 MainPage = new EnterInfoPage();
             }
         }

@@ -59,6 +59,7 @@ namespace PiHoleDisablerMultiplatform.Views
             base.OnAppearing();
             if (NeedsPiholeData())
             {
+                PiholeHttp.CheckPiholeStatus("127.0.0.1", "fakeToken");
                 MessagingCenter.Send(this, Commands.infoRequest);
             }
         }
