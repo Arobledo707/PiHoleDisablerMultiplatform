@@ -5,6 +5,7 @@ using System.Text;
 using System.Net.Http;
 using Newtonsoft.Json;
 using Xamarin.Essentials;
+using System.Net.NetworkInformation;
 
 namespace PiHoleDisablerMultiplatform.Services
 {
@@ -16,6 +17,7 @@ namespace PiHoleDisablerMultiplatform.Services
             Disable,
             Invalid
         };
+
         public async static Task<string> CheckPiholeStatus(string savedUrl, string currentApiToken) 
         {
             try

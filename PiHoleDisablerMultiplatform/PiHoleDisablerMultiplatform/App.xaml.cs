@@ -8,6 +8,7 @@ using Xamarin.Forms.Xaml;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.IO;
+using System.Text;
 
 namespace PiHoleDisablerMultiplatform
 {
@@ -28,6 +29,7 @@ namespace PiHoleDisablerMultiplatform
             }
             else
             {
+                PiholeHttp.CheckPiholeStatus("127.0.0.1", null);
                 MainPage = new EnterInfoPage();
             }
         }
