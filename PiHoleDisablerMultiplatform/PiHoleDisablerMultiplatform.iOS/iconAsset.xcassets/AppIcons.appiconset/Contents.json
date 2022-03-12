@@ -94,16 +94,16 @@
       "filename": "icon167.png"
     },
     {
-      "scale": "1x",
-      "size": "1024x1024",
-      "idiom": "ios-marketing",
-      "filename": "icon10241.png"
-    },
-    {
       "scale": "2x",
       "size": "29x29",
       "idiom": "ipad",
       "filename": "icon58.png"
+    },
+    {
+      "scale": "1x",
+      "size": "1024x1024",
+      "idiom": "ios-marketing",
+      "filename": "icon10242.png"
     }
   ],
   "properties": {},
