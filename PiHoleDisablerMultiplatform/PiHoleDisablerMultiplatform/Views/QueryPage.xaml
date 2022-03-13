@@ -3,6 +3,41 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PiHoleDisablerMultiplatform.Views.QueryPage">
     <ContentPage.Content>
+        <RefreshView IsRefreshing="{Binding IsRefreshing}"
+                     Command="{Binding RefreshCommand}">
+            <FlexLayout Direction="Column" VerticalOptions="Center" HorizontalOptions="StartAndExpand">
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Time"  WidthRequest="60"/>
+                    <Label Text="Type" WidthRequest="50"/>
+                    <Label Text="Domain" WidthRequest="80"/>
+                    <Label Text="Client" />
+                    <Label Text="Status" />
+                    <Label Text="Action" />
+                </StackLayout>
+                <StackLayout FlowDirection="LeftToRight" Orientation="Horizontal">
+                    <Label  Text="3/13/22 1:40:00" Padding="0,10,0,0" WidthRequest="60"/>
+                    <Label  Text="HTTPS" Padding="0,10,0,0" WidthRequest="50"/>
+                    <Label  Text="mesu-cdn.apple.com.akadns.net" Padding="0,10,0,0" WidthRequest="80"/>
+                    <Label  Text="10.0.0.115" Padding="0,10,0,0" WidthRequest="50"/>
+                    <Label  Text="Status" Padding="0,10,0,0"/>
+                    <Button Text="Clear" WidthRequest="100"/>
+                </StackLayout>
+                <StackLayout FlowDirection="LeftToRight" Orientation="Horizontal">
+                    <Label  Text="3/13/22 1:40:00" Padding="0,10,0,0" WidthRequest="60"/>
+                    <Label  Text="AAA" Padding="0,10,0,0" WidthRequest="50"/>
+                    <Label  Text="10.0.0.115" Padding="0,10,0,0" />
+                    <Label  Text="Status" Padding="0,10,0,0"/>
+                    <Button Text="Clear" WidthRequest="100"/>
+                </StackLayout>
+                    <StackLayout FlowDirection="LeftToRight" Orientation="Horizontal">
+                        <Label  Text="3/13/22 1:40:00" Padding="0,10,0,0" WidthRequest="60"/>
+                        <Label  Text="AAA" Padding="0,10,0,0" WidthRequest="50"/>
+                        <Label  Text="10.0.0.115" Padding="0,10,0,0"/>
+                        <Label  Text="Status" Padding="0,10,0,0"/>
+                        <Button Text="Clear" WidthRequest="100"/>
+                    </StackLayout>
+            </FlexLayout>
+        </RefreshView>
 
     </ContentPage.Content>
 </ContentPage>
