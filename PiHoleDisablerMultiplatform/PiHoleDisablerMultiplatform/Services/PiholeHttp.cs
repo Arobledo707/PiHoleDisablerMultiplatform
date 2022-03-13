@@ -18,6 +18,36 @@ namespace PiHoleDisablerMultiplatform.Services
             Invalid
         };
 
+        public async static Task<string> GetQueries(string savedUrl, string currentApiToken, int count) 
+        {
+            try
+            {
+                //http://pi.hole/admin/queries.php
+                string url = $"http://{savedUrl}/admin/api.php?getAllQueries={count}&auth={currentApiToken}";
+                HttpClient client = new HttpClient();
+                client.Timeout = TimeSpan.FromSeconds(5);
+                var message = await client.GetAsync(url);
+                //string test = await client.GetStringAsync(url);
+                if (message.IsSuccessStatusCode)
+                {
+                    //var values = JsonConvert.DeserializeObject<Dictionary<string, string>>(message.Content.ReadAsStringAsync().Result);
+                    //var values = JsonConvert.DeserializeObject<Dictionary<string, string>>(message.Content.ReadAsStringAsync().Result);
+                    var content = message.Content;
+                    var contentString = await message.Content.ReadAsStringAsync();
+                    var geader = message.Content.Headers;
+                    //var contentDict = JsonConvert.DeserializeObject<List<string>>(contentString);
+                    //var values = JsonConvert.DeserializeObject<Dictionary<string, string>>(message.Content.ReadAsStringAsync().Result);
+                    return "values";
+                }
+            }
+            catch (Exception err) 
+            {
+                Console.WriteLine(err);
+                return "notok";
+            }
+            return "ok";
+        }
+
         public async static Task<string> CheckPiholeStatus(string savedUrl, string currentApiToken) 
         {
             try
