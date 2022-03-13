@@ -6,6 +6,7 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using Xamarin.Essentials;
 using System.Net.NetworkInformation;
+using PiHoleDisablerMultiplatform.Models;
 
 namespace PiHoleDisablerMultiplatform.Services
 {
@@ -30,22 +31,18 @@ namespace PiHoleDisablerMultiplatform.Services
                 //string test = await client.GetStringAsync(url);
                 if (message.IsSuccessStatusCode)
                 {
-                    //var values = JsonConvert.DeserializeObject<Dictionary<string, string>>(message.Content.ReadAsStringAsync().Result);
-                    //var values = JsonConvert.DeserializeObject<Dictionary<string, string>>(message.Content.ReadAsStringAsync().Result);
-                    var content = message.Content;
                     var contentString = await message.Content.ReadAsStringAsync();
-                    var geader = message.Content.Headers;
-                    //var contentDict = JsonConvert.DeserializeObject<List<string>>(contentString);
-                    //var values = JsonConvert.DeserializeObject<Dictionary<string, string>>(message.Content.ReadAsStringAsync().Result);
-                    return "values";
+                    //var values = JsonConvert.DeserializeObject<QueryData>(contentString);
+                
+                    return contentString;
                 }
             }
             catch (Exception err) 
             {
                 Console.WriteLine(err);
-                return "notok";
+                return String.Empty;
             }
-            return "ok";
+            return String.Empty;
         }
 
         public async static Task<string> CheckPiholeStatus(string savedUrl, string currentApiToken) 

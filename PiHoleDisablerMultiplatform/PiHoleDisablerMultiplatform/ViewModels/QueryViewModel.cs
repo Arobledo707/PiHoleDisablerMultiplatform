@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using PiHoleDisablerMultiplatform.Services;
 using PiHoleDisablerMultiplatform.StaticPi;
+using PiHoleDisablerMultiplatform.Models;
+using Newtonsoft.Json;
 
 namespace PiHoleDisablerMultiplatform.ViewModels
 {
@@ -16,11 +18,13 @@ namespace PiHoleDisablerMultiplatform.ViewModels
 
         private async void Test() 
         {
-            string test = await PiholeHttp.GetQueries(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token, 2);
-            if (test == String.Empty) 
+            string contentString = await PiholeHttp.GetQueries(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token, 10);
+            if (contentString == String.Empty || contentString == null) 
             {
-                Console.WriteLine("CLEAR");
+                return;
             }
+            QueryData data = JsonConvert.DeserializeObject<QueryData>(contentString);
+
         }
     }
 }
