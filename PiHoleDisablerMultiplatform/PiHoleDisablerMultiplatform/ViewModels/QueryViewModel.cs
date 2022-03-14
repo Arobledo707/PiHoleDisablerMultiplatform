@@ -40,15 +40,48 @@ namespace PiHoleDisablerMultiplatform.ViewModels
 
         private async void Refresh() 
         {
-            //IsCurrentlyRefreshing = true;
-            StackLayout stackLayout = CreateStackLayout(Color.LightGreen);
 
             string contentString = await PiholeHttp.GetQueries(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token, 10);
             if (contentString == String.Empty || contentString == null)
             {
                 return;
             }
-            QueryData data = JsonConvert.DeserializeObject<QueryData>(contentString);
+            QueryData queryData = JsonConvert.DeserializeObject<QueryData>(contentString);
+            foreach (List<string> stringList in queryData.data) 
+            {
+                Color colour = Color.Pink;
+                if (stringList[4] == "4") 
+                {
+                    colour = Color.LightGreen;
+                }
+                StackLayout stackLayout = CreateStackLayout(colour);
+                for (int i = 0; i < 4;++i) 
+                {
+                    double widthRequest = 0;
+                    switch (i) 
+                    {
+                        case 0:
+                            widthRequest = 60;
+                            break;
+                        case 1:
+                            widthRequest = 50;
+                            break;
+                        case 2:
+                            widthRequest = 120;
+                            break;
+                        case 3:
+                            widthRequest = 80;
+                            break;
+                        case 4:
+                            widthRequest = 50;
+                            break;
+                    }
+                    stackLayout.Children.Add(CreateLabel(stringList[i], 12, widthRequest));
+                }
+
+                stackLayout.Children.Add(CreateButton(stringList[4]));
+            }
+
             IsCurrentlyRefreshing = false;
         }
 
@@ -63,11 +96,36 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             return stackLayout;
         }
 
+        private Label CreateLabel(string text, double fontSize, double widthRequest) 
+        {
+            Label label = new Label();
+            label.HorizontalOptions = LayoutOptions.FillAndExpand;
+            label.WidthRequest = widthRequest;
+            label.Padding = new Thickness(0, 10, 0, 0);
+            return label;
+        }
+
         private void AttachItems(ref StackLayout layout) 
         {
             Label label = new Label();
             label.Text = "lol";
             //layout.Children.Add();
+        }
+
+        private Button CreateButton(string status) 
+        {
+
+            Button button = new Button();
+            if (status == "4")
+            {
+                button.Text = "blacklist";
+            }
+            else 
+            {
+                button.Text = "whitelist";
+            }
+
+            return button;
         }
     }
 }
