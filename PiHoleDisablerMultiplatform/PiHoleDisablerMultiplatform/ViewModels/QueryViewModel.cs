@@ -23,6 +23,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
         public QueryViewModel()
         {
             RefreshCommand = new Command(Refresh);
+
             Title = "Queries";
             Test();
         }
@@ -38,7 +39,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
 
         }
 
-        private async void Refresh() 
+        private async void Refresh(object param) 
         {
 
             string contentString = await PiholeHttp.GetQueries(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token, 10);
@@ -46,11 +47,30 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             {
                 return;
             }
+            ContentPage page = param as ContentPage;
+            FlexLayout flexLayout  = page.Content.FindByName<FlexLayout>("flexLayout");
+            if (flexLayout == null) 
+            {
+                return;
+            }
+            var labelInfo = flexLayout.Children[0];
+            flexLayout.Children.Clear();
             QueryData queryData = JsonConvert.DeserializeObject<QueryData>(contentString);
+            flexLayout.Children.Add(labelInfo);
+            var enumerate = Application.Current.Resources.MergedDictionaries.GetEnumerator();
+            enumerate.MoveNext();
+            ResourceDictionary currentTheme = enumerate.Current;
+
             foreach (List<string> stringList in queryData.data) 
             {
-                Color colour = Color.Pink;
-                if (stringList[4] == "4") 
+                Color colour = Color.Red;
+                object colored;
+                if (currentTheme.TryGetValue("PrimaryColor", out colored))
+                {
+                    colour = (Color)colored;
+                }
+
+                if (stringList[4] != "1") 
                 {
                     colour = Color.LightGreen;
                 }
@@ -58,10 +78,15 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                 for (int i = 0; i < 4;++i) 
                 {
                     double widthRequest = 0;
+                    string text = stringList[i];
                     switch (i) 
                     {
                         case 0:
                             widthRequest = 60;
+                            long epoch = long.Parse(text);
+                            DateTimeOffset dtOffset = DateTimeOffset.FromUnixTimeSeconds(long.Parse(text));
+                            DateTime dt = dtOffset.DateTime;
+                            text = dtOffset.DateTime.ToString();
                             break;
                         case 1:
                             widthRequest = 50;
@@ -76,10 +101,11 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                             widthRequest = 50;
                             break;
                     }
-                    stackLayout.Children.Add(CreateLabel(stringList[i], 12, widthRequest));
+                    stackLayout.Children.Add(CreateLabel(text, 12, widthRequest));
                 }
 
                 stackLayout.Children.Add(CreateButton(stringList[4]));
+                flexLayout.Children.Add(stackLayout);
             }
 
             IsCurrentlyRefreshing = false;
@@ -102,6 +128,9 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             label.HorizontalOptions = LayoutOptions.FillAndExpand;
             label.WidthRequest = widthRequest;
             label.Padding = new Thickness(0, 10, 0, 0);
+            label.FontSize = fontSize;
+            label.Text = text;
+            label.TextColor = Color.White;
             return label;
         }
 
@@ -116,7 +145,8 @@ namespace PiHoleDisablerMultiplatform.ViewModels
         {
 
             Button button = new Button();
-            if (status == "4")
+            button.FontSize = 12;
+            if (status != "1")
             {
                 button.Text = "blacklist";
             }

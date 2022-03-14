@@ -4,8 +4,9 @@
              x:Class="PiHoleDisablerMultiplatform.Views.QueryPage">
     <ContentPage.Content>
         <RefreshView IsRefreshing="{Binding IsCurrentlyRefreshing}"
-                     Command="{Binding RefreshCommand}">
-            <FlexLayout Direction="Column" VerticalOptions="Center" HorizontalOptions="FillAndExpand" AlignItems="Stretch">
+                     Command="{Binding RefreshCommand}"
+                     CommandParameter="{x:Reference flexLayout}">
+            <FlexLayout x:Name="flexLayout" Direction="Column" VerticalOptions="Center" HorizontalOptions="FillAndExpand" AlignItems="Stretch">
                 <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                     <Label Text="Time"  WidthRequest="45" HorizontalOptions="FillAndExpand"/>
                     <Label Text="Type" WidthRequest="35" HorizontalOptions="FillAndExpand"/>
@@ -14,6 +15,7 @@
                     <Label Text="Status" WidthRequest="60" HorizontalOptions="FillAndExpand"/>
                     <Label Text="Action" WidthRequest="60" HorizontalOptions="FillAndExpand"/>
                 </StackLayout>
+                <!--
                 <StackLayout FlowDirection="LeftToRight" Orientation="Horizontal" HorizontalOptions="FillAndExpand" BackgroundColor="Pink">
                     <Label  Text="3/13/22 1:40:00" Padding="0,10,0,0" WidthRequest="60" FontSize="12" HorizontalOptions="FillAndExpand"/>
                     <Label  Text="HTTPS" Padding="0,10,0,0" WidthRequest="50" FontSize="12" HorizontalOptions="FillAndExpand"/>
@@ -38,6 +40,7 @@
                     <Label  Text="OK" Padding="0,10,0,0" WidthRequest="50" FontSize="11" HorizontalOptions="FillAndExpand"/>
                     <Button Text="Blacklist" FontSize="12" AnchorX="500" HorizontalOptions="FillAndExpand"/>
                     </StackLayout>
+                -->
             </FlexLayout>
         </RefreshView>
 

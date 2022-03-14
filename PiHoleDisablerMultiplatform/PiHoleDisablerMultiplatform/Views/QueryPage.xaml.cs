@@ -13,10 +13,20 @@ namespace PiHoleDisablerMultiplatform.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class QueryPage : ContentPage
 	{
+		private QueryViewModel viewModel;
 		public QueryPage()
 		{
 			InitializeComponent();
-			this.BindingContext = new QueryViewModel();
+			viewModel = new QueryViewModel();
+			this.BindingContext = viewModel;
 		}
-	}
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+			viewModel.RefreshCommand.Execute(this);
+        }
+
+
+    }
 }
