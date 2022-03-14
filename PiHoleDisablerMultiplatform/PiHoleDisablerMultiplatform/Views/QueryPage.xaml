@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PiHoleDisablerMultiplatform.Views.QueryPage">
     <ContentPage.Content>
-        <RefreshView IsRefreshing="{Binding IsRefreshing}"
+        <RefreshView IsRefreshing="{Binding IsCurrentlyRefreshing}"
                      Command="{Binding RefreshCommand}">
             <FlexLayout Direction="Column" VerticalOptions="Center" HorizontalOptions="FillAndExpand" AlignItems="Stretch">
                 <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
