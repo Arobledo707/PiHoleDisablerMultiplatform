@@ -42,7 +42,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
         private async void Refresh(object param) 
         {
 
-            string contentString = await PiholeHttp.GetQueries(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token, 10);
+            string contentString = await PiholeHttp.GetQueries(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token, 30);
             if (contentString == String.Empty || contentString == null)
             {
                 return;
