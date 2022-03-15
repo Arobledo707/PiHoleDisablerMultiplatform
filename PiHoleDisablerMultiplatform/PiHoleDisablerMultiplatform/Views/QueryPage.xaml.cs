@@ -24,7 +24,7 @@ namespace PiHoleDisablerMultiplatform.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-			viewModel.RefreshCommand.Execute(this);
+			viewModel.RefreshCommand.Execute(scrollView);
         }
 
 

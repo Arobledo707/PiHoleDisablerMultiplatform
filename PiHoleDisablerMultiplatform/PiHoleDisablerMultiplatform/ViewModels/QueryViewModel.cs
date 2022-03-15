@@ -13,48 +13,52 @@ namespace PiHoleDisablerMultiplatform.ViewModels
     public class QueryViewModel : BaseViewModel
     {
         private bool isRefreshing = false;
-        public bool IsCurrentlyRefreshing 
+        public bool IsCurrentlyRefreshing
         {
             get => isRefreshing;
             set => SetProperty(ref isRefreshing, value);
         }
-        public Command RefreshCommand { get;}
+        public Command RefreshCommand { get; }
+
+        public Command WhiteListCommand { get; }
+        public Command BlackListCommand { get; }
 
         public QueryViewModel()
         {
             RefreshCommand = new Command(Refresh);
+            WhiteListCommand = new Command(WhitelistButtonClick);
+            BlackListCommand = new Command(BlacklistButtonClick);
 
             Title = "Queries";
-            Test();
         }
 
-        private async void Test() 
-        {
-            string contentString = await PiholeHttp.GetQueries(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token, 10);
-            if (contentString == String.Empty || contentString == null) 
-            {
-                return;
-            }
-            QueryData data = JsonConvert.DeserializeObject<QueryData>(contentString);
 
-        }
-
-        private StackLayout ReturnStackLayout(object param) 
+        private StackLayout ReturnStackLayout(object param)
         {
             ContentPage page = param as ContentPage;
             ScrollView scrollView;
-            if (page != null) 
+            if (page != null)
             {
                 scrollView = page.Content.FindByName<ScrollView>("scrollView");
                 StackLayout stackLayout = (StackLayout)scrollView.Content;
                 return stackLayout;
             }
             scrollView = param as ScrollView;
-            if (scrollView != null) 
+            if (scrollView != null)
             {
                 return scrollView.Content as StackLayout;
             }
             return null;
+        }
+
+        private async void BlacklistButtonClick(object param) 
+        {
+            await PiholeHttp.AddToList(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token, "black", "add", (string)param);
+        }
+
+        private async void WhitelistButtonClick(object param)
+        {
+            await PiholeHttp.AddToList(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token, "white", "add", (string)param);
         }
 
         private async void Refresh(object param) 
@@ -139,8 +143,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                     }
                     stackLayout.Children.Add(CreateLabel(text, fontSize, widthRequest, layoutOption));
                 }
-
-                stackLayout.Children.Add(CreateButton(stringList[4], buttonColor));
+                stackLayout.Children.Add(CreateButton(stringList[4], buttonColor, stringList[2]));
                 content.Children.Add(stackLayout);
             }
 
@@ -169,12 +172,13 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             return label;
         }
 
-        private Button CreateButton(string status, Color color) 
+        private Button CreateButton(string status, Color color, string parameter) 
         {
 
             Button button = new Button();
             button.FontSize = 11;
             button.HorizontalOptions = LayoutOptions.EndAndExpand;
+            button.CommandParameter = parameter;
             if (color != Color.White)
             {
                 button.BackgroundColor = color;
@@ -182,10 +186,12 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             if (status != "1")
             {
                 button.Text = "blacklist";
+                button.Command = BlackListCommand;
             }
             else 
             {
                 button.Text = "whitelist";
+                button.Command = WhiteListCommand;
             }
 
             return button;
