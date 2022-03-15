@@ -39,28 +39,41 @@ namespace PiHoleDisablerMultiplatform.ViewModels
 
         }
 
+        private StackLayout ReturnStackLayout(object param) 
+        {
+            ContentPage page = param as ContentPage;
+            ScrollView scrollView;
+            if (page != null) 
+            {
+                scrollView = page.Content.FindByName<ScrollView>("scrollView");
+                StackLayout stackLayout = (StackLayout)scrollView.Content;
+                return stackLayout;
+            }
+            scrollView = param as ScrollView;
+            if (scrollView != null) 
+            {
+                return scrollView.Content as StackLayout;
+            }
+            return null;
+        }
+
         private async void Refresh(object param) 
         {
-
+            IsCurrentlyRefreshing = true;
             string contentString = await PiholeHttp.GetQueries(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token, 30);
             if (contentString == String.Empty || contentString == null)
             {
                 return;
             }
-            ContentPage page = param as ContentPage;
-            ScrollView scrollView  = page.Content.FindByName<ScrollView>("flexLayout");
-            if (scrollView == null) 
-            {
-                return;
-            }
-            var test = scrollView.Content;
-            StackLayout content = test as StackLayout;
+
+            StackLayout content = ReturnStackLayout(param);
+
+            // keep item title 
             var labelInfo = content.Children[0];
             content.Children.Clear();
             content.Children.Add(labelInfo);
-            //flexLayout.Children.Clear();
+
             QueryData queryData = JsonConvert.DeserializeObject<QueryData>(contentString);
-            //flexLayout.Children.Add(labelInfo);
             var enumerate = Application.Current.Resources.MergedDictionaries.GetEnumerator();
             enumerate.MoveNext();
             ResourceDictionary currentTheme = enumerate.Current;
@@ -97,6 +110,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                     double widthRequest = 0;
                     double fontSize = 12;
                     string text = stringList[i];
+                    var layoutOption = LayoutOptions.FillAndExpand;
                     switch (i) 
                     {
                         case 0:
@@ -109,24 +123,25 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                             break;
                         case 1:
                             widthRequest = 50;
+                            fontSize = 11;
                             break;
                         case 2:
                             widthRequest = 120;
+                            layoutOption = LayoutOptions.CenterAndExpand;
                             break;
                         case 3:
                             widthRequest = 80;
+                            layoutOption = LayoutOptions.EndAndExpand;
                             break;
                         case 4:
                             widthRequest = 50;
                             break;
                     }
-                    stackLayout.Children.Add(CreateLabel(text, fontSize, widthRequest));
+                    stackLayout.Children.Add(CreateLabel(text, fontSize, widthRequest, layoutOption));
                 }
 
                 stackLayout.Children.Add(CreateButton(stringList[4], buttonColor));
                 content.Children.Add(stackLayout);
-                //flexLayout.Children.Add(stackLayout);
-                //var flexLayout.Content 
             }
 
             IsCurrentlyRefreshing = false;
@@ -143,10 +158,10 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             return stackLayout;
         }
 
-        private Label CreateLabel(string text, double fontSize, double widthRequest) 
+        private Label CreateLabel(string text, double fontSize, double widthRequest, LayoutOptions options) 
         {
             Label label = new Label();
-            label.HorizontalOptions = LayoutOptions.FillAndExpand;
+            label.HorizontalOptions = options;//LayoutOptions.FillAndExpand;
             label.WidthRequest = widthRequest;
             label.Padding = new Thickness(0, 0, 10, 0);
             label.FontSize = fontSize;
@@ -154,18 +169,12 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             return label;
         }
 
-        private void AttachItems(ref StackLayout layout) 
-        {
-            Label label = new Label();
-            label.Text = "lol";
-            //layout.Children.Add();
-        }
-
         private Button CreateButton(string status, Color color) 
         {
 
             Button button = new Button();
             button.FontSize = 11;
+            button.HorizontalOptions = LayoutOptions.EndAndExpand;
             if (color != Color.White)
             {
                 button.BackgroundColor = color;

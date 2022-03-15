@@ -2,47 +2,22 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PiHoleDisablerMultiplatform.Views.QueryPage"
+             Title="Queries"
              BackgroundColor="{DynamicResource PageBackgroundColor}">
     <ContentPage.Content>
         <RefreshView IsRefreshing="{Binding IsCurrentlyRefreshing}"
                      Command="{Binding RefreshCommand}"
-                     CommandParameter="{x:Reference flexLayout}">
-            <ScrollView x:Name="flexLayout" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" >
+                     CommandParameter="{x:Reference scrollView}">
+            <ScrollView x:Name="scrollView" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" >
                 <StackLayout>
                     <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                    <Label Text="Time"  WidthRequest="45" HorizontalOptions="FillAndExpand"/>
-                    <Label Text="Type" WidthRequest="35" HorizontalOptions="FillAndExpand"/>
-                    <Label Text="Domain" WidthRequest="90" HorizontalOptions="CenterAndExpand"/>
-                    <Label Text="Client" WidthRequest="55" HorizontalOptions="EndAndExpand"/>
-                    <Label Text="Action" WidthRequest="60" HorizontalOptions="EndAndExpand"/>
+                        <Label Text="Time"  WidthRequest="45" HorizontalOptions="FillAndExpand"/>
+                        <Label Text="Type" WidthRequest="35" HorizontalOptions="FillAndExpand"/>
+                        <Label Text="Domain" WidthRequest="90" HorizontalOptions="CenterAndExpand"/>
+                        <Label Text="Client" WidthRequest="85" HorizontalOptions="EndAndExpand"/>
+                        <Label Text="Action" WidthRequest="60" HorizontalOptions="EndAndExpand"/>
                     </StackLayout>
                 </StackLayout>
-                        <!--
-                <StackLayout FlowDirection="LeftToRight" Orientation="Horizontal" HorizontalOptions="FillAndExpand" BackgroundColor="Pink">
-                    <Label  Text="3/13/22 1:40:00" Padding="0,10,0,0" WidthRequest="60" FontSize="12" HorizontalOptions="FillAndExpand"/>
-                    <Label  Text="HTTPS" Padding="0,10,0,0" WidthRequest="50" FontSize="12" HorizontalOptions="FillAndExpand"/>
-                    <Label  Text="mesu-cdn.apple.com.akadns.net" Padding="0,10,0,0" WidthRequest="120" FontSize="12" HorizontalOptions="FillAndExpand"/>
-                    <Label  Text="10.0.0.115" Padding="0,10,0,0" WidthRequest="80" FontSize="12" HorizontalOptions="FillAndExpand"/>
-                    <Label  Text="Blocked" Padding="0,10,0,0" WidthRequest="50" FontSize="11" HorizontalOptions="FillAndExpand"/>
-                    <Button Text="Whitelist" FontSize="12" HorizontalOptions="FillAndExpand"/>
-                </StackLayout>
-                <StackLayout FlowDirection="LeftToRight" Orientation="Horizontal" HorizontalOptions="FillAndExpand" BackgroundColor="LightGreen">
-                    <Label  Text="3/13/22 1:40:00" Padding="0,10,0,0" WidthRequest="60" FontSize="12" HorizontalOptions="FillAndExpand"/>
-                    <Label  Text="AAA" Padding="0,10,0,0" WidthRequest="50" FontSize="12" HorizontalOptions="FillAndExpand"/>
-                    <Label  Text="mesu-cdn.apple.com.akadns.net" Padding="0,10,0,0" WidthRequest="120" FontSize="12" HorizontalOptions="FillAndExpand"/>
-                    <Label  Text="10.0.0.115" Padding="0,10,0,0" WidthRequest="80" FontSize="12" HorizontalOptions="FillAndExpand"/>
-                    <Label  Text="OK" Padding="0,10,0,0" WidthRequest="50" FontSize="11" HorizontalOptions="FillAndExpand"/>
-                    <Button Text="Blacklist" FontSize="12" HorizontalOptions="FillAndExpand"/>
-                </StackLayout>
-                <StackLayout FlowDirection="LeftToRight" Orientation="Horizontal" HorizontalOptions="FillAndExpand" BackgroundColor="LightGreen">
-                    <Label  Text="3/13/22 1:40:00" Padding="0,10,0,0" WidthRequest="60" FontSize="12" HorizontalOptions="FillAndExpand"/>
-                    <Label  Text="AAA" Padding="0,10,0,0" WidthRequest="50" FontSize="12" HorizontalOptions="FillAndExpand"/>
-                    <Label  Text="mesu-cdn.apple.com.akadns.net" Padding="0,10,0,0" WidthRequest="120" FontSize="12" HorizontalOptions="FillAndExpand"/>
-                    <Label  Text="10.0.0.115" Padding="0,10,0,0" WidthRequest="80" FontSize="12" HorizontalOptions="FillAndExpand"/>
-                    <Label  Text="OK" Padding="0,10,0,0" WidthRequest="50" FontSize="11" HorizontalOptions="FillAndExpand"/>
-                    <Button Text="Blacklist" FontSize="12" AnchorX="500" HorizontalOptions="FillAndExpand"/>
-                    </StackLayout>
-                -->
             </ScrollView>
         </RefreshView>
 
