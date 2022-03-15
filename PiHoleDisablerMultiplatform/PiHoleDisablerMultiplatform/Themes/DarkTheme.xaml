@@ -11,5 +11,8 @@
     <Color x:Key="SecondaryTextColor">White</Color>
     <Color x:Key="TertiaryTextColor">WhiteSmoke</Color>
     <Color x:Key="TransparentColor">Transparent</Color>
+    <Color x:Key="AllowedQueryColor">Black</Color>
+    <Color x:Key="BlockedQueryColor">Gray</Color>
+    <Color x:Key="WhitelistButtonColor">#51ad51</Color>
 
 </ResourceDictionary>

@@ -48,15 +48,19 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                 return;
             }
             ContentPage page = param as ContentPage;
-            FlexLayout flexLayout  = page.Content.FindByName<FlexLayout>("flexLayout");
-            if (flexLayout == null) 
+            ScrollView scrollView  = page.Content.FindByName<ScrollView>("flexLayout");
+            if (scrollView == null) 
             {
                 return;
             }
-            var labelInfo = flexLayout.Children[0];
-            flexLayout.Children.Clear();
+            var test = scrollView.Content;
+            StackLayout content = test as StackLayout;
+            var labelInfo = content.Children[0];
+            content.Children.Clear();
+            content.Children.Add(labelInfo);
+            //flexLayout.Children.Clear();
             QueryData queryData = JsonConvert.DeserializeObject<QueryData>(contentString);
-            flexLayout.Children.Add(labelInfo);
+            //flexLayout.Children.Add(labelInfo);
             var enumerate = Application.Current.Resources.MergedDictionaries.GetEnumerator();
             enumerate.MoveNext();
             ResourceDictionary currentTheme = enumerate.Current;
@@ -65,19 +69,33 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             {
                 Color colour = Color.Red;
                 object colored;
-                if (currentTheme.TryGetValue("PrimaryColor", out colored))
-                {
-                    colour = (Color)colored;
-                }
+                Color buttonColor = Color.White;
 
-                if (stringList[4] != "1") 
+                if (stringList[4] != "1")
                 {
-                    colour = Color.LightGreen;
+                    if (currentTheme.TryGetValue("AllowedQueryColor", out colored))
+                    {
+                        colour = (Color)colored;
+                    }
+                }
+                else 
+                {
+                    if (currentTheme.TryGetValue("BlockedQueryColor", out colored))
+                    {
+                        colour = (Color)colored;
+                    }
+
+                    if (currentTheme.TryGetValue("WhitelistButtonColor", out colored))
+                    {
+                        buttonColor = (Color)colored;
+                    }
+
                 }
                 StackLayout stackLayout = CreateStackLayout(colour);
                 for (int i = 0; i < 4;++i) 
                 {
                     double widthRequest = 0;
+                    double fontSize = 12;
                     string text = stringList[i];
                     switch (i) 
                     {
@@ -87,6 +105,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                             DateTimeOffset dtOffset = DateTimeOffset.FromUnixTimeSeconds(long.Parse(text));
                             DateTime dt = dtOffset.DateTime;
                             text = dtOffset.DateTime.ToString();
+                            fontSize = 11;
                             break;
                         case 1:
                             widthRequest = 50;
@@ -101,11 +120,13 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                             widthRequest = 50;
                             break;
                     }
-                    stackLayout.Children.Add(CreateLabel(text, 12, widthRequest));
+                    stackLayout.Children.Add(CreateLabel(text, fontSize, widthRequest));
                 }
 
-                stackLayout.Children.Add(CreateButton(stringList[4]));
-                flexLayout.Children.Add(stackLayout);
+                stackLayout.Children.Add(CreateButton(stringList[4], buttonColor));
+                content.Children.Add(stackLayout);
+                //flexLayout.Children.Add(stackLayout);
+                //var flexLayout.Content 
             }
 
             IsCurrentlyRefreshing = false;
@@ -127,10 +148,9 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             Label label = new Label();
             label.HorizontalOptions = LayoutOptions.FillAndExpand;
             label.WidthRequest = widthRequest;
-            label.Padding = new Thickness(0, 10, 0, 0);
+            label.Padding = new Thickness(0, 0, 10, 0);
             label.FontSize = fontSize;
             label.Text = text;
-            label.TextColor = Color.White;
             return label;
         }
 
@@ -141,11 +161,15 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             //layout.Children.Add();
         }
 
-        private Button CreateButton(string status) 
+        private Button CreateButton(string status, Color color) 
         {
 
             Button button = new Button();
-            button.FontSize = 12;
+            button.FontSize = 11;
+            if (color != Color.White)
+            {
+                button.BackgroundColor = color;
+            }
             if (status != "1")
             {
                 button.Text = "blacklist";

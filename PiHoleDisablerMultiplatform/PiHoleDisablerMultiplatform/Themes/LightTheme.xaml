@@ -11,6 +11,10 @@
     <Color x:Key="SecondaryTextColor">White</Color>
     <Color x:Key="TertiaryTextColor">Gray</Color>
     <Color x:Key="TransparentColor">Transparent</Color>
+    <Color x:Key="AllowedQueryColor">LightGreen</Color>
+    <Color x:Key="BlockedQueryColor">#f77b72</Color>
+    <Color x:Key="WhitelistButtonColor">#51ad51</Color>
+
     <!--<SolidColorBrush x:Key="CommandBarBackgroundColor" Color="Orange" />
     <SolidColorBrush x:Key="CommandBarTextColor" Color="Blue" />-->
 </ResourceDictionary>
