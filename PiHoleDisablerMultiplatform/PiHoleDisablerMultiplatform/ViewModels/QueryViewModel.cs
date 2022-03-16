@@ -12,6 +12,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
 {
     public class QueryViewModel : BaseViewModel
     {
+        private const string blackListed = "5";
         private bool isRefreshing = false;
         public bool IsCurrentlyRefreshing
         {
@@ -53,12 +54,46 @@ namespace PiHoleDisablerMultiplatform.ViewModels
 
         private async void BlacklistButtonClick(object param) 
         {
-            await PiholeHttp.AddToList(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token, "black", "add", (string)param);
+            bool result = await PiholeHttp.PiHoleList(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token, "black", "add", (string)param);
+            if (result)
+            {
+                result = await PiholeHttp.PiHoleList(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token, "white", "sub", (string)param);
+                if (result)
+                {
+                    MessagingCenter.Send(this, "blah", new List<string> { "Success", $"Added {(string)param} to blacklist and removed it from whitelist" });
+                }
+                else 
+                {
+                    MessagingCenter.Send(this, "blah", new List<string> { "Success", $"Added {(string)param} to blacklist" });
+                }
+            }
+            else 
+            {
+                MessagingCenter.Send(this, "blah", new List<string> { "Error", $"Failed to add {(string)param} to blacklist" });
+            }
         }
 
         private async void WhitelistButtonClick(object param)
         {
-            await PiholeHttp.AddToList(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token, "white", "add", (string)param);
+           bool result = await PiholeHttp.PiHoleList(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token, "white", "add", (string)param);
+            if (result)
+            {
+                result = await PiholeHttp.PiHoleList(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token, "black", "sub", (string)param);
+                if (result)
+                {
+
+                    MessagingCenter.Send(this, "blah", new List<string> { "Success", $"Added {(string)param} to whitelist and removed it from blacklist" });
+                }
+                else 
+                {
+                    MessagingCenter.Send(this, "blah", new List<string> { "Success", $"Added {(string)param} to whitelist" });
+                }
+            }
+            else
+            {
+                MessagingCenter.Send(this, "blah", new List<string> { "Error", $"Failed to add {(string)param} to whitelist" });
+
+            }
         }
 
         private async void Refresh(object param) 
@@ -88,7 +123,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                 object colored;
                 Color buttonColor = Color.White;
 
-                if (stringList[4] != "1")
+                if (stringList[4] != "1" && stringList[4] != blackListed)
                 {
                     if (currentTheme.TryGetValue("AllowedQueryColor", out colored))
                     {
@@ -183,7 +218,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             {
                 button.BackgroundColor = color;
             }
-            if (status != "1")
+            if (status != "1" && status != blackListed)
             {
                 button.Text = "blacklist";
                 button.Command = BlackListCommand;

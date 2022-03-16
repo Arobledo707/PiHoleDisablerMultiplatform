@@ -68,7 +68,7 @@ namespace PiHoleDisablerMultiplatform.Services
 
         }
 
-        public async static Task<bool> AddToList(string savedUrl, string currentApiToken, string list, string action, string domain) 
+        public async static Task<bool> PiHoleList(string savedUrl, string currentApiToken, string list, string action, string domain) 
         {
             try
             {
@@ -76,13 +76,12 @@ namespace PiHoleDisablerMultiplatform.Services
                 // list is black, white, regex_white and regex_black.
                 //Add API endpoints api.php? list = black & add = domain.com like commands
                 //where add = domain and sub = domain can be used to manage the lists.A simple api.php? list = black will simply list all blacklisted domains.
-                string url = $"http://{savedUrl}/admin/api.php?list={list}&action={action}={domain}&auth={currentApiToken}";
+
+                string url = $"http://{savedUrl}/admin/api.php?list={list}&{action}={domain}&auth={currentApiToken}";
                 HttpClient client = new HttpClient();
                 client.Timeout = TimeSpan.FromSeconds(5);
                 var message = await client.GetAsync(url);
                 HttpResponseMessage sendMessage;
-                //sendMessage = HttpContent.
-                //client.SendAsync(url);
                 if (message.IsSuccessStatusCode) 
                 {
                     var content = await message.Content.ReadAsStringAsync();
