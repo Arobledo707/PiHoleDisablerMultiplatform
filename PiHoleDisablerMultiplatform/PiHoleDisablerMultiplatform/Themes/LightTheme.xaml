@@ -12,7 +12,7 @@
     <Color x:Key="TertiaryTextColor">Gray</Color>
     <Color x:Key="TransparentColor">Transparent</Color>
     <Color x:Key="AllowedQueryColor">LightGreen</Color>
-    <Color x:Key="BlockedQueryColor">#f77b72</Color>
+    <Color x:Key="BlockedQueryColor">#fa9891</Color>
     <Color x:Key="WhitelistButtonColor">#51ad51</Color>
 
     <!--<SolidColorBrush x:Key="CommandBarBackgroundColor" Color="Orange" />
