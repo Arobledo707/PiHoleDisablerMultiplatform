@@ -11,11 +11,11 @@
             <ScrollView x:Name="scrollView" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" >
                 <StackLayout>
                     <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                        <Label Text="Time"  WidthRequest="45" HorizontalOptions="FillAndExpand"/>
-                        <Label Text="Type" WidthRequest="35" HorizontalOptions="FillAndExpand"/>
-                        <Label Text="Domain" WidthRequest="90" HorizontalOptions="CenterAndExpand"/>
-                        <Label Text="Client" WidthRequest="85" HorizontalOptions="EndAndExpand"/>
-                        <Label Text="Action" WidthRequest="60" HorizontalOptions="EndAndExpand"/>
+                        <Label Text="Time"  WidthRequest="45" HorizontalOptions="FillAndExpand" TextColor="{DynamicResource PrimaryTextColor}"/>
+                        <Label Text="Type" WidthRequest="35" HorizontalOptions="FillAndExpand" TextColor="{DynamicResource PrimaryTextColor}"/>
+                        <Label Text="Domain" WidthRequest="90" HorizontalOptions="CenterAndExpand" TextColor="{DynamicResource PrimaryTextColor}"/>
+                        <Label Text="Client" WidthRequest="85" HorizontalOptions="EndAndExpand" TextColor="{DynamicResource PrimaryTextColor}"/>
+                        <Label Text="Action" WidthRequest="60" HorizontalOptions="EndAndExpand" TextColor="{DynamicResource PrimaryTextColor}"/>
                     </StackLayout>
                 </StackLayout>
             </ScrollView>

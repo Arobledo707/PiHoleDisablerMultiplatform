@@ -14,5 +14,6 @@ namespace PiHoleDisablerMultiplatform.StaticPi
         public static readonly string clear = "clear";
         public static readonly string statusUpdate = "statusUpdate";
         public static readonly string refresh = "refresh";
+        public static readonly string listChange = "listChange";
     }
 }

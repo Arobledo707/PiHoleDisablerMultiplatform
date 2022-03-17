@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using PiHoleDisablerMultiplatform.StaticPi;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,15 @@ namespace PiHoleDisablerMultiplatform.Views
 			InitializeComponent();
 			viewModel = new QueryViewModel();
 			this.BindingContext = viewModel;
+			MessagingCenter.Subscribe<QueryViewModel, List<string>>(this, Commands.listChange, async(sender, message) => 
+			{
+				if (message.Count < 2) 
+				{
+					Console.WriteLine("Error: message has less than 2 strings");
+					return;
+				}
+				await DisplayAlert(message[0], message[1], "Ok");
+			});
 		}
 
         protected override void OnAppearing()
@@ -26,7 +36,5 @@ namespace PiHoleDisablerMultiplatform.Views
             base.OnAppearing();
 			viewModel.RefreshCommand.Execute(scrollView);
         }
-
-
     }
 }
