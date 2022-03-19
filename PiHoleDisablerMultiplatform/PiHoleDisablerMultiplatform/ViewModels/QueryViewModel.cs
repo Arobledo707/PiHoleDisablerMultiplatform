@@ -135,7 +135,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                                     long epoch = long.Parse(text);
                                     DateTimeOffset dtOffset = DateTimeOffset.FromUnixTimeSeconds(long.Parse(text));
                                     DateTime dt = dtOffset.DateTime;
-                                    text = dtOffset.DateTime.ToString();
+                                    text = dtOffset.DateTime.ToLocalTime().ToString();
                                 }
                                 catch (Exception err) 
                                 {
