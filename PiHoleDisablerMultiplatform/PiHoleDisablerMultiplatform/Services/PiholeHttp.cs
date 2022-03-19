@@ -27,7 +27,8 @@ namespace PiHoleDisablerMultiplatform.Services
                 string url = $"http://{savedUrl}/admin/api.php?getAllQueries={count}&auth={currentApiToken}";
                 HttpClient client = new HttpClient();
                 client.Timeout = TimeSpan.FromSeconds(5);
-                var message = await client.GetAsync(url);
+               // var message = await client.GetAsync(url);
+                var message = client.GetAsync(url).GetAwaiter().GetResult();
                 //string test = await client.GetStringAsync(url);
                 if (message.IsSuccessStatusCode)
                 {

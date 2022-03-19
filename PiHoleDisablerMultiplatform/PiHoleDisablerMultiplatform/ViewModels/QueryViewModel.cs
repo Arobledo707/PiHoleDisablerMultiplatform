@@ -95,7 +95,6 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             IsCurrentlyRefreshing = true;
             string contentString = await PiholeHttp.GetQueries(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token, 30);
             StackLayout content = ReturnStackLayout(param);
-
             // keep item title 
             var labelInfo = content.Children[0];
             content.Children.Clear();
@@ -105,80 +104,73 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             {
                 return;
             }
-
-            QueryData queryData = JsonConvert.DeserializeObject<QueryData>(contentString);
-            var enumerate = Application.Current.Resources.MergedDictionaries.GetEnumerator();
-            enumerate.MoveNext();
-            ResourceDictionary currentTheme = enumerate.Current;
-
-            foreach (List<string> stringList in queryData.data)
+            Console.Error.WriteLine("Content String is not null/empty");
+            try
             {
-                bool allowed = false;
-                Color colour = Color.Red;
-                object colored;
-                Color buttonColor = Color.White;
+                QueryData queryData = JsonConvert.DeserializeObject<QueryData>(contentString);
+                var enumerate = Application.Current.Resources.MergedDictionaries.GetEnumerator();
+                enumerate.MoveNext();
+                ResourceDictionary currentTheme = enumerate.Current;
 
-                if (stringList[4] != "1" && stringList[4] != blackListed)
+                foreach (List<string> stringList in queryData.data)
                 {
-                    if (currentTheme.TryGetValue("AllowedQueryColor", out colored))
+                    bool allowed = false;
+                    if (stringList[4] != "1" && stringList[4] != blackListed)
                     {
-                        colour = (Color)colored;
+                        allowed = true;
                     }
-                    allowed = true;
+                    StackLayout stackLayout = CreateStackLayout(allowed);
+                    for (int i = 0; i < 4; ++i)
+                    {
+                        double widthRequest = 0;
+                        double fontSize = 12;
+                        string text = stringList[i];
+                        var layoutOption = LayoutOptions.FillAndExpand;
+                        switch (i)
+                        {
+                            case 0:
+                                widthRequest = 60;
+                                try
+                                {
+                                    long epoch = long.Parse(text);
+                                    DateTimeOffset dtOffset = DateTimeOffset.FromUnixTimeSeconds(long.Parse(text));
+                                    DateTime dt = dtOffset.DateTime;
+                                    text = dtOffset.DateTime.ToString();
+                                }
+                                catch (Exception err) 
+                                {
+                                    Console.Error.WriteLine("error: " + err + err.Message);
+                                }
+                                fontSize = 11;
+                                break;
+                            case 1:
+                                widthRequest = 50;
+                                fontSize = 11;
+                                break;
+                            case 2:
+                                widthRequest = 120;
+                                layoutOption = LayoutOptions.CenterAndExpand;
+                                break;
+                            case 3:
+                                widthRequest = 80;
+                                layoutOption = LayoutOptions.EndAndExpand;
+                                break;
+                            case 4:
+                                widthRequest = 50;
+                                break;
+                        }
+                        stackLayout.Children.Add(CreateLabel(text, fontSize, widthRequest, layoutOption));
+                    }
+                    stackLayout.Children.Add(CreateButton(allowed, stringList[2]));
+                    content.Children.Add(stackLayout);
                 }
-                else
-                {
-                    if (currentTheme.TryGetValue("BlockedQueryColor", out colored))
-                    {
-                        colour = (Color)colored;
-                    }
-
-                    if (currentTheme.TryGetValue("WhitelistButtonColor", out colored))
-                    {
-                        buttonColor = (Color)colored;
-                    }
-
-                }
-                StackLayout stackLayout = CreateStackLayout(allowed);
-                for (int i = 0; i < 4; ++i)
-                {
-                    double widthRequest = 0;
-                    double fontSize = 12;
-                    string text = stringList[i];
-                    var layoutOption = LayoutOptions.FillAndExpand;
-                    switch (i)
-                    {
-                        case 0:
-                            widthRequest = 60;
-                            long epoch = long.Parse(text);
-                            DateTimeOffset dtOffset = DateTimeOffset.FromUnixTimeSeconds(long.Parse(text));
-                            DateTime dt = dtOffset.DateTime;
-                            text = dtOffset.DateTime.ToString();
-                            fontSize = 11;
-                            break;
-                        case 1:
-                            widthRequest = 50;
-                            fontSize = 11;
-                            break;
-                        case 2:
-                            widthRequest = 120;
-                            layoutOption = LayoutOptions.CenterAndExpand;
-                            break;
-                        case 3:
-                            widthRequest = 80;
-                            layoutOption = LayoutOptions.EndAndExpand;
-                            break;
-                        case 4:
-                            widthRequest = 50;
-                            break;
-                    }
-                    stackLayout.Children.Add(CreateLabel(text, fontSize, widthRequest, layoutOption));
-                }
-                stackLayout.Children.Add(CreateButton(stringList[4], buttonColor, stringList[2]));
-                content.Children.Add(stackLayout);
+                IsCurrentlyRefreshing = false;
             }
-
-            IsCurrentlyRefreshing = false;
+            catch (Exception err) 
+            {
+                Console.WriteLine(err + ": " + err.Message);
+                IsCurrentlyRefreshing = false;
+            }
         }
 
         private StackLayout CreateStackLayout(bool allowed)
@@ -210,27 +202,26 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             return label;
         }
 
-        private Button CreateButton(string status, Color color, string parameter)
+        private Button CreateButton(bool allowed, string parameter)
         {
 
-            Button button = new Button();
-            button.FontSize = 11;
-            button.HorizontalOptions = LayoutOptions.EndAndExpand;
-            button.CommandParameter = parameter;
-            if (color != Color.White)
+            Button button;
+
+            if (!allowed)
             {
-                button.BackgroundColor = color;
-            }
-            if (status != "1" && status != blackListed)
-            {
+                button = new WhitelistButton();
                 button.Text = "blacklist";
                 button.Command = BlackListCommand;
             }
             else
             {
+                button = new BlacklistButton();
                 button.Text = "whitelist";
                 button.Command = WhiteListCommand;
             }
+            button.FontSize = 11;
+            button.HorizontalOptions = LayoutOptions.EndAndExpand;
+            button.CommandParameter = parameter;
 
             return button;
         }

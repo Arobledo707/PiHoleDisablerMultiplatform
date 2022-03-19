@@ -29,7 +29,7 @@
     </Shell.Resources>
 
     <TabBar x:Name="piTabBar">
-        <ShellContent Title="Disable" Icon="icon_feed.png" Route="DisablePage"  ContentTemplate="{DataTemplate local:DisablePage}"/>
+        <ShellContent Title="Disable" Icon="icon_toolbox.png" Route="DisablePage"  ContentTemplate="{DataTemplate local:DisablePage}"/>
         <ShellContent Title="Queries" Icon="icon_feed.png" Route="QueryPage" ContentTemplate="{DataTemplate local:QueryPage}"/>
         <ShellContent Title="Pi-hole Info" Icon="icon_about.png" Route="PiholeInfoPage" ContentTemplate="{DataTemplate local:PiholeInfoPage}" />
     </TabBar>
