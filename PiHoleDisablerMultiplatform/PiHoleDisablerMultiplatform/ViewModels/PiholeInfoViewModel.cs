@@ -101,6 +101,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             {
                 CurrentPiData.piHoleData.Url = String.Empty;
                 CurrentPiData.piHoleData.Token = String.Empty;
+                CurrentPiData.DemoMode = false;
             }
             else
             {
@@ -110,7 +111,17 @@ namespace PiHoleDisablerMultiplatform.ViewModels
 
         private async Task<bool> ValidateInfo(string address, string token) 
         {
-            bool isValidated = await PiholeHttp.PiholeCommand(address, token, "enable", 0);
+            bool isValidated;
+            if (token == "demo")
+            {
+                StaticPi.CurrentPiData.DemoMode = true;
+                isValidated = true;
+            }
+            else 
+            {
+                CurrentPiData.DemoMode = false;
+                isValidated = await PiholeHttp.PiholeCommand(address, token, "enable", 0);
+            }
             bool isSerialized = false;
             MessagingCenter.Send(this, Commands.validInfo, isValidated);
             if (isValidated) 

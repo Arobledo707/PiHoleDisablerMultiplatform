@@ -14,6 +14,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
     public class QueryViewModel : BaseViewModel
     {
         private const string blackListed = "5";
+        private const string gravity = "1";
         private bool isRefreshing = false;
         public bool IsCurrentlyRefreshing
         {
@@ -55,10 +56,21 @@ namespace PiHoleDisablerMultiplatform.ViewModels
 
         private async void BlacklistButtonClick(object param)
         {
-            bool result = await PiholeHttp.PiHoleList(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token, "black", "add", (string)param);
+            bool result = true;
+            if (!CurrentPiData.DemoMode)
+            {
+                result = await PiholeHttp.PiHoleList(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token, "black", "add", (string)param);
+            }
+            else 
+            {
+                DemoModeButtonClick((string)param, 1);
+            }
             if (result)
             {
-                result = await PiholeHttp.PiHoleList(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token, "white", "sub", (string)param);
+                if (!CurrentPiData.DemoMode)
+                {
+                    result = await PiholeHttp.PiHoleList(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token, "white", "sub", (string)param);
+                }
                 if (!result)
                 {
                     //
@@ -73,10 +85,21 @@ namespace PiHoleDisablerMultiplatform.ViewModels
 
         private async void WhitelistButtonClick(object param)
         {
-            bool result = await PiholeHttp.PiHoleList(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token, "white", "add", (string)param);
+            bool result = true;
+            if (!CurrentPiData.DemoMode)
+            {
+                result = await PiholeHttp.PiHoleList(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token, "white", "add", (string)param);
+            }
+            else 
+            {
+                DemoModeButtonClick((string)param, 2);
+            }
             if (result)
             {
-                result = await PiholeHttp.PiHoleList(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token, "black", "sub", (string)param);
+                if (!CurrentPiData.DemoMode)
+                {
+                    result = await PiholeHttp.PiHoleList(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token, "black", "sub", (string)param);
+                }
                 if (!result)
                 {
                     //
@@ -90,24 +113,46 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             }
         }
 
+        private void DemoModeButtonClick(string domain, int changePermission) 
+        {
+            foreach (List<string> entry in CurrentPiData.demoData) 
+            {
+                if (domain == entry[2]) 
+                {
+                    entry[4] = changePermission.ToString();
+                }
+            }
+        }
+
         private async void Refresh(object param)
         {
             IsCurrentlyRefreshing = true;
-            string contentString = await PiholeHttp.GetQueries(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token, 30);
+            string contentString = String.Empty;
+            if (!CurrentPiData.DemoMode)
+            {
+                contentString = await PiholeHttp.GetQueries(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token, 30);
+            }
             StackLayout content = ReturnStackLayout(param);
             // keep item title 
             var labelInfo = content.Children[0];
             content.Children.Clear();
             content.Children.Add(labelInfo);
 
-            if (contentString == String.Empty || contentString == null)
+            if ((contentString == String.Empty || contentString == null) && !CurrentPiData.DemoMode)
             {
                 return;
             }
-            Console.Error.WriteLine("Content String is not null/empty");
             try
             {
-                QueryData queryData = JsonConvert.DeserializeObject<QueryData>(contentString);
+                QueryData queryData = new QueryData();
+                if (!CurrentPiData.DemoMode)
+                {
+                    queryData = JsonConvert.DeserializeObject<QueryData>(contentString);
+                }
+                else 
+                {
+                    queryData.data = CurrentPiData.demoData;
+                }
                 var enumerate = Application.Current.Resources.MergedDictionaries.GetEnumerator();
                 enumerate.MoveNext();
                 ResourceDictionary currentTheme = enumerate.Current;
@@ -115,7 +160,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                 foreach (List<string> stringList in queryData.data)
                 {
                     bool allowed = false;
-                    if (stringList[4] != "1" && stringList[4] != blackListed)
+                    if (stringList[4] != gravity && stringList[4] != blackListed)
                     {
                         allowed = true;
                     }
@@ -210,14 +255,14 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             if (!allowed)
             {
                 button = new WhitelistButton();
-                button.Text = "blacklist";
-                button.Command = BlackListCommand;
+                button.Text = "whitelist";
+                button.Command = WhiteListCommand;
             }
             else
             {
                 button = new BlacklistButton();
-                button.Text = "whitelist";
-                button.Command = WhiteListCommand;
+                button.Text = "blacklist";
+                button.Command = BlackListCommand;
             }
             button.FontSize = 11;
             button.HorizontalOptions = LayoutOptions.EndAndExpand;

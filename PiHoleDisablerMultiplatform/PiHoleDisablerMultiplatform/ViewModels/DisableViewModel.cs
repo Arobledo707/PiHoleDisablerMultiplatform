@@ -26,8 +26,21 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                 if (CurrentPiData.piHoleData.Url == String.Empty)
                 {
                     CurrentPiData.piHoleData = await PiholeDataSerializer.DeserializeData();
+                    if (CurrentPiData.piHoleData.Token == "demo") 
+                    {
+                        CurrentPiData.DemoMode = true;
+                    }
                 }
-                string result = await PiholeHttp.CheckPiholeStatus(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token);
+                string result;
+                if (!CurrentPiData.DemoMode)
+                {
+                    result = await PiholeHttp.CheckPiholeStatus(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token);
+                }
+                else 
+                {
+                    result = "enabled";
+                    CurrentPiData.DemoMode = true;
+                }
                 MessagingCenter.Send(this, Commands.statusUpdate, result);
             });
         }
@@ -47,8 +60,15 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                 {
                     command = PiholeHttp.Command.Disable;
                 }
-                successfulCommand = await PiholeHttp.PiholeCommand(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token,
-                    command.ToString().ToLower(), time);
+                if (!CurrentPiData.DemoMode)
+                {
+                    successfulCommand = await PiholeHttp.PiholeCommand(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token,
+                        command.ToString().ToLower(), time);
+                }
+                else 
+                {
+                    successfulCommand = true;
+                }
                 if (successfulCommand) 
                 {
                     MessagingCenter.Send(this, Commands.statusUpdate, command.ToString().ToLower() + "d");
