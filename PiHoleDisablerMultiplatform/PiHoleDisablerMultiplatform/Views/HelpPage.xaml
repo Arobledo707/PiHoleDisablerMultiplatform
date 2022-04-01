@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PiHoleDisablerMultiplatform.Views.HelpPage"
+             BackgroundColor="{DynamicResource PageBackgroundColor}">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+                <Label Text="What do I enter for my address?" HorizontalOptions="CenterAndExpand" TextColor="{DynamicResource PrimaryTextColor}" FontSize="Medium"/>
+                <Label Text="Enter your pi-hole's local address" TextColor="{DynamicResource PrimaryTextColor}"/>
+                <Label Text="Valid address examples:" TextColor="{DynamicResource PrimaryTextColor}"/>
+                <Label Text="pi.hole" TextColor="{DynamicResource PrimaryTextColor}"/>
+                <Label Text="10.0.0.115" TextColor="{DynamicResource PrimaryTextColor}"/>
+                <Label Text="192.168.1.40" TextColor="{DynamicResource PrimaryTextColor}"/>
+                <Label />
+                <Label Text="Invalid address examples:" TextColor="{DynamicResource PrimaryTextColor}"/>
+                <Label Text="http://pi.hole" TextColor="{DynamicResource PrimaryTextColor}"/>
+                <Label Text="https://10.0.0.115" TextColor="{DynamicResource PrimaryTextColor}"/>
+                <Label />
+                <Label Text="What is a token and how do I get it?" HorizontalOptions="CenterAndExpand" TextColor="{DynamicResource PrimaryTextColor}" FontSize="Medium"/>
+                <Label Text="Option 1: SSH into your Pi-hole and enter this command:" TextColor="{DynamicResource PrimaryTextColor}"/>
+                <Label Text="cat /etc/pihole/setupVars.conf | grep WEBPASSWORD=" TextColor="{DynamicResource PrimaryTextColor}"/>
+                <Label />
+                <Label Text="Option 2: Login to your Pi-hole webpage " TextColor="{DynamicResource PrimaryTextColor}"/>
+                <Label Text="Go to Settings -> API/Web Interface -> Show API token" TextColor="{DynamicResource PrimaryTextColor}"/>
+                <Label Text="You should end up at url below" TextColor="{DynamicResource PrimaryTextColor}"/>
+                <Label Text="http://pi.hole/admin/settings.php" TextColor="{DynamicResource PrimaryTextColor}"/>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

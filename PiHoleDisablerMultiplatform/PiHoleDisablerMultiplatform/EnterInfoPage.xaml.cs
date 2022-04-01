@@ -13,6 +13,7 @@ namespace PiHoleDisablerMultiplatform
         public EnterInfoPage()
         {
             InitializeComponent();
+            Routing.RegisterRoute(nameof(HelpPage), typeof(HelpPage));
         }
     }
 }

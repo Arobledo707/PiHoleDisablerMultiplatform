@@ -13,6 +13,7 @@ namespace PiHoleDisablerMultiplatform
         public AppShell()
         {
             InitializeComponent();
+            Routing.RegisterRoute(nameof(HelpPage), typeof(HelpPage));
         }
     }
 }
