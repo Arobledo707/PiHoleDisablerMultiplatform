@@ -42,7 +42,7 @@
     <DebugSymbols>false</DebugSymbols>
     <DebugType>portable</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>D:\Release Pihole\</OutputPath>
+    <OutputPath>C:\Users\arobl\Documents\PiholeDisablerOutput\</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AndroidManagedSymbols>true</AndroidManagedSymbols>
