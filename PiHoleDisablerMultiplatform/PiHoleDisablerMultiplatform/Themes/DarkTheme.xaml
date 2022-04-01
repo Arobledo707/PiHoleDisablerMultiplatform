@@ -14,5 +14,6 @@
     <Color x:Key="AllowedQueryColor">Black</Color>
     <Color x:Key="BlockedQueryColor">Gray</Color>
     <Color x:Key="WhitelistButtonColor">#51ad51</Color>
+    <Color x:Key="UrlColor">#0000EE</Color>
 
 </ResourceDictionary>

@@ -2,29 +2,31 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PiHoleDisablerMultiplatform.Views.HelpPage"
+             xmlns:UI="clr-namespace:PiHoleDisablerMultiplatform.UI"
              BackgroundColor="{DynamicResource PageBackgroundColor}">
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>
-                <Label Text="What do I enter for my address?" HorizontalOptions="CenterAndExpand" TextColor="{DynamicResource PrimaryTextColor}" FontSize="Medium"/>
-                <Label Text="Enter your pi-hole's local address" TextColor="{DynamicResource PrimaryTextColor}"/>
-                <Label Text="Valid address examples:" TextColor="{DynamicResource PrimaryTextColor}"/>
-                <Label Text="pi.hole" TextColor="{DynamicResource PrimaryTextColor}"/>
-                <Label Text="10.0.0.115" TextColor="{DynamicResource PrimaryTextColor}"/>
-                <Label Text="192.168.1.40" TextColor="{DynamicResource PrimaryTextColor}"/>
+                
+                <UI:DynamicLabel Text="What do I enter for my address?" HorizontalOptions="CenterAndExpand" FontSize="Medium"/>
+                <UI:DynamicLabel Text="Enter your pi-hole's local address" />
+                <UI:DynamicLabel Text="Valid address examples:" />
+                <UI:DynamicLabel Text="pi.hole" />
+                <UI:DynamicLabel Text="10.0.0.115" />
+                <UI:DynamicLabel Text="192.168.1.40" />
                 <Label />
-                <Label Text="Invalid address examples:" TextColor="{DynamicResource PrimaryTextColor}"/>
-                <Label Text="http://pi.hole" TextColor="{DynamicResource PrimaryTextColor}"/>
-                <Label Text="https://10.0.0.115" TextColor="{DynamicResource PrimaryTextColor}"/>
+                <UI:DynamicLabel Text="Invalid address examples:" />
+                <UI:DynamicLabel Text="http://pi.hole" />
+                <UI:DynamicLabel Text="https://10.0.0.115" />
                 <Label />
-                <Label Text="What is a token and how do I get it?" HorizontalOptions="CenterAndExpand" TextColor="{DynamicResource PrimaryTextColor}" FontSize="Medium"/>
-                <Label Text="Option 1: SSH into your Pi-hole and enter this command:" TextColor="{DynamicResource PrimaryTextColor}"/>
-                <Label Text="cat /etc/pihole/setupVars.conf | grep WEBPASSWORD=" TextColor="{DynamicResource PrimaryTextColor}"/>
+                <UI:DynamicLabel Text="What is a token and how do I get it?" HorizontalOptions="CenterAndExpand"  FontSize="Medium"/>
+                <UI:DynamicLabel Text="Option 1: SSH into your Pi-hole and enter this command:" />
+                <UI:DynamicLabel Text="cat /etc/pihole/setupVars.conf | grep WEBPASSWORD=" />
                 <Label />
-                <Label Text="Option 2: Login to your Pi-hole webpage " TextColor="{DynamicResource PrimaryTextColor}"/>
-                <Label Text="Go to Settings -> API/Web Interface -> Show API token" TextColor="{DynamicResource PrimaryTextColor}"/>
-                <Label Text="You should end up at url below" TextColor="{DynamicResource PrimaryTextColor}"/>
-                <Label Text="http://pi.hole/admin/settings.php" TextColor="{DynamicResource PrimaryTextColor}"/>
+                <UI:DynamicLabel Text="Option 2: Login to your Pi-hole webpage " />
+                <UI:DynamicLabel Text="Go to Settings -> API/Web Interface -> Show API token" />
+                <UI:DynamicLabel Text="You should end up at a similar url" />
+                <UI:DynamicLabel Text="http://pi.hole/admin/settings.php" TextType="Html"/>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

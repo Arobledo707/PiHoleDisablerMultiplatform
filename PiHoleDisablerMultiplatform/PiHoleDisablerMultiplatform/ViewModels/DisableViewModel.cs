@@ -33,6 +33,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
 
             MessagingCenter.Subscribe<DisablePage>(this, Commands.refresh, async (sender) =>
             {
+                IsCurrentlyRefreshing = true;
                 if (CurrentPiData.piHoleData.Url == String.Empty)
                 {
                     CurrentPiData.piHoleData = await PiholeDataSerializer.DeserializeData();
@@ -52,6 +53,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                     CurrentPiData.DemoMode = true;
                 }
                 MessagingCenter.Send(this, Commands.statusUpdate, result);
+                IsCurrentlyRefreshing = false;
             });
         }
 

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PiHoleDisablerMultiplatform.Views.QueryPage"
              Title="Queries"
+             xmlns:UI="clr-namespace:PiHoleDisablerMultiplatform.UI"
              BackgroundColor="{DynamicResource PageBackgroundColor}">
     <ContentPage.Content>
         <RefreshView IsRefreshing="{Binding IsCurrentlyRefreshing}"
@@ -11,15 +12,14 @@
             <ScrollView x:Name="scrollView" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" >
                 <StackLayout>
                     <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                        <Label Text="Time"  WidthRequest="45" HorizontalOptions="FillAndExpand" TextColor="{DynamicResource PrimaryTextColor}"/>
-                        <Label Text="Type" WidthRequest="35" HorizontalOptions="FillAndExpand" TextColor="{DynamicResource PrimaryTextColor}"/>
-                        <Label Text="Domain" WidthRequest="90" HorizontalOptions="CenterAndExpand" TextColor="{DynamicResource PrimaryTextColor}"/>
-                        <Label Text="Client" WidthRequest="85" HorizontalOptions="EndAndExpand" TextColor="{DynamicResource PrimaryTextColor}"/>
-                        <Label Text="Action" WidthRequest="60" HorizontalOptions="EndAndExpand" TextColor="{DynamicResource PrimaryTextColor}"/>
+                        <UI:DynamicLabel Text="Time"  WidthRequest="45" HorizontalOptions="FillAndExpand" />
+                        <UI:DynamicLabel Text="Type" WidthRequest="35" HorizontalOptions="FillAndExpand" />
+                        <UI:DynamicLabel Text="Domain" WidthRequest="90" HorizontalOptions="CenterAndExpand" />
+                        <UI:DynamicLabel Text="Client" WidthRequest="85" HorizontalOptions="EndAndExpand" />
+                        <UI:DynamicLabel Text="Action" WidthRequest="60" HorizontalOptions="EndAndExpand" />
                     </StackLayout>
                 </StackLayout>
             </ScrollView>
         </RefreshView>
-
     </ContentPage.Content>
 </ContentPage>
