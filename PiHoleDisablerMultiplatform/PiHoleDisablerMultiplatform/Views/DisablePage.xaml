@@ -6,34 +6,36 @@
              BackgroundColor="{DynamicResource PageBackgroundColor}">
             
     <ContentPage.Content>
-        <ScrollView>
-            <StackLayout>
-            <Label x:Name="piHoleStatusText" Text="Pi-hole status: " 
+        <RefreshView IsRefreshing="{Binding IsCurrentlyRefreshing}}"
+                     Command="{Binding RefreshCommand}">
+            <ScrollView>
+                <StackLayout>
+                    <Label x:Name="piHoleStatusText" Text="Pi-hole status: " 
                HorizontalOptions="StartAndExpand" TextColor="{DynamicResource PrimaryTextColor}" FontSize="30"/>
-            <Grid x:Name="disableGrid" Padding="0,20,0,0" IsVisible="True">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="150"/>
-                    <RowDefinition Height="150"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Button x:Name="disable30sec"  Grid.Row="0" Grid.Column="0" Text="Disable For 30 Seconds" 
+                    <Grid x:Name="disableGrid" Padding="0,20,0,0" IsVisible="True">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="150"/>
+                            <RowDefinition Height="150"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="disable30sec"  Grid.Row="0" Grid.Column="0" Text="Disable For 30 Seconds" 
                         Command="{Binding ButtonClickCommand}" CommandParameter="30"/>
-                <Button x:Name="disable60sec"  Grid.Row="0"  Grid.Column="1" Text="Disable For 60 Seconds"
+                        <Button x:Name="disable60sec"  Grid.Row="0"  Grid.Column="1" Text="Disable For 60 Seconds"
                         Command="{Binding ButtonClickCommand}" CommandParameter="60"/>
-                <Button  x:Name="disable5min" Grid.Row="1"  Grid.Column="0" Text="Disable For 5 Minutes"
+                        <Button  x:Name="disable5min" Grid.Row="1"  Grid.Column="0" Text="Disable For 5 Minutes"
                          Command="{Binding ButtonClickCommand}" CommandParameter="300"/>
-                <Button x:Name="disable30min" Grid.Row="1" Grid.Column="1" Text="Disable For 30 Minutes"
+                        <Button x:Name="disable30min" Grid.Row="1" Grid.Column="1" Text="Disable For 30 Minutes"
                         Command="{Binding ButtonClickCommand}" CommandParameter="1800"/>
-            </Grid>
-            <StackLayout x:Name="enableData" VerticalOptions="FillAndExpand" IsVisible="False">
-                <Button x:Name="enableButton" Text="Enable" Margin="40,50,40,50" 
+                    </Grid>
+                    <StackLayout x:Name="enableData" VerticalOptions="FillAndExpand" IsVisible="False">
+                        <Button x:Name="enableButton" Text="Enable" Margin="40,50,40,50" 
                     HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Command="{Binding ButtonClickCommand}" CommandParameter="-1"/>
-            </StackLayout>
-        </StackLayout>
-        </ScrollView>
-
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+        </RefreshView>
     </ContentPage.Content>
 </ContentPage>

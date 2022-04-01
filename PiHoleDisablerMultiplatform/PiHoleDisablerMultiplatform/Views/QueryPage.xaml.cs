@@ -36,10 +36,5 @@ namespace PiHoleDisablerMultiplatform.Views
             base.OnAppearing();
 			viewModel.RefreshCommand.Execute(scrollView);
 		}
-
-		private async void Refresh() 
-		{
-			viewModel.RefreshCommand.Execute(scrollView);
-		}
     }
 }

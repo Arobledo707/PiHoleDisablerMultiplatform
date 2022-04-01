@@ -16,10 +16,20 @@ namespace PiHoleDisablerMultiplatform.ViewModels
     public class DisableViewModel : BaseViewModel
     {
         public Command ButtonClickCommand { get; }
+        public Command RefreshCommand { get; }
+
+        private bool isRefreshing = false;
+        public bool IsCurrentlyRefreshing
+        {
+            get => isRefreshing;
+            set => SetProperty(ref isRefreshing, value);
+        }
+
         public DisableViewModel() 
         {
             Title = "Disable";
             ButtonClickCommand = new Command(OnButtonClicked);
+            RefreshCommand = new Command(Refresh);
 
             MessagingCenter.Subscribe<DisablePage>(this, Commands.refresh, async (sender) =>
             {
@@ -43,6 +53,14 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                 }
                 MessagingCenter.Send(this, Commands.statusUpdate, result);
             });
+        }
+
+        private async void Refresh(object obj) 
+        {
+            IsCurrentlyRefreshing = true;
+            string status = await PiholeHttp.CheckPiholeStatus(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token);
+            MessagingCenter.Send(this, Commands.statusUpdate, status);
+            IsCurrentlyRefreshing = false;
         }
 
         private async void OnButtonClicked(object timeString) 

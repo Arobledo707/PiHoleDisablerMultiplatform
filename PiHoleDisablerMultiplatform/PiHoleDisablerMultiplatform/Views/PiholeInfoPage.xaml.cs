@@ -59,7 +59,7 @@ namespace PiHoleDisablerMultiplatform.Views
             base.OnAppearing();
             if (NeedsPiholeData())
             {
-                PiholeHttp.CheckPiholeStatus(piholeAddress.Placeholder.Trim(), "fakeToken");
+                //PiholeHttp.CheckPiholeStatus(piholeAddress.Placeholder.Trim(), "fakeToken");
                 MessagingCenter.Send(this, Commands.infoRequest);
             }
         }
