@@ -26,7 +26,7 @@
                 <UI:DynamicLabel Text="Option 2: Login to your Pi-hole webpage " />
                 <UI:DynamicLabel Text="Go to Settings -> API/Web Interface -> Show API token" />
                 <UI:DynamicLabel Text="You should end up at a similar url" />
-                <UI:DynamicLabel Text="http://pi.hole/admin/settings.php" TextType="Html"/>
+                <UI:DynamicLabel Text="http://pi.hole/admin/settings.php" TextType="Html" FontSize="Medium"/>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
