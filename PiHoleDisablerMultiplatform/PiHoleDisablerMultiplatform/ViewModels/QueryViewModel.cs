@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 using PiHoleDisablerMultiplatform.Services;
 using PiHoleDisablerMultiplatform.StaticPi;
 using PiHoleDisablerMultiplatform.Models;
 using PiHoleDisablerMultiplatform.UI;
-using Xamarin.Essentials;
 using Xamarin.Forms;
+using Xamarin.Essentials;
 using Newtonsoft.Json;
+using System;
 
 namespace PiHoleDisablerMultiplatform.ViewModels
 {
@@ -124,9 +125,114 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             }
         }
 
-        private async void Refresh(object param)
+        private async void Refresh(object param) 
         {
             IsCurrentlyRefreshing = true;
+            //bool result = await RefreshTask(param);
+            await Task.Run(async () => { await RefreshTask(param); });
+
+            IsCurrentlyRefreshing  = false;
+            
+        }
+
+        //private async void Refresh(object param)
+        //{
+        //    IsCurrentlyRefreshing = true;
+        //    string contentString = String.Empty;
+        //    if (!CurrentPiData.DemoMode)
+        //    {
+        //        contentString = await PiholeHttp.GetQueries(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token, 30);
+        //    }
+        //    StackLayout content = ReturnStackLayout(param);
+        //    // keep item title 
+        //    var labelInfo = content.Children[0];
+        //    content.Children.Clear();
+        //    content.Children.Add(labelInfo);
+
+        //    if ((contentString == String.Empty || contentString == null) && !CurrentPiData.DemoMode)
+        //    {
+        //        return;
+        //    }
+        //    try
+        //    {
+        //        QueryData queryData = new QueryData();
+        //        if (!CurrentPiData.DemoMode)
+        //        {
+        //            queryData = JsonConvert.DeserializeObject<QueryData>(contentString);
+        //        }
+        //        else 
+        //        {
+        //            queryData.data = CurrentPiData.demoData;
+        //        }
+        //        var enumerate = Application.Current.Resources.MergedDictionaries.GetEnumerator();
+        //        enumerate.MoveNext();
+        //        ResourceDictionary currentTheme = enumerate.Current;
+
+        //        foreach (List<string> stringList in queryData.data)
+        //        {
+        //            bool allowed = false;
+        //            if (stringList[4] != gravity && stringList[4] != blackListed)
+        //            {
+        //                allowed = true;
+        //            }
+        //            StackLayout stackLayout = CreateStackLayout(allowed);
+        //            for (int i = 0; i < 4; ++i)
+        //            {
+        //                double widthRequest = 0;
+        //                double fontSize = 12;
+        //                string text = stringList[i];
+        //                var layoutOption = LayoutOptions.FillAndExpand;
+        //                switch (i)
+        //                {
+        //                    case 0:
+        //                        widthRequest = 60;
+        //                        try
+        //                        {
+        //                            long epoch = long.Parse(text);
+        //                            DateTimeOffset dtOffset = DateTimeOffset.FromUnixTimeSeconds(long.Parse(text));
+        //                            //DateTime dt = dtOffset.DateTime;
+        //                            //string years = dt.Year.ToString();
+        //                            text = dtOffset.DateTime.ToLocalTime().ToString();
+        //                        }
+        //                        catch (Exception err) 
+        //                        {
+        //                            Console.Error.WriteLine("error: " + err + err.Message);
+        //                        }
+        //                        fontSize = 11;
+        //                        break;
+        //                    case 1:
+        //                        widthRequest = 50;
+        //                        fontSize = 11;
+        //                        break;
+        //                    case 2:
+        //                        widthRequest = 120;
+        //                        layoutOption = LayoutOptions.CenterAndExpand;
+        //                        break;
+        //                    case 3:
+        //                        widthRequest = 80;
+        //                        layoutOption = LayoutOptions.EndAndExpand;
+        //                        break;
+        //                    case 4:
+        //                        widthRequest = 50;
+        //                        break;
+        //                }
+        //                stackLayout.Children.Add(CreateLabel(text, fontSize, widthRequest, layoutOption));
+        //            }
+        //            stackLayout.Children.Add(CreateButton(allowed, stringList[2]));
+        //            content.Children.Add(stackLayout);
+        //        }
+        //        IsCurrentlyRefreshing = false;
+        //    }
+        //    catch (Exception err) 
+        //    {
+        //        Console.WriteLine(err + ": " + err.Message);
+        //        IsCurrentlyRefreshing = false;
+        //    }
+        //}
+
+
+        private async Task<bool> RefreshTask(object param) 
+        {
             string contentString = String.Empty;
             if (!CurrentPiData.DemoMode)
             {
@@ -134,13 +240,19 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             }
             StackLayout content = ReturnStackLayout(param);
             // keep item title 
-            var labelInfo = content.Children[0];
-            content.Children.Clear();
-            content.Children.Add(labelInfo);
+            View labelInfo = new StackLayout();
+            labelInfo = content.Children[0];
+            content.Children.RemoveAt(0);
+            //MainThread.InvokeOnMainThreadAsync(() => {
+            //    View labelInfo = content.Children[0];
+            //    content.Children.Clear();
+            //    content.Children.Add(labelInfo);
+            //});
+            
 
             if ((contentString == String.Empty || contentString == null) && !CurrentPiData.DemoMode)
             {
-                return;
+                return await Task.FromResult(false);
             }
             try
             {
@@ -149,14 +261,16 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                 {
                     queryData = JsonConvert.DeserializeObject<QueryData>(contentString);
                 }
-                else 
+                else
                 {
                     queryData.data = CurrentPiData.demoData;
                 }
                 var enumerate = Application.Current.Resources.MergedDictionaries.GetEnumerator();
                 enumerate.MoveNext();
                 ResourceDictionary currentTheme = enumerate.Current;
-
+                StackLayout replacementContent = new StackLayout();
+                
+                replacementContent.Children.Add(labelInfo);
                 foreach (List<string> stringList in queryData.data)
                 {
                     bool allowed = false;
@@ -183,7 +297,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                                     //string years = dt.Year.ToString();
                                     text = dtOffset.DateTime.ToLocalTime().ToString();
                                 }
-                                catch (Exception err) 
+                                catch (Exception err)
                                 {
                                     Console.Error.WriteLine("error: " + err + err.Message);
                                 }
@@ -208,14 +322,18 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                         stackLayout.Children.Add(CreateLabel(text, fontSize, widthRequest, layoutOption));
                     }
                     stackLayout.Children.Add(CreateButton(allowed, stringList[2]));
-                    content.Children.Add(stackLayout);
+                    replacementContent.Children.Add(stackLayout);
+                    //MainThread.InvokeOnMainThreadAsync(() => { content.Children.Add(stackLayout); });
                 }
+                MainThread.InvokeOnMainThreadAsync(() => { content = replacementContent; });
                 IsCurrentlyRefreshing = false;
+                return await Task.FromResult(true);
             }
-            catch (Exception err) 
+            catch (Exception err)
             {
                 Console.WriteLine(err + ": " + err.Message);
                 IsCurrentlyRefreshing = false;
+                return await Task.FromResult(false);
             }
         }
 
