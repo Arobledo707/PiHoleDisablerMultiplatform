@@ -36,5 +36,6 @@ namespace PiHoleDisablerMultiplatform.Views
             base.OnAppearing();
 			viewModel.RefreshCommand.Execute(scrollView);
 		}
+
     }
 }
