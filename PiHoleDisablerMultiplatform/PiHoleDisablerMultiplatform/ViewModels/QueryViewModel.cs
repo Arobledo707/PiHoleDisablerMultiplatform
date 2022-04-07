@@ -227,10 +227,8 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                         stackLayout.Children.Add(CreateLabel(text, fontSize, widthRequest, layoutOption));
                     }
                     stackLayout.Children.Add(CreateButton(allowed, stringList[2]));
-                    //replacementContent.Children.Add(stackLayout);
                    await MainThread.InvokeOnMainThreadAsync(() => { content.Children.Add(stackLayout); });
                 }
-               //MainThread.InvokeOnMainThreadAsync(() => { content = replacementContent; });
                 IsCurrentlyRefreshing = false;
                 return await Task.FromResult(true);
             }
