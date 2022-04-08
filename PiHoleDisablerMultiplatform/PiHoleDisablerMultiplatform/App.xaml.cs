@@ -66,7 +66,8 @@ namespace PiHoleDisablerMultiplatform
                 if (mergedDictionaries != null)
                 {
                     mergedDictionaries.Clear();
-
+                    //Xamarin.Forms.TabBar bar;
+                    //bar.
                     switch (theme)
                     {
                         case OSAppTheme.Dark:
