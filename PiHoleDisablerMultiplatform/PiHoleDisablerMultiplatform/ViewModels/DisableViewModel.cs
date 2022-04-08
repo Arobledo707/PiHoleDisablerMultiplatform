@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 using Xamarin.Forms;
 using PiHoleDisablerMultiplatform.Views;
 using PiHoleDisablerMultiplatform.Services;
 using PiHoleDisablerMultiplatform.StaticPi;
-using PiHoleDisablerMultiplatform.Models;
-using System.Threading.Tasks;
 
 
 namespace PiHoleDisablerMultiplatform.ViewModels

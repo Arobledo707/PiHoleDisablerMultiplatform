@@ -4,37 +4,35 @@ using PiHoleDisablerMultiplatform.Models;
 using PiHoleDisablerMultiplatform.StaticPi;
 using System.Collections.Generic;
 using System;
-using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace PiHoleDisablerMultiplatform.ViewModels
 {
     public class PiholeInfoViewModel : BaseViewModel
     {
-        private readonly string enterInfoText = "Enter Info";
-        private readonly string piHoleAddressText = "Pi-hole Address: ";
-        private readonly string addressPlaceholder = "pi.hole";
-        private readonly string qrButtonText = "QR";
-        private readonly string tokenText = "Token: ";
-        private readonly string tokenPlacerholderText = "Enter Token Here";
-        private readonly string clearButtonText = "Clear";
-        private readonly string savedInfoText = "Saved Info";
-        private readonly string saveButtonText = "Save";
-        private readonly string helpButtonText = "Help";
+        private const string kEnterInfoText = "Enter Info";
+        private const string kPiHoleAddressText = "Pi-hole Address: ";
+        private const string kAddressPlaceholder = "pi.hole";
+        private const string kQrButtonText = "QR";
+        private const string kTokenText = "Token: ";
+        private const string kTokenPlacerholderText = "Enter Token Here";
+        private const string kClearButtonText = "Clear";
+        private const string kSavedInfoText = "Saved Info";
+        private const string kSaveButtonText = "Save";
+        private const string kHelpButtonText = "Help";
 
-        public string EnterInfoText { get { return enterInfoText; } }
-        public string PiholeAddressText { get { return piHoleAddressText; } }
-        public string AddressPlaceholder { get { return addressPlaceholder; } }
-        public string TokenText { get { return tokenText; } }
-        public string TokenPlaceholderText { get { return tokenPlacerholderText; } }
-        public string QrButtonText { get { return qrButtonText; } }
-        public string ClearButtonText { get { return clearButtonText; } }
-        public string SavedInfoText { get { return savedInfoText; } }
-        public string SaveButtonText { get { return saveButtonText; } }
-        public string HelpButtonText { get { return helpButtonText; } }
+        public string EnterInfoText { get { return kEnterInfoText; } }
+        public string PiholeAddressText { get { return kPiHoleAddressText; } }
+        public string AddressPlaceholder { get { return kAddressPlaceholder; } }
+        public string TokenText { get { return kTokenText; } }
+        public string TokenPlaceholderText { get { return kTokenPlacerholderText; } }
+        public string QrButtonText { get { return kQrButtonText; } }
+        public string ClearButtonText { get { return kClearButtonText; } }
+        public string SavedInfoText { get { return kSavedInfoText; } }
+        public string SaveButtonText { get { return kSaveButtonText; } }
+        public string HelpButtonText { get { return kHelpButtonText; } }
 
 
 

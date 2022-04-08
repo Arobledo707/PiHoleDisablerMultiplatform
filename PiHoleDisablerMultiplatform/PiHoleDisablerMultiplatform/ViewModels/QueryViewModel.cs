@@ -9,14 +9,17 @@ using PiHoleDisablerMultiplatform.UI;
 using Xamarin.Forms;
 using Xamarin.Essentials;
 using Newtonsoft.Json;
-using System;
 
 namespace PiHoleDisablerMultiplatform.ViewModels
 {
     public class QueryViewModel : BaseViewModel
     {
-        private const string blackListed = "5";
-        private const string gravity = "1";
+        private const string kBlackListed = "5";
+        private const string kGravity = "1";
+        private const string kPageTitle = "Queries";
+        private const string kWhitelist = "whitelist";
+        private const string kBlacklist = "blacklist";
+
         private bool isRefreshing = false;
         public bool IsCurrentlyRefreshing
         {
@@ -34,7 +37,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             WhiteListCommand = new Command(WhitelistButtonClick);
             BlackListCommand = new Command(BlacklistButtonClick);
 
-            Title = "Queries";
+            Title = kPageTitle;
         }
 
 
@@ -182,7 +185,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                 foreach (List<string> stringList in queryData.data)
                 {
                     bool allowed = false;
-                    if (stringList[4] != gravity && stringList[4] != blackListed)
+                    if (stringList[4] != kGravity && stringList[4] !=kBlackListed)
                     {
                         allowed = true;
                     }
@@ -284,13 +287,13 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             if (!allowed)
             {
                 button = new WhitelistButton();
-                button.Text = "whitelist";
+                button.Text = kWhitelist;
                 button.Command = WhiteListCommand;
             }
             else
             {
                 button = new BlacklistButton();
-                button.Text = "blacklist";
+                button.Text = kBlacklist;
                 button.Command = BlackListCommand;
             }
             button.FontSize = 11;
