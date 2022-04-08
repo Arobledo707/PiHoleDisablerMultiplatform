@@ -19,13 +19,10 @@ namespace PiHoleDisablerMultiplatform.Views
         private readonly string enabled = "enabled";
         private readonly string disconnected = "disconnected";
 
-        private DisableViewModel viewModel;
-
         public DisablePage()
         {
             InitializeComponent();
-            viewModel = new DisableViewModel();
-            BindingContext = viewModel;
+            this.BindingContext = new DisableViewModel();
             MessagingCenter.Subscribe<DisableViewModel, string>(this, Commands.statusUpdate, async (sender, status) =>
             {
                 ChangeStatus(status);

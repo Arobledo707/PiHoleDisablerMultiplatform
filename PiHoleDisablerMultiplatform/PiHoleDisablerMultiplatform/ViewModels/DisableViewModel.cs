@@ -15,6 +15,20 @@ namespace PiHoleDisablerMultiplatform.ViewModels
 {
     public class DisableViewModel : BaseViewModel
     {
+        private readonly string statusText = "Pi-hole status: ";
+        private readonly string disable30seconds = "Disable For 30 Seconds";
+        private readonly string disable60seconds = "Disable For 60 Seconds";
+        private readonly string disable5minutes = "Disable For 5 Minutes";
+        private readonly string disable30minutes = "Disable For 30 Minutes";
+
+
+        public string StatusText { get { return statusText; } }
+
+        public string Disable30SecondsText { get { return disable30seconds; } }
+        public string Disable60SecondsText { get { return disable60seconds; } }
+        public string Disable5MinutesText { get { return disable5minutes; } }
+        public string Disable30MinutesText { get { return disable30minutes; } }
+
         public Command ButtonClickCommand { get; }
         public Command RefreshCommand { get; }
 

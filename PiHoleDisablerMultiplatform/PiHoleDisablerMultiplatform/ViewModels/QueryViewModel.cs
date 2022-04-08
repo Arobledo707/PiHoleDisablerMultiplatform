@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Threading;
 using PiHoleDisablerMultiplatform.Services;
 using PiHoleDisablerMultiplatform.StaticPi;
 using PiHoleDisablerMultiplatform.Models;
@@ -185,6 +186,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                     {
                         allowed = true;
                     }
+
                     StackLayout stackLayout = CreateStackLayout(allowed);
                     for (int i = 0; i < 4; ++i)
                     {
@@ -227,7 +229,12 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                         stackLayout.Children.Add(CreateLabel(text, fontSize, widthRequest, layoutOption));
                     }
                     stackLayout.Children.Add(CreateButton(allowed, stringList[2]));
-                   await MainThread.InvokeOnMainThreadAsync(() => { content.Children.Add(stackLayout); });
+
+                    //TODO worker thread with queue to add stacklayouts to main thread
+
+
+                    MainThread.InvokeOnMainThreadAsync(() => { content.Children.Add(stackLayout); });
+                    //await MainThread.InvokeOnMainThreadAsync(() => { content.Children.Add(stackLayout); });
                 }
                 IsCurrentlyRefreshing = false;
                 return await Task.FromResult(true);
