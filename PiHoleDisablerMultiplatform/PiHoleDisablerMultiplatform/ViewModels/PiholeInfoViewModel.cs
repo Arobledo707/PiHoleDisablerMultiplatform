@@ -14,6 +14,30 @@ namespace PiHoleDisablerMultiplatform.ViewModels
 {
     public class PiholeInfoViewModel : BaseViewModel
     {
+        private readonly string enterInfoText = "Enter Info";
+        private readonly string piHoleAddressText = "Pi-hole Address: ";
+        private readonly string addressPlaceholder = "pi.hole";
+        private readonly string qrButtonText = "QR";
+        private readonly string tokenText = "Token: ";
+        private readonly string tokenPlacerholderText = "Enter Token Here";
+        private readonly string clearButtonText = "Clear";
+        private readonly string savedInfoText = "Saved Info";
+        private readonly string saveButtonText = "Save";
+        private readonly string helpButtonText = "Help";
+
+        public string EnterInfoText { get { return enterInfoText; } }
+        public string PiholeAddressText { get { return piHoleAddressText; } }
+        public string AddressPlaceholder { get { return addressPlaceholder; } }
+        public string TokenText { get { return tokenText; } }
+        public string TokenPlaceholderText { get { return tokenPlacerholderText; } }
+        public string QrButtonText { get { return qrButtonText; } }
+        public string ClearButtonText { get { return clearButtonText; } }
+        public string SavedInfoText { get { return savedInfoText; } }
+        public string SaveButtonText { get { return saveButtonText; } }
+        public string HelpButtonText { get { return helpButtonText; } }
+
+
+
         public Command ScanCommand { get; }
         public PiholeInfoViewModel() 
         {

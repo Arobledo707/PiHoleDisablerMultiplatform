@@ -41,7 +41,7 @@ namespace PiHoleDisablerMultiplatform.StaticPi
          new List<string> { "2022-03-21 19:18:13", "AAAA", "apple.com", "10.0.0.66", "2" },
          new List<string> { "2022-03-21 19:17:26", "A", "mail-ads.google.com", "10.0.0.33", "1" },
          new List<string> { "2022-03-21 19:16:13", "AAAA", "apple.com", "10.0.0.33", "2" },
-         new List<string> { "2022-03-21 19:15:25", "A", "12.client-channel.google.com", "2" },
+         new List<string> { "2022-03-21 19:15:25", "A", "12.client-channel.google.com", "10.0.0.57", "2" },
          new List<string> { "2022-03-21 19:14:26", "A", "mail-ads.google.com", "10.0.0.57", "1" },};
 
         static CurrentPiData() 

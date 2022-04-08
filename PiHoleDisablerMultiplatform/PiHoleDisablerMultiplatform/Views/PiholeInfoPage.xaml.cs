@@ -16,6 +16,8 @@ namespace PiHoleDisablerMultiplatform.Views
     public partial class PiholeInfoPage : ContentPage
     {
         private readonly string piHoleDisablerString = "PiHoleDisabler";
+
+
         PiholeInfoViewModel piViewModel;
 
         public PiholeInfoPage()
@@ -59,7 +61,6 @@ namespace PiHoleDisablerMultiplatform.Views
             base.OnAppearing();
             if (NeedsPiholeData())
             {
-                //PiholeHttp.CheckPiholeStatus(piholeAddress.Placeholder.Trim(), "fakeToken");
                 MessagingCenter.Send(this, Commands.infoRequest);
             }
         }
