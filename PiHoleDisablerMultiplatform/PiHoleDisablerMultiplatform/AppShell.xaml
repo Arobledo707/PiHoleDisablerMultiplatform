@@ -3,6 +3,7 @@
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:local="clr-namespace:PiHoleDisablerMultiplatform.Views"
        Title="PiHoleDisabler"
+       xmlns:UI="clr-namespace:PiHoleDisablerMultiplatform.UI"
        x:Class="PiHoleDisablerMultiplatform.AppShell">
 
     <!--
@@ -18,7 +19,7 @@
                 <Setter Property="Shell.TitleColor" Value="White" />
                 <Setter Property="Shell.DisabledColor" Value="#B4FFFFFF" />
                 <Setter Property="Shell.UnselectedColor" Value="#95FFFFFF" />
-                <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource PrimaryColor}" />
+                <Setter Property="Shell.TabBarBackgroundColor" Value="{DynamicResource PrimaryColor}" />
                 <Setter Property="Shell.TabBarForegroundColor" Value="White"/>
                 <Setter Property="Shell.TabBarUnselectedColor" Value="#95FFFFFF"/>
                 <Setter Property="Shell.TabBarTitleColor" Value="White"/>

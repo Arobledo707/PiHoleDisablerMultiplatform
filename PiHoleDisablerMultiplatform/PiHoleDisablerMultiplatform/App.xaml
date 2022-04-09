@@ -7,7 +7,7 @@
         Define global resources and styles here, that apply to all pages in your app.
     -->
     <Application.Resources>
-        <ResourceDictionary Source="Themes/LightTheme.xaml"/>
+        <ResourceDictionary Source="Themes/RedLight.xaml"/>
 
         <Style TargetType="Button">
                 <Setter Property="TextColor" Value="{DynamicResource SecondaryTextColor}"></Setter>

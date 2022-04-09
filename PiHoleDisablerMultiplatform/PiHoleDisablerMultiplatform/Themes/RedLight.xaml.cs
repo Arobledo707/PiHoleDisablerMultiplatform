@@ -2,9 +2,9 @@
 
 namespace PiHoleDisablerMultiplatform 
 {
-    public partial class DarkTheme : ResourceDictionary
+    public partial class RedLight : ResourceDictionary
     {
-        public DarkTheme()
+        public RedLight()
         {
             InitializeComponent();
         }

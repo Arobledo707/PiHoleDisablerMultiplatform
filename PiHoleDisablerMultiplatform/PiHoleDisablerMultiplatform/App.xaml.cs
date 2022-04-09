@@ -46,11 +46,11 @@ namespace PiHoleDisablerMultiplatform
                 switch (theme)
                 {
                     case OSAppTheme.Dark:
-                        mergedDictionaries.Add(new DarkTheme());
+                        mergedDictionaries.Add(new GreenDark());
                         break;
                     case OSAppTheme.Light:
                     default:
-                        mergedDictionaries.Add(new LightTheme());
+                        mergedDictionaries.Add(new GreenLight());
                         break;
                 }
             }
@@ -71,11 +71,11 @@ namespace PiHoleDisablerMultiplatform
                     switch (theme)
                     {
                         case OSAppTheme.Dark:
-                            mergedDictionaries.Add(new DarkTheme());
+                            mergedDictionaries.Add(new GreenDark());
                             break;
                         case OSAppTheme.Light:
                         default:
-                            mergedDictionaries.Add(new LightTheme());
+                            mergedDictionaries.Add(new GreenLight());
                             break;
                     }
                 }

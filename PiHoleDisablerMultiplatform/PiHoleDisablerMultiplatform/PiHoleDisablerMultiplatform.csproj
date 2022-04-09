@@ -14,14 +14,23 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Themes\BlueThemeDark.xaml.cs">
-      <DependentUpon>BlueThemeDark.xaml</DependentUpon>
+    <Compile Update="Themes\GreenDark.xaml.cs">
+      <DependentUpon>GreenDark.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Themes\LightTheme.xaml.cs">
-      <DependentUpon>LightTheme.xaml</DependentUpon>
+    <Compile Update="Themes\BlueDark.xaml.cs">
+      <DependentUpon>BlueDark.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Themes\BlueThemeLight.xaml.cs">
-      <DependentUpon>BlueThemeLight.xaml</DependentUpon>
+    <Compile Update="Themes\GreenLight.xaml.cs">
+      <DependentUpon>GreenLight.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Themes\RedDark.xaml.cs">
+      <DependentUpon>RedDark.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Themes\RedLight.xaml.cs">
+      <DependentUpon>RedLight.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Themes\BlueLight.xaml.cs">
+      <DependentUpon>BlueLight.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
@@ -29,10 +38,10 @@
     <EmbeddedResource Update="EnterInfoPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Themes\DarkTheme.xaml">
+    <EmbeddedResource Update="Themes\RedDark.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Themes\BlueThemeLight.xaml">
+    <EmbeddedResource Update="Themes\BlueLight.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\DisablePage.xaml">

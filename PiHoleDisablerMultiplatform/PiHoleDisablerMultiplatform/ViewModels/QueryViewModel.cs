@@ -36,6 +36,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             RefreshCommand = new Command(Refresh, canExecute:(object param) => { return !IsCurrentlyRefreshing; });
             WhiteListCommand = new Command(WhitelistButtonClick);
             BlackListCommand = new Command(BlacklistButtonClick);
+            //Shell.TabBarTitleColorProperty
 
             Title = kPageTitle;
         }

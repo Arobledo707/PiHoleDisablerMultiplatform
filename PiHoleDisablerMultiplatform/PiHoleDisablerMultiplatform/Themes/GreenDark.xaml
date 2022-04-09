@@ -1,19 +1,20 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                    x:Class="PiHoleDisablerMultiplatform.BlueThemeDark">
+                    x:Class="PiHoleDisablerMultiplatform.GreenDark">
 
     <Color x:Key="PageBackgroundColor">Black</Color>
-    <Color x:Key="NavigationBarColor">#11274e</Color>
-    <Color x:Key="PrimaryColor">#2b88b3</Color>
-    <Color x:Key="SecondaryColor">#5ea0bf</Color>
+    <Color x:Key="NavigationBarColor">#519657</Color>
+    <Color x:Key="PrimaryColor">#4caf50</Color>
+    <Color x:Key="SecondaryColor">#b2fab4</Color>
     <Color x:Key="PrimaryTextColor">White</Color>
     <Color x:Key="SecondaryTextColor">White</Color>
     <Color x:Key="TertiaryTextColor">WhiteSmoke</Color>
     <Color x:Key="TransparentColor">Transparent</Color>
     <Color x:Key="AllowedQueryColor">Black</Color>
     <Color x:Key="BlockedQueryColor">Gray</Color>
-    <Color x:Key="WhitelistButtonColor">#51ad51</Color>
+    <Color x:Key="WhitelistButtonColor">#c781c4</Color>
+    <Color x:Key="BlacklistButtonColor">#64b5f6</Color>
     <Color x:Key="UrlColor">#0000EE</Color>
 
 </ResourceDictionary>
