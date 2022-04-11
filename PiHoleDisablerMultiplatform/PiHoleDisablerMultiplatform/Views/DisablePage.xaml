@@ -4,7 +4,7 @@
              x:Class="PiHoleDisablerMultiplatform.Views.DisablePage"
              Title="Pi-hole Disabler"
              BackgroundColor="{DynamicResource PageBackgroundColor}">
-            
+
     <ContentPage.Content>
         <RefreshView IsRefreshing="{Binding IsCurrentlyRefreshing}}"
                      Command="{Binding RefreshCommand}">
@@ -38,4 +38,7 @@
             </ScrollView>
         </RefreshView>
     </ContentPage.Content>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Theme" Clicked="ToolbarItem_Clicked"/>
+    </ContentPage.ToolbarItems>
 </ContentPage>

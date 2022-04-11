@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="Renderer\iOSStatusBar.cs" />
     <Compile Include="Scan\QRScaniOS.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />

@@ -50,6 +50,9 @@ namespace PiHoleDisablerMultiplatform.Views
             MessagingCenter.Send(this, Commands.refresh);
         }
 
+        private void ToolbarItem_Clicked(object sender, EventArgs e)
+        {
 
+        }
     }
 }

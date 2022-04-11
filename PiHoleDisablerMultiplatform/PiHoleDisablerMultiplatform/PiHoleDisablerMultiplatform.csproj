@@ -14,6 +14,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Themes\OrangeDark.xaml.cs">
+      <DependentUpon>OrangeDark.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Themes\OrangeLight.xaml.cs">
+      <DependentUpon>OrangeLight.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Themes\GreenDark.xaml.cs">
       <DependentUpon>GreenDark.xaml</DependentUpon>
     </Compile>

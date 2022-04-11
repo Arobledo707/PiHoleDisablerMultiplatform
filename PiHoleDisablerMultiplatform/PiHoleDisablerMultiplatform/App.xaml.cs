@@ -1,5 +1,6 @@
 ﻿using PiHoleDisablerMultiplatform.Services;
 using PiHoleDisablerMultiplatform.StaticPi;
+using PiHoleDisablerMultiplatform.Renderer;
 using PiHoleDisablerMultiplatform.Views;
 using System;
 using System.Threading.Tasks;
@@ -53,6 +54,10 @@ namespace PiHoleDisablerMultiplatform
                         mergedDictionaries.Add(new GreenLight());
                         break;
                 }
+
+                var statusBar = DependencyService.Get<IStatusBar>();
+                Color color = (Color)Application.Current.Resources["NavigationBarColor"];
+                statusBar.SetStatusBarColor(color.ToHex());
             }
         }
 
@@ -66,8 +71,6 @@ namespace PiHoleDisablerMultiplatform
                 if (mergedDictionaries != null)
                 {
                     mergedDictionaries.Clear();
-                    //Xamarin.Forms.TabBar bar;
-                    //bar.
                     switch (theme)
                     {
                         case OSAppTheme.Dark:
@@ -78,6 +81,9 @@ namespace PiHoleDisablerMultiplatform
                             mergedDictionaries.Add(new GreenLight());
                             break;
                     }
+                    var statusBar = DependencyService.Get<IStatusBar>();
+                    Color color = (Color)Application.Current.Resources["NavigationBarColor"];
+                    statusBar.SetStatusBarColor(color.ToHex());
                 }
             }
         }
