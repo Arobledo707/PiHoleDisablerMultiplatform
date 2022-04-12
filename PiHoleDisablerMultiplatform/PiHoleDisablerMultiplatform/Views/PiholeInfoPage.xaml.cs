@@ -21,7 +21,7 @@ namespace PiHoleDisablerMultiplatform.Views
             this.BindingContext = new PiholeInfoViewModel();
             piViewModel = this.BindingContext as PiholeInfoViewModel;
 
-            MessagingCenter.Subscribe<PiholeInfoViewModel, bool>(this, Commands.validInfo, async (sender, arg) =>
+            MessagingCenter.Subscribe<PiholeInfoViewModel, bool>(this, Constants.validInfo, async (sender, arg) =>
             {
                 if (arg)
                 {
@@ -37,13 +37,13 @@ namespace PiHoleDisablerMultiplatform.Views
                 }
             });
 
-            MessagingCenter.Subscribe<PiholeInfoViewModel, List<string>>(this, Commands.requestedData, async (sender, infoStrings) =>
+            MessagingCenter.Subscribe<PiholeInfoViewModel, List<string>>(this, Constants.requestedData, async (sender, infoStrings) =>
             {
                 savedPiholeAddress.Text = infoStrings[0];
                 savedToken.Text = infoStrings[1];
             });
 
-            MessagingCenter.Subscribe<PiholeInfoViewModel, List<string>>(this, Commands.error, async (sender, message) =>
+            MessagingCenter.Subscribe<PiholeInfoViewModel, List<string>>(this, Constants.error, async (sender, message) =>
             {
                 await DisplayAlert(message[0], message[1], "Ok");
             });
@@ -56,7 +56,7 @@ namespace PiHoleDisablerMultiplatform.Views
             base.OnAppearing();
             if (NeedsPiholeData())
             {
-                MessagingCenter.Send(this, Commands.infoRequest);
+                MessagingCenter.Send(this, Constants.infoRequest);
             }
         }
 
@@ -97,7 +97,7 @@ namespace PiHoleDisablerMultiplatform.Views
                     savedPiholeAddress.Text = String.Empty;
                 }
                 savedToken.Text = String.Empty;
-                MessagingCenter.Send(this, Commands.clear);
+                MessagingCenter.Send(this, Constants.clear);
             }
         }
 
@@ -117,7 +117,7 @@ namespace PiHoleDisablerMultiplatform.Views
 
                 List<String> checkStrings = new List<string> { sendAddress, tokenEntered.Text.Trim() };
 
-                MessagingCenter.Send(this, Commands.checkInfo, checkStrings);
+                MessagingCenter.Send(this, Constants.checkInfo, checkStrings);
             }
             else
             {

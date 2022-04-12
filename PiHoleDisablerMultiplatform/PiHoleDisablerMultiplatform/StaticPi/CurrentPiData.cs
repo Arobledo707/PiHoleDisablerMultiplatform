@@ -44,6 +44,7 @@ namespace PiHoleDisablerMultiplatform.StaticPi
          new List<string> { "2022-03-21 19:15:25", "A", "12.client-channel.google.com", "10.0.0.57", "2" },
          new List<string> { "2022-03-21 19:14:26", "A", "mail-ads.google.com", "10.0.0.57", "1" },};
 
+
         static CurrentPiData() 
         {
             piHoleData = new PiHoleData();

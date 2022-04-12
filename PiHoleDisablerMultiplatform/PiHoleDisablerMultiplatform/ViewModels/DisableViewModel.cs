@@ -1,5 +1,7 @@
 ﻿using System;
 using Xamarin.Forms;
+using Xamarin.Essentials;
+using System.Threading.Tasks;
 using PiHoleDisablerMultiplatform.Views;
 using PiHoleDisablerMultiplatform.Services;
 using PiHoleDisablerMultiplatform.StaticPi;
@@ -26,6 +28,8 @@ namespace PiHoleDisablerMultiplatform.ViewModels
         public Command ButtonClickCommand { get; }
         public Command RefreshCommand { get; }
 
+        public Command ThemeCommand { get; }
+
         private bool isRefreshing = false;
         public bool IsCurrentlyRefreshing
         {
@@ -38,8 +42,9 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             Title = "Disable";
             ButtonClickCommand = new Command(OnButtonClicked);
             RefreshCommand = new Command(Refresh);
+            ThemeCommand = new Command(ToolBarClicked);
 
-            MessagingCenter.Subscribe<DisablePage>(this, Commands.refresh, async (sender) =>
+            MessagingCenter.Subscribe<DisablePage>(this, Constants.refresh, async (sender) =>
             {
                 IsCurrentlyRefreshing = true;
                 if (CurrentPiData.piHoleData.Url == String.Empty)
@@ -60,7 +65,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                     result = "enabled";
                     CurrentPiData.DemoMode = true;
                 }
-                MessagingCenter.Send(this, Commands.statusUpdate, result);
+                MessagingCenter.Send(this, Constants.statusUpdate, result);
                 IsCurrentlyRefreshing = false;
             });
         }
@@ -69,7 +74,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
         {
             IsCurrentlyRefreshing = true;
             string status = await PiholeHttp.CheckPiholeStatus(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token);
-            MessagingCenter.Send(this, Commands.statusUpdate, status);
+            MessagingCenter.Send(this, Constants.statusUpdate, status);
             IsCurrentlyRefreshing = false;
         }
 
@@ -99,7 +104,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                 }
                 if (successfulCommand) 
                 {
-                    MessagingCenter.Send(this, Commands.statusUpdate, command.ToString().ToLower() + "d");
+                    MessagingCenter.Send(this, Constants.statusUpdate, command.ToString().ToLower() + "d");
                 }
 
             }
@@ -109,7 +114,39 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             }
             if (!successfulCommand) 
             {
-                MessagingCenter.Send(this, Commands.statusUpdate, "disconnected");
+                MessagingCenter.Send(this, Constants.statusUpdate, "disconnected");
+            }
+        }
+
+        private async void ToolBarClicked(object obj) 
+        {
+            Page page = obj as Page;
+            var result = await page.DisplayActionSheet("Choose Theme", "cancel", null,
+                Constants.Theme.Default.ToString(), Constants.Theme.Blue.ToString(), Constants.Theme.Green.ToString(), Constants.Theme.Orange.ToString());
+
+            if (result != null) 
+            {
+                DetectThemeChoice(result);
+            }
+        }
+
+        private void DetectThemeChoice(string themeString) 
+        {
+            if (themeString == Constants.Theme.Default.ToString())
+            {
+
+            }
+            else if (themeString == Constants.Theme.Blue.ToString()) 
+            {
+
+            }
+            else if (themeString == Constants.Theme.Green.ToString())
+            {
+
+            }
+            else if (themeString == Constants.Theme.Orange.ToString())
+            {
+
             }
         }
 

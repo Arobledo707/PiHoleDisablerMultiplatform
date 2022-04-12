@@ -43,7 +43,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
 
             Title = "Pi-hole Disabler Info";
             
-            MessagingCenter.Subscribe<PiholeInfoPage, List<string>>(this, Commands.checkInfo, async (sender, arg) => 
+            MessagingCenter.Subscribe<PiholeInfoPage, List<string>>(this, Constants.checkInfo, async (sender, arg) => 
             {
                 var permissionStatus = await Permissions.CheckStatusAsync<Permissions.NetworkState>();
                 if (permissionStatus != PermissionStatus.Granted)
@@ -58,7 +58,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                 await ValidateInfo(arg[0], arg[1]);
             });
 
-            MessagingCenter.Subscribe<PiholeInfoPage>(this, Commands.infoRequest, async (sender) =>
+            MessagingCenter.Subscribe<PiholeInfoPage>(this, Constants.infoRequest, async (sender) =>
             {
                 bool dataSent = await SendPiholeData();
                 if (dataSent) 
@@ -67,7 +67,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                 }
             });
 
-            MessagingCenter.Subscribe<PiholeInfoPage>(this, Commands.clear, async (sender) =>
+            MessagingCenter.Subscribe<PiholeInfoPage>(this, Constants.clear, async (sender) =>
             {
                 ClearData();
             });
@@ -111,7 +111,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                 CurrentPiData.piHoleData = await PiholeDataSerializer.DeserializeData();
             }
             List<string> data = new List<string> {CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token};
-            MessagingCenter.Send(this, Commands.requestedData, data);
+            MessagingCenter.Send(this, Constants.requestedData, data);
 
             return await Task.FromResult(true);
         }
@@ -127,7 +127,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             }
             else
             {
-                MessagingCenter.Send(this, Commands.error, new List<string> { "IO Error", "Failed to delete file"});
+                MessagingCenter.Send(this, Constants.error, new List<string> { "IO Error", "Failed to delete file"});
             }
         }
 
@@ -145,7 +145,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                 isValidated = await PiholeHttp.PiholeCommand(address, token, "enable", 0);
             }
             bool isSerialized = false;
-            MessagingCenter.Send(this, Commands.validInfo, isValidated);
+            MessagingCenter.Send(this, Constants.validInfo, isValidated);
             if (isValidated) 
             {
                 CurrentPiData.piHoleData = new PiHoleData(address, token);
@@ -153,7 +153,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             }
             if (!isSerialized && isValidated) 
             {
-                MessagingCenter.Send(this, Commands.error, new List<string> { "IO Error", "Failed to serialize data"});
+                MessagingCenter.Send(this, Constants.error, new List<string> { "IO Error", "Failed to serialize data"});
             }
 
             return await Task.FromResult(true);

@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PiHoleDisablerMultiplatform.Views.DisablePage"
+             x:Name="Page"
              Title="Pi-hole Disabler"
              BackgroundColor="{DynamicResource PageBackgroundColor}">
 
@@ -39,6 +40,6 @@
         </RefreshView>
     </ContentPage.Content>
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Theme" Clicked="ToolbarItem_Clicked"/>
+        <ToolbarItem Text="Theme" Command="{Binding ThemeCommand}" CommandParameter="{x:Reference Page}"/>
     </ContentPage.ToolbarItems>
 </ContentPage>

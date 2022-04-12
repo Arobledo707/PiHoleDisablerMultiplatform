@@ -81,11 +81,11 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                 {
                     //
                 }
-                MessagingCenter.Send(this, Commands.listChange, new List<string> { "Success", $"Added {(string)param} to blacklist" });
+                MessagingCenter.Send(this, Constants.listChange, new List<string> { "Success", $"Added {(string)param} to blacklist" });
             }
             else
             {
-                MessagingCenter.Send(this, Commands.listChange, new List<string> { "Error", $"Failed to add {(string)param} to blacklist" });
+                MessagingCenter.Send(this, Constants.listChange, new List<string> { "Error", $"Failed to add {(string)param} to blacklist" });
             }
         }
 
@@ -110,11 +110,11 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                 {
                     //
                 }
-                MessagingCenter.Send(this, Commands.listChange, new List<string> { "Success", $"Added {(string)param} to whitelist" });
+                MessagingCenter.Send(this, Constants.listChange, new List<string> { "Success", $"Added {(string)param} to whitelist" });
             }
             else
             {
-                MessagingCenter.Send(this, Commands.listChange, new List<string> { "Error", $"Failed to add {(string)param} to whitelist" });
+                MessagingCenter.Send(this, Constants.listChange, new List<string> { "Error", $"Failed to add {(string)param} to whitelist" });
 
             }
         }

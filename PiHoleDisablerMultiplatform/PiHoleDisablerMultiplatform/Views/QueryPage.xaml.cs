@@ -16,7 +16,7 @@ namespace PiHoleDisablerMultiplatform.Views
 			InitializeComponent();
 			viewModel = new QueryViewModel();
 			this.BindingContext = viewModel;
-			MessagingCenter.Subscribe<QueryViewModel, List<string>>(this, Commands.listChange, async(sender, message) => 
+			MessagingCenter.Subscribe<QueryViewModel, List<string>>(this, Constants.listChange, async(sender, message) => 
 			{
 				if (message.Count < 2) 
 				{

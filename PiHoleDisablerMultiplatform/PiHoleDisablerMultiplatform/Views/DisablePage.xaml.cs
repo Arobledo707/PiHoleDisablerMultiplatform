@@ -23,7 +23,7 @@ namespace PiHoleDisablerMultiplatform.Views
         {
             InitializeComponent();
             this.BindingContext = new DisableViewModel();
-            MessagingCenter.Subscribe<DisableViewModel, string>(this, Commands.statusUpdate, async (sender, status) =>
+            MessagingCenter.Subscribe<DisableViewModel, string>(this, Constants.statusUpdate, async (sender, status) =>
             {
                 ChangeStatus(status);
             });
@@ -47,12 +47,13 @@ namespace PiHoleDisablerMultiplatform.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            MessagingCenter.Send(this, Commands.refresh);
+            MessagingCenter.Send(this, Constants.refresh);
         }
 
-        private void ToolbarItem_Clicked(object sender, EventArgs e)
+        private async void ToolbarItem_Clicked(object sender, EventArgs e)
         {
-
+           var result = await DisplayActionSheet("Choose Theme" ,"cancel", null, 
+                Constants.Theme.Default.ToString(), Constants.Theme.Blue.ToString(), Constants.Theme.Green.ToString(), Constants.Theme.Orange.ToString());
         }
     }
 }
