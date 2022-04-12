@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using UIKit;
 using Xamarin.Forms;
+using Xamarin.Forms.Platform.iOS;
 using PiHoleDisablerMultiplatform.Renderer;
 
 [assembly: Dependency(typeof(PiHoleDisablerMultiplatform.iOS.Renderer.iOSStatusBar))]
@@ -14,7 +15,11 @@ namespace PiHoleDisablerMultiplatform.iOS.Renderer
     {
         public void SetStatusBarColor(string hexColor)
         {
-            throw new NotImplementedException();
+            UIView statusBar = UIApplication.SharedApplication.ValueForKey(new NSString("statusBar")) as UIView;
+            if (statusBar != null && statusBar.RespondsToSelector(new ObjCRuntime.Selector("setBackgroundColor:")))
+            {
+                statusBar.BackgroundColor = Color.FromHex(hexColor).ToUIColor();
+            }
         }
     }
 }
