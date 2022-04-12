@@ -53,7 +53,8 @@ namespace PiHoleDisablerMultiplatform.Views
         private async void ToolbarItem_Clicked(object sender, EventArgs e)
         {
            var result = await DisplayActionSheet("Choose Theme" ,"cancel", null, 
-                Constants.Theme.Default.ToString(), Constants.Theme.Blue.ToString(), Constants.Theme.Green.ToString(), Constants.Theme.Orange.ToString());
+                Constants.Theme.Default.ToString(), Constants.Theme.Blue.ToString(), Constants.Theme.Green.ToString(), 
+                Constants.Theme.Orange.ToString(), Constants.Theme.Purple.ToString());
         }
     }
 }

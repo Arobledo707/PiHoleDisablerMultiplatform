@@ -12,6 +12,8 @@ namespace PiHoleDisablerMultiplatform.StaticPi
             Blue,
             Green,
             Orange,
+            Purple,
+            Grey
         };
 
         public const string error = "error";
@@ -23,5 +25,7 @@ namespace PiHoleDisablerMultiplatform.StaticPi
         public const string statusUpdate = "statusUpdate";
         public const string refresh = "refresh";
         public const string listChange = "listChange";
+
+        public const string cancel = "cancel";
     }
 }

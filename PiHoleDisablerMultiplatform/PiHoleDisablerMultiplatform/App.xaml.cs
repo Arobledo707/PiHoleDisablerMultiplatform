@@ -15,7 +15,8 @@ namespace PiHoleDisablerMultiplatform
 {
     public partial class App : Application
     {
-
+        private ResourceDictionary lightTheme = new RedLight();
+        private ResourceDictionary darkTheme = new RedDark();
         public App()
         {
             InitializeComponent();
@@ -47,11 +48,11 @@ namespace PiHoleDisablerMultiplatform
                 switch (theme)
                 {
                     case OSAppTheme.Dark:
-                        mergedDictionaries.Add(new GreenDark());
+                        mergedDictionaries.Add(darkTheme);
                         break;
                     case OSAppTheme.Light:
                     default:
-                        mergedDictionaries.Add(new GreenLight());
+                        mergedDictionaries.Add(lightTheme);
                         break;
                 }
 
@@ -61,7 +62,34 @@ namespace PiHoleDisablerMultiplatform
             }
         }
 
-        private void SetTheme()
+        public void SetThemes() 
+        {
+            switch (CurrentPiData.currentTheme) 
+            {
+                case Constants.Theme.Purple:
+                    lightTheme = new PurpleLight();
+                    darkTheme = new PurpleDark();
+                    break;
+                case Constants.Theme.Blue:
+                    lightTheme = new BlueLight();
+                    darkTheme = new BlueDark();
+                    break;
+                case Constants.Theme.Green:
+                    lightTheme = new GreenLight();
+                    darkTheme = new GreenDark();
+                    break;
+                case Constants.Theme.Orange:
+                    lightTheme = new OrangeLight();
+                    darkTheme = new OrangeDark();
+                    break;
+                case Constants.Theme.Default:
+                    lightTheme = new RedLight();
+                    darkTheme = new RedDark();
+                    break;
+            }
+        }
+
+        public void ChangeTheme()
         {
             OSAppTheme theme = Application.Current.RequestedTheme;
             if (Application.Current.UserAppTheme != theme)
@@ -74,11 +102,11 @@ namespace PiHoleDisablerMultiplatform
                     switch (theme)
                     {
                         case OSAppTheme.Dark:
-                            mergedDictionaries.Add(new GreenDark());
+                            mergedDictionaries.Add(darkTheme);
                             break;
                         case OSAppTheme.Light:
                         default:
-                            mergedDictionaries.Add(new GreenLight());
+                            mergedDictionaries.Add(lightTheme);
                             break;
                     }
                     var statusBar = DependencyService.Get<IStatusBar>();
@@ -87,15 +115,10 @@ namespace PiHoleDisablerMultiplatform
                 }
             }
         }
-        private async Task<bool> DataEntered()
-        {
-            CurrentPiData.piHoleData = await PiholeDataSerializer.DeserializeData();
-            return await Task.FromResult(CurrentPiData.piHoleData.Token != null && CurrentPiData.piHoleData.Token != String.Empty);
-        }
 
         protected override void OnStart()
         {
-            SetTheme();
+            ChangeTheme();
         }
 
         protected override void OnSleep()
@@ -104,7 +127,7 @@ namespace PiHoleDisablerMultiplatform
 
         protected override void OnResume()
         {
-            SetTheme();
+            ChangeTheme();
         }
     }
 }

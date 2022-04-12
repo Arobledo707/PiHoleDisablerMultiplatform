@@ -132,22 +132,34 @@ namespace PiHoleDisablerMultiplatform.ViewModels
 
         private void DetectThemeChoice(string themeString) 
         {
-            if (themeString == Constants.Theme.Default.ToString())
+            if (themeString == Constants.cancel)
             {
-
+                return;
             }
-            else if (themeString == Constants.Theme.Blue.ToString()) 
+            else if (themeString == Constants.Theme.Default.ToString())
             {
-
+                CurrentPiData.currentTheme = Constants.Theme.Default;
+            }
+            else if (themeString == Constants.Theme.Blue.ToString())
+            {
+                CurrentPiData.currentTheme = Constants.Theme.Blue;
             }
             else if (themeString == Constants.Theme.Green.ToString())
             {
-
+                CurrentPiData.currentTheme = Constants.Theme.Green;
             }
             else if (themeString == Constants.Theme.Orange.ToString())
             {
+                CurrentPiData.currentTheme = Constants.Theme.Orange;
+            }
+            else if (themeString == Constants.Theme.Purple.ToString()) 
+            {
+                CurrentPiData.currentTheme = Constants.Theme.Purple;
 
             }
+            App app = Application.Current as App;
+            app.SetThemes();
+            app.ChangeTheme();
         }
 
     }

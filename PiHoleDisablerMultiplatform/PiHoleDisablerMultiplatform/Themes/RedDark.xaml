@@ -4,7 +4,7 @@
                     x:Class="PiHoleDisablerMultiplatform.RedDark">
 
     <Color x:Key="PageBackgroundColor">Black</Color>
-    <Color x:Key="NavigationBarColor">#c3352b</Color>
+    <Color x:Key="NavigationBarColor">#4e1511</Color>
     <Color x:Key="PrimaryColor">#c3352b</Color>
     <Color x:Key="SecondaryColor">#f77b72</Color>
     <Color x:Key="PrimaryTextColor">White</Color>
