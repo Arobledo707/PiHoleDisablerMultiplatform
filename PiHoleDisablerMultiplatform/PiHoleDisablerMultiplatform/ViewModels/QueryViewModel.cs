@@ -176,7 +176,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
 
             StackLayout content = ReturnStackLayout(param);
 
-            await MainThread.InvokeOnMainThreadAsync(() =>
+            MainThread.BeginInvokeOnMainThread(() =>
             {
                 View labelInfo = new StackLayout();
                 labelInfo = content.Children[0];
@@ -184,6 +184,8 @@ namespace PiHoleDisablerMultiplatform.ViewModels
 
                 content.Children.Add(labelInfo);
             });
+
+            Queue<StackLayout> stackLayoutQueue = new Queue<StackLayout>();
 
             try
             {
@@ -259,12 +261,16 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                         stackLayout.Children.Add(CreateLabel(text, fontSize, widthRequest, layoutOption));
                     }
                     stackLayout.Children.Add(CreateButton(allowed, stringList[2]));
-
-                    //TODO worker thread with queue to add stacklayouts to main thread
-
-                    MainThread.BeginInvokeOnMainThread(() => { content.Children.Add(stackLayout); });
-                    //await MainThread.InvokeOnMainThreadAsync(() => { content.Children.Add(stackLayout); });
+                    stackLayoutQueue.Enqueue(stackLayout);
                 }
+
+                MainThread.BeginInvokeOnMainThread(() => 
+                {
+                    while (stackLayoutQueue.Count > 0) 
+                    {
+                        content.Children.Add(stackLayoutQueue.Dequeue());
+                    }
+                });
                 IsCurrentlyRefreshing = false;
                 return await Task.FromResult(true);
             }
