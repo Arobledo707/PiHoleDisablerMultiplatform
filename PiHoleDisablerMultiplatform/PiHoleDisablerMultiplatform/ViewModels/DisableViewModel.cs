@@ -121,7 +121,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
         private async void ToolBarClicked(object obj) 
         {
             Page page = obj as Page;
-            var result = await page.DisplayActionSheet("Choose Theme", "cancel", null,
+            var result = await page.DisplayActionSheet("Choose Theme", Constants.cancel, null,
                 Constants.Theme.Default.ToString(), Constants.Theme.Blue.ToString(), 
                 Constants.Theme.Green.ToString(), Constants.Theme.Orange.ToString(), 
                 Constants.Theme.Purple.ToString(), Constants.Theme.Grey.ToString());

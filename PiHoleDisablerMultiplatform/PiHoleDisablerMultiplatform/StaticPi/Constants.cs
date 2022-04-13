@@ -25,7 +25,11 @@ namespace PiHoleDisablerMultiplatform.StaticPi
         public const string statusUpdate = "statusUpdate";
         public const string refresh = "refresh";
         public const string listChange = "listChange";
-
         public const string cancel = "cancel";
+
+        public const int k10Queries = 10;
+        public const int k30Queries = 30;
+        public const int k50Queries = 50;
+        public const int k100Queries = 100;
     }
 }

@@ -4,6 +4,7 @@
              x:Class="PiHoleDisablerMultiplatform.Views.QueryPage"
              Title="Queries"
              xmlns:UI="clr-namespace:PiHoleDisablerMultiplatform.UI"
+             x:Name="queryPage"
              BackgroundColor="{DynamicResource PageBackgroundColor}">
     <ContentPage.Content>
         <RefreshView IsRefreshing="{Binding IsCurrentlyRefreshing}"
@@ -22,4 +23,7 @@
             </ScrollView>
         </RefreshView>
     </ContentPage.Content>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="QueryToolBar" Text="{Binding QueryCount}" Command="{Binding QueryCountCommand}" CommandParameter="{x:Reference queryPage}"/>
+    </ContentPage.ToolbarItems>
 </ContentPage>

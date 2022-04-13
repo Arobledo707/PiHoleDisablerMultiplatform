@@ -19,6 +19,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
         private const string kPageTitle = "Queries";
         private const string kWhitelist = "whitelist";
         private const string kBlacklist = "blacklist";
+        private int queryCount = Constants.k30Queries;
 
         private bool isRefreshing = false;
         public bool IsCurrentlyRefreshing
@@ -31,12 +32,16 @@ namespace PiHoleDisablerMultiplatform.ViewModels
         public Command WhiteListCommand { get; }
         public Command BlackListCommand { get; }
 
+        public Command QueryCountCommand { get; }
+
+        public int QueryCount { get { return queryCount; } }
+
         public QueryViewModel()
         {
             RefreshCommand = new Command(Refresh, canExecute:(object param) => { return !IsCurrentlyRefreshing; });
             WhiteListCommand = new Command(WhitelistButtonClick);
             BlackListCommand = new Command(BlacklistButtonClick);
-            //Shell.TabBarTitleColorProperty
+            QueryCountCommand = new Command(ChangeQueryCount);
 
             Title = kPageTitle;
         }
@@ -140,13 +145,27 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             
         }
 
+        private async void ChangeQueryCount(object obj) 
+        {
+            Page page = obj as Page;
+            string selection = await page.DisplayActionSheet("Query Count:", Constants.cancel, null, Constants.k10Queries.ToString(), 
+                Constants.k30Queries.ToString(), Constants.k50Queries.ToString(), Constants.k100Queries.ToString());
+
+            if (selection != Constants.cancel) 
+            {
+                queryCount = Convert.ToInt32(selection);
+                OnPropertyChanged("QueryCount");
+            }
+
+        }
+
 
         private async Task<bool> RefreshTask(object param) 
         {
             string contentString = String.Empty;
             if (!CurrentPiData.DemoMode)
             {
-                contentString = await PiholeHttp.GetQueries(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token, 30);
+                contentString = await PiholeHttp.GetQueries(CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token, queryCount);
             }
 
 
@@ -175,16 +194,23 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                 }
                 else
                 {
-                    queryData.data = CurrentPiData.demoData;
+                    if (queryCount > Constants.k30Queries)
+                    {
+                        queryData.data = CurrentPiData.demoData;
+                    }
+                    else 
+                    {
+                        queryData.data = CurrentPiData.demoData.GetRange(0, queryCount);
+                    }
                 }
                 var enumerate = Application.Current.Resources.MergedDictionaries.GetEnumerator();
                 enumerate.MoveNext();
                 ResourceDictionary currentTheme = enumerate.Current;
                 StackLayout replacementContent = new StackLayout();
 
-
-                foreach (List<string> stringList in queryData.data)
+                for(int i = queryData.data.Count -1; i >= 0; --i)
                 {
+                    List<string> stringList = queryData.data[i];
                     bool allowed = false;
                     if (stringList[4] != kGravity && stringList[4] !=kBlackListed)
                     {
@@ -192,13 +218,13 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                     }
 
                     StackLayout stackLayout = CreateStackLayout(allowed);
-                    for (int i = 0; i < 4; ++i)
+                    for (int j = 0; j < 4; ++j)
                     {
                         double widthRequest = 0;
                         double fontSize = 12;
-                        string text = stringList[i];
+                        string text = stringList[j];
                         var layoutOption = LayoutOptions.FillAndExpand;
-                        switch (i)
+                        switch (j)
                         {
                             case 0:
                                 widthRequest = 60;
@@ -236,8 +262,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
 
                     //TODO worker thread with queue to add stacklayouts to main thread
 
-
-                    MainThread.InvokeOnMainThreadAsync(() => { content.Children.Add(stackLayout); });
+                    MainThread.BeginInvokeOnMainThread(() => { content.Children.Add(stackLayout); });
                     //await MainThread.InvokeOnMainThreadAsync(() => { content.Children.Add(stackLayout); });
                 }
                 IsCurrentlyRefreshing = false;
