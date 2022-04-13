@@ -82,6 +82,10 @@ namespace PiHoleDisablerMultiplatform
                     lightTheme = new OrangeLight();
                     darkTheme = new OrangeDark();
                     break;
+                case Constants.Theme.Grey:
+                    lightTheme = new GreyLight();
+                    darkTheme = new GreyDark();
+                    break;
                 case Constants.Theme.Default:
                     lightTheme = new RedLight();
                     darkTheme = new RedDark();

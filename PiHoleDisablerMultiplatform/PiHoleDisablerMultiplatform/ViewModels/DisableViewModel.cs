@@ -122,7 +122,9 @@ namespace PiHoleDisablerMultiplatform.ViewModels
         {
             Page page = obj as Page;
             var result = await page.DisplayActionSheet("Choose Theme", "cancel", null,
-                Constants.Theme.Default.ToString(), Constants.Theme.Blue.ToString(), Constants.Theme.Green.ToString(), Constants.Theme.Orange.ToString());
+                Constants.Theme.Default.ToString(), Constants.Theme.Blue.ToString(), 
+                Constants.Theme.Green.ToString(), Constants.Theme.Orange.ToString(), 
+                Constants.Theme.Purple.ToString(), Constants.Theme.Grey.ToString());
 
             if (result != null) 
             {
@@ -152,10 +154,13 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             {
                 CurrentPiData.currentTheme = Constants.Theme.Orange;
             }
-            else if (themeString == Constants.Theme.Purple.ToString()) 
+            else if (themeString == Constants.Theme.Purple.ToString())
             {
                 CurrentPiData.currentTheme = Constants.Theme.Purple;
-
+            }
+            else if (themeString == Constants.Theme.Grey.ToString()) 
+            {
+                CurrentPiData.currentTheme = Constants.Theme.Grey;
             }
             App app = Application.Current as App;
             app.SetThemes();
