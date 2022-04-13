@@ -19,7 +19,20 @@ namespace PiHoleDisablerMultiplatform.ViewModels
         private const string kPageTitle = "Queries";
         private const string kWhitelist = "whitelist";
         private const string kBlacklist = "blacklist";
+        private const double kDateTimeStacklayoutWidth = 60.0f;
+        private const double kTypeStacklayoutWidth = 50;
+        private const double kDomainStacklayoutWidth = 120;
+        private const double kClientStacklayoutWidth = 80;
+        private const double kDefaultRightThickness = 10;
+        private const int kSmallFontSize = 11;
+        private const int kDateTimeIndex = 0;
+        private const int kTypeIndex = 1;
+        private const int kDomainIndex = 2;
+        private const int kClientIndex = 3;
+        private const int kStatusIndex = 4;
+
         private int queryCount = Constants.k30Queries;
+
 
         private bool isRefreshing = false;
         public bool IsCurrentlyRefreshing
@@ -178,8 +191,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
 
             MainThread.BeginInvokeOnMainThread(() =>
             {
-                View labelInfo = new StackLayout();
-                labelInfo = content.Children[0];
+                View labelInfo = content.Children[0];
                 content.Children.Clear();
 
                 content.Children.Add(labelInfo);
@@ -214,13 +226,13 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                 {
                     List<string> stringList = queryData.data[i];
                     bool allowed = false;
-                    if (stringList[4] != kGravity && stringList[4] !=kBlackListed)
+                    if (stringList[kStatusIndex] != kGravity && stringList[kStatusIndex] !=kBlackListed)
                     {
                         allowed = true;
                     }
 
                     StackLayout stackLayout = CreateStackLayout(allowed);
-                    for (int j = 0; j < 4; ++j)
+                    for (int j = 0; j < kStatusIndex; ++j)
                     {
                         double widthRequest = 0;
                         double fontSize = 12;
@@ -228,8 +240,8 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                         var layoutOption = LayoutOptions.FillAndExpand;
                         switch (j)
                         {
-                            case 0:
-                                widthRequest = 60;
+                            case kDateTimeIndex:
+                                widthRequest = kDateTimeStacklayoutWidth;
                                 try
                                 {
                                     long epoch = long.Parse(text);
@@ -240,27 +252,24 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                                 {
                                     Console.Error.WriteLine("error: " + err + err.Message);
                                 }
-                                fontSize = 11;
+                                fontSize = kSmallFontSize;
                                 break;
-                            case 1:
-                                widthRequest = 50;
-                                fontSize = 11;
+                            case kTypeIndex:
+                                widthRequest = kTypeStacklayoutWidth;
+                                fontSize = kSmallFontSize;
                                 break;
-                            case 2:
-                                widthRequest = 120;
+                            case kDomainIndex:
+                                widthRequest = kDomainStacklayoutWidth;
                                 layoutOption = LayoutOptions.CenterAndExpand;
                                 break;
-                            case 3:
-                                widthRequest = 80;
+                            case kClientIndex:
+                                widthRequest = kClientStacklayoutWidth;
                                 layoutOption = LayoutOptions.EndAndExpand;
-                                break;
-                            case 4:
-                                widthRequest = 50;
                                 break;
                         }
                         stackLayout.Children.Add(CreateLabel(text, fontSize, widthRequest, layoutOption));
                     }
-                    stackLayout.Children.Add(CreateButton(allowed, stringList[2]));
+                    stackLayout.Children.Add(CreateButton(allowed, stringList[kDomainIndex]));
                     stackLayoutQueue.Enqueue(stackLayout);
                 }
 
@@ -305,7 +314,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             Label label = new DynamicLabel();
             label.HorizontalOptions = options;
             label.WidthRequest = widthRequest;
-            label.Padding = new Thickness(0, 0, 10, 0);
+            label.Padding = new Thickness(0, 0, kDefaultRightThickness, 0);
             label.FontSize = fontSize;
             label.Text = text;
             return label;
@@ -328,7 +337,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                 button.Text = kBlacklist;
                 button.Command = BlackListCommand;
             }
-            button.FontSize = 11;
+            button.FontSize = kSmallFontSize;
             button.HorizontalOptions = LayoutOptions.EndAndExpand;
             button.CommandParameter = parameter;
 
