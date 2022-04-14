@@ -22,6 +22,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
         private const string kSavedInfoText = "Saved Info";
         private const string kSaveButtonText = "Save";
         private const string kHelpButtonText = "Help";
+        private const string kDemoModeText = "demo";
 
         public string EnterInfoText { get { return kEnterInfoText; } }
         public string PiholeAddressText { get { return kPiHoleAddressText; } }
@@ -134,7 +135,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
         private async Task<bool> ValidateInfo(string address, string token) 
         {
             bool isValidated;
-            if (token == "demo")
+            if (token == kDemoModeText)
             {
                 StaticPi.CurrentPiData.DemoMode = true;
                 isValidated = true;

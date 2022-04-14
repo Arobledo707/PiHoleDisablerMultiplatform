@@ -10,8 +10,7 @@ namespace PiHoleDisablerMultiplatform.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PiholeInfoPage : ContentPage
     {
-        private readonly string piHoleDisablerString = "PiHoleDisabler";
-
+        private const string piHoleDisablerString = "PiHoleDisabler";
 
         PiholeInfoViewModel piViewModel;
 

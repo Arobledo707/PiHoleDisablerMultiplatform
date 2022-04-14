@@ -6,6 +6,9 @@ namespace PiHoleDisablerMultiplatform.StaticPi
 {
     public static class Constants
     {
+
+        public const string piDataFile = "data.json";
+        public const string settingsFile = "settings.json";
         public enum Theme
         {
             Default,

@@ -10,6 +10,7 @@ namespace PiHoleDisablerMultiplatform.Services
     public static class PiholeDataSerializer
     {
         public static string file = "data.json";
+        public static string settingsFile = "settings.json";
         public async static Task<bool> SerializeData(PiHoleData piHoleData) 
         { 
             

@@ -22,8 +22,6 @@ namespace PiHoleDisablerMultiplatform
             InitializeComponent();
             Application.Current.RequestedThemeChanged += (OnThemeChange);
 
-            DependencyService.Register<MockDataStore>();
-
             string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "data.json");
             if (File.Exists(path))
             {
