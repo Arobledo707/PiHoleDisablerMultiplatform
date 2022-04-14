@@ -36,28 +36,16 @@ namespace PiHoleDisablerMultiplatform.ViewModels
         public string HelpButtonText { get { return kHelpButtonText; } }
 
 
-
         public Command ScanCommand { get; }
+        public Command HelpCommand { get; }
+        public Command SaveButtonCommand { get; }
         public PiholeInfoViewModel() 
         {
             ScanCommand = new Command(Scanner);
+            HelpCommand = new Command(ShowHelpPage);
+            SaveButtonCommand = new Command(SaveButonClicked);
 
             Title = "Pi-hole Disabler Info";
-            
-            MessagingCenter.Subscribe<PiholeInfoPage, List<string>>(this, Constants.checkInfo, async (sender, arg) => 
-            {
-                var permissionStatus = await Permissions.CheckStatusAsync<Permissions.NetworkState>();
-                if (permissionStatus != PermissionStatus.Granted)
-                {
-                    permissionStatus = await Permissions.RequestAsync<Permissions.NetworkState>();
-                }
-                if (permissionStatus != PermissionStatus.Granted)
-                {
-                    //todo send message about network state is needed
-                    return;
-                }
-                await ValidateInfo(arg[0], arg[1]);
-            });
 
             MessagingCenter.Subscribe<PiholeInfoPage>(this, Constants.infoRequest, async (sender) =>
             {
@@ -75,6 +63,39 @@ namespace PiHoleDisablerMultiplatform.ViewModels
 
         }
 
+        private async void SaveButonClicked(object obj) 
+        {
+            ContentPage page = obj as ContentPage;
+            if (page == null) 
+            {
+                return;
+            }
+            Entry piholeAddress = page.FindByName("piholeAddress") as Entry;
+            Entry tokenEntered = page.FindByName("tokenEntered") as Entry;
+            if (tokenEntered.Text != null && tokenEntered.Text != String.Empty)
+            {
+                var permissionStatus = await Permissions.CheckStatusAsync<Permissions.NetworkState>();
+                if (permissionStatus != PermissionStatus.Granted)
+                {
+                    permissionStatus = await Permissions.RequestAsync<Permissions.NetworkState>();
+                }
+                if (permissionStatus != PermissionStatus.Granted)
+                {
+                    //todo send message about network state is needed
+                    return;
+                }
+                await ValidateInfo(piholeAddress.Text, tokenEntered.Text);
+            }
+            else
+            {
+                await page.DisplayAlert("Missing Token", "Enter a Token", "Ok");
+            }
+        }
+
+        private async void ShowHelpPage(Object obj)
+        {
+            await Shell.Current.GoToAsync($"{nameof(HelpPage)}");
+        }
 
         private async void Scanner(Object obj) 
         {

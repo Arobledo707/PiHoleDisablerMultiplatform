@@ -12,13 +12,10 @@ namespace PiHoleDisablerMultiplatform.Views
     {
         private const string piHoleDisablerString = "PiHoleDisabler";
 
-        PiholeInfoViewModel piViewModel;
-
         public PiholeInfoPage()
         {
             InitializeComponent();
             this.BindingContext = new PiholeInfoViewModel();
-            piViewModel = this.BindingContext as PiholeInfoViewModel;
 
             MessagingCenter.Subscribe<PiholeInfoViewModel, bool>(this, Constants.validInfo, async (sender, arg) =>
             {
@@ -102,31 +99,26 @@ namespace PiHoleDisablerMultiplatform.Views
 
         private async void saveButton_Clicked(object sender, EventArgs e)
         {
-            if (tokenEntered.Text != null && tokenEntered.Text != String.Empty)
-            {
-                string sendAddress;
-                if (piholeAddress.Text == null || piholeAddress.Text == String.Empty)
-                {
-                    sendAddress = piholeAddress.Placeholder.Trim();
-                }
-                else
-                {
-                    sendAddress = piholeAddress.Text.Trim();
-                }
+            //if (tokenEntered.Text != null && tokenEntered.Text != String.Empty)
+            //{
+            //    string sendAddress;
+            //    if (piholeAddress.Text == null || piholeAddress.Text == String.Empty)
+            //    {
+            //        sendAddress = piholeAddress.Placeholder.Trim();
+            //    }
+            //    else
+            //    {
+            //        sendAddress = piholeAddress.Text.Trim();
+            //    }
 
-                List<String> checkStrings = new List<string> { sendAddress, tokenEntered.Text.Trim() };
+            //    List<String> checkStrings = new List<string> { sendAddress, tokenEntered.Text.Trim() };
 
-                MessagingCenter.Send(this, Constants.checkInfo, checkStrings);
-            }
-            else
-            {
-                await DisplayAlert("Missing Token", "Enter a Token", "Ok");
-            }
-        }
-
-        private async void ToolbarItem_Clicked(object sender, EventArgs e)
-        {
-            await Shell.Current.GoToAsync($"{nameof(HelpPage)}");
+            //    MessagingCenter.Send(this, Constants.checkInfo, checkStrings);
+            //}
+            //else
+            //{
+            //    await DisplayAlert("Missing Token", "Enter a Token", "Ok");
+            //}
         }
     }
 }
