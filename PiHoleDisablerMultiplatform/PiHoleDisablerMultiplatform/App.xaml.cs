@@ -1,16 +1,13 @@
 ﻿using PiHoleDisablerMultiplatform.Services;
 using PiHoleDisablerMultiplatform.StaticPi;
 using PiHoleDisablerMultiplatform.Renderer;
-using PiHoleDisablerMultiplatform.Views;
 using PiHoleDisablerMultiplatform.Models;
 using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 using System.IO;
-using System.Text;
+using Xamarin.Essentials;
 
 namespace PiHoleDisablerMultiplatform
 {
@@ -24,7 +21,7 @@ namespace PiHoleDisablerMultiplatform
             LoadSettings();
             Application.Current.RequestedThemeChanged += (OnThemeChange);
 
-            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "data.json");
+            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Constants.kPiDataFile);
             if (File.Exists(path))
             {
                 MainPage = new AppShell();

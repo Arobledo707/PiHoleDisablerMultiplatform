@@ -15,7 +15,7 @@ namespace PiHoleDisablerMultiplatform.iOS.Renderer
     {
         public void SetStatusBarColor(string hexColor)
         {
-            UIView statusBar = UIApplication.SharedApplication.ValueForKey(new NSString("statusBar")) as UIView;
+            UIView statusBar = new UIView(UIApplication.SharedApplication.StatusBarFrame);
             if (statusBar != null && statusBar.RespondsToSelector(new ObjCRuntime.Selector("setBackgroundColor:")))
             {
                 statusBar.BackgroundColor = Color.FromHex(hexColor).ToUIColor();
