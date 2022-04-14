@@ -23,6 +23,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
         private const string kSaveButtonText = "Save";
         private const string kHelpButtonText = "Help";
         private const string kDemoModeText = "demo";
+        private const string piHoleEntryName = "piholeAddress";
 
         public string EnterInfoText { get { return kEnterInfoText; } }
         public string PiholeAddressText { get { return kPiHoleAddressText; } }
@@ -39,12 +40,13 @@ namespace PiHoleDisablerMultiplatform.ViewModels
         public Command ScanCommand { get; }
         public Command HelpCommand { get; }
         public Command SaveButtonCommand { get; }
+        public Command ClearButtonCommand { get; }
         public PiholeInfoViewModel() 
         {
             ScanCommand = new Command(Scanner);
             HelpCommand = new Command(ShowHelpPage);
             SaveButtonCommand = new Command(SaveButonClicked);
-
+            ClearButtonCommand = new Command(ClearPiData);
             Title = "Pi-hole Disabler Info";
 
             MessagingCenter.Subscribe<PiholeInfoPage>(this, Constants.infoRequest, async (sender) =>
@@ -56,10 +58,10 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                 }
             });
 
-            MessagingCenter.Subscribe<PiholeInfoPage>(this, Constants.clear, async (sender) =>
-            {
-                ClearData();
-            });
+            //MessagingCenter.Subscribe<PiholeInfoPage>(this, Constants.clear, async (sender) =>
+            //{
+            //    ClearPiData();
+            //});
 
         }
 
@@ -70,7 +72,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             {
                 return;
             }
-            Entry piholeAddress = page.FindByName("piholeAddress") as Entry;
+            Entry piholeAddress = page.FindByName(piHoleEntryName) as Entry;
             Entry tokenEntered = page.FindByName("tokenEntered") as Entry;
             if (tokenEntered.Text != null && tokenEntered.Text != String.Empty)
             {
@@ -84,7 +86,13 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                     //todo send message about network state is needed
                     return;
                 }
-                await ValidateInfo(piholeAddress.Text, tokenEntered.Text);
+
+                if (piholeAddress.Text == null || piholeAddress.Text == String.Empty)
+                {
+                    piholeAddress.Text = piholeAddress.Placeholder.Trim();
+                }
+
+                await ValidateInfo(piholeAddress.Text, tokenEntered.Text.Trim());
             }
             else
             {
@@ -107,7 +115,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             }
             if (permissionStatus != PermissionStatus.Granted) 
             {
-                //
+                // TODO send message
                 return;
             }
             try 
@@ -138,8 +146,31 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             return await Task.FromResult(true);
         }
 
-        private async void ClearData() 
+        private async void ClearPiData(object obj) 
         {
+            ContentPage page = obj as ContentPage;
+            if (page == null) 
+            {
+                return;
+            }
+            Label savedPiholeAddress = page.FindByName<Label>("savedPiholeAddress");
+            Label savedToken = page.FindByName<Label>("savedToken");
+
+            if (savedPiholeAddress == null || savedToken == null) 
+            {
+                return;
+            }
+            bool clearInfo = await page.DisplayAlert("Clear Pi-hole Info", "Are you sure?", "Yes", "No");
+
+            if (clearInfo)
+            {
+                if (savedPiholeAddress.Text != null)
+                {
+                    savedPiholeAddress.Text = String.Empty;
+                }
+                savedToken.Text = String.Empty;
+            }
+
             bool cleared = await PiholeDataSerializer.DeleteData();
             if (cleared)
             {
