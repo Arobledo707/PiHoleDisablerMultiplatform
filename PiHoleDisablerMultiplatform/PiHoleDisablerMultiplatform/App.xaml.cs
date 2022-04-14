@@ -2,6 +2,7 @@
 using PiHoleDisablerMultiplatform.StaticPi;
 using PiHoleDisablerMultiplatform.Renderer;
 using PiHoleDisablerMultiplatform.Views;
+using PiHoleDisablerMultiplatform.Models;
 using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -20,6 +21,7 @@ namespace PiHoleDisablerMultiplatform
         public App()
         {
             InitializeComponent();
+            LoadSettings();
             Application.Current.RequestedThemeChanged += (OnThemeChange);
 
             string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "data.json");
@@ -62,7 +64,7 @@ namespace PiHoleDisablerMultiplatform
 
         public void SetThemes() 
         {
-            switch (CurrentPiData.currentTheme) 
+            switch (CurrentPiData.CurrentSettings.Theme) 
             {
                 case Constants.Theme.Purple:
                     lightTheme = new PurpleLight();
@@ -115,6 +117,17 @@ namespace PiHoleDisablerMultiplatform
                     Color color = (Color)Application.Current.Resources["NavigationBarColor"];
                     statusBar.SetStatusBarColor(color.ToHex());
                 }
+            }
+        }
+
+        private async void LoadSettings() 
+        {
+            Settings settings =  await Serializer.DeserializeSettingsData() as Settings;
+            if (settings != null) 
+            {
+                CurrentPiData.CurrentSettings = settings;
+                SetThemes();
+                ChangeTheme();
             }
         }
 

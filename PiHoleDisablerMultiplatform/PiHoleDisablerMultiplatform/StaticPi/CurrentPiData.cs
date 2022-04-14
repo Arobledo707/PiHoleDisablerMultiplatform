@@ -9,6 +9,8 @@ namespace PiHoleDisablerMultiplatform.StaticPi
     {
         public static PiHoleData piHoleData { get; set; }
 
+        public static Settings CurrentSettings { get; set; }
+
         public static bool DemoMode { get; set; }
 
         public static List<List<string>> demoData = new List<List<string>> { 
@@ -46,13 +48,13 @@ namespace PiHoleDisablerMultiplatform.StaticPi
          new List<string> { "Demo Mode Max queries", "A", "30-query-limit.com", "127.0.0.1", "1" },
         };
 
-        public static Constants.Theme currentTheme;
-
         static CurrentPiData() 
         {
             piHoleData = new PiHoleData();
             piHoleData.Url = String.Empty;
             piHoleData.Token = String.Empty;
+
+            CurrentSettings = new Settings();
         }
     }
 }

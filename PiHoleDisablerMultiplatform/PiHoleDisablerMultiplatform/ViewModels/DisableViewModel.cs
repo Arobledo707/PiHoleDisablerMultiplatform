@@ -12,11 +12,13 @@ namespace PiHoleDisablerMultiplatform.ViewModels
 {
     public class DisableViewModel : BaseViewModel
     {
-        private readonly string statusText = "Pi-hole status: ";
-        private readonly string disable30seconds = "Disable For 30 Seconds";
-        private readonly string disable60seconds = "Disable For 60 Seconds";
-        private readonly string disable5minutes = "Disable For 5 Minutes";
-        private readonly string disable30minutes = "Disable For 30 Minutes";
+        private const string statusText = "Pi-hole status: ";
+        private const string disable30minutes = "Disable For 30 Minutes";
+        private const string disable30seconds = "Disable For 30 Seconds";
+        private const string disable60seconds = "Disable For 60 Seconds";
+        private const string disable5minutes = "Disable For 5 Minutes";
+
+        private const string kDemoModeText = "demo";
 
 
         public string StatusText { get { return statusText; } }
@@ -51,7 +53,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                 if (CurrentPiData.piHoleData.Url == String.Empty)
                 {
                     CurrentPiData.piHoleData = await Serializer.DeserializePiData();
-                    if (CurrentPiData.piHoleData.Token == "demo") 
+                    if (CurrentPiData.piHoleData.Token == kDemoModeText) 
                     {
                         CurrentPiData.DemoMode = true;
                     }
@@ -133,7 +135,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             }
         }
 
-        private void DetectThemeChoice(string themeString) 
+        private async void DetectThemeChoice(string themeString) 
         {
             if (themeString == Constants.cancel)
             {
@@ -141,31 +143,37 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             }
             else if (themeString == Constants.Theme.Default.ToString())
             {
-                CurrentPiData.currentTheme = Constants.Theme.Default;
+                CurrentPiData.CurrentSettings.Theme = Constants.Theme.Default;
             }
             else if (themeString == Constants.Theme.Blue.ToString())
             {
-                CurrentPiData.currentTheme = Constants.Theme.Blue;
+                CurrentPiData.CurrentSettings.Theme = Constants.Theme.Blue;
             }
             else if (themeString == Constants.Theme.Green.ToString())
             {
-                CurrentPiData.currentTheme = Constants.Theme.Green;
+                CurrentPiData.CurrentSettings.Theme = Constants.Theme.Green;
             }
             else if (themeString == Constants.Theme.Orange.ToString())
             {
-                CurrentPiData.currentTheme = Constants.Theme.Orange;
+                CurrentPiData.CurrentSettings.Theme = Constants.Theme.Orange;
             }
             else if (themeString == Constants.Theme.Purple.ToString())
             {
-                CurrentPiData.currentTheme = Constants.Theme.Purple;
+                CurrentPiData.CurrentSettings.Theme = Constants.Theme.Purple;
             }
             else if (themeString == Constants.Theme.Grey.ToString()) 
             {
-                CurrentPiData.currentTheme = Constants.Theme.Grey;
+                CurrentPiData.CurrentSettings.Theme = Constants.Theme.Grey;
             }
             App app = Application.Current as App;
             app.SetThemes();
             app.ChangeTheme();
+
+            bool result = await Serializer.SerializeData(CurrentPiData.CurrentSettings, Constants.kSettingsFile);
+            if (!result) 
+            {
+                Console.WriteLine("Error: could not save settings");
+            }
         }
 
     }

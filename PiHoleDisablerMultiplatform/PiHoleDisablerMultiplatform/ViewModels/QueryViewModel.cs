@@ -56,6 +56,11 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             BlackListCommand = new Command(BlacklistButtonClick);
             QueryCountCommand = new Command(ChangeQueryCount);
 
+            if (CurrentPiData.CurrentSettings.QueryCount != 0) 
+            {
+                queryCount = CurrentPiData.CurrentSettings.QueryCount;
+            }
+
             Title = kPageTitle;
         }
 
@@ -168,6 +173,12 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             {
                 queryCount = Convert.ToInt32(selection);
                 OnPropertyChanged("QueryCount");
+                CurrentPiData.CurrentSettings.QueryCount = queryCount;
+                bool result =  await Serializer.SerializeData(CurrentPiData.CurrentSettings, Constants.kSettingsFile);
+                if(!result)
+                {
+                    await page.DisplayAlert("IO Error:", "Could not save settings", "Ok");
+                }
             }
 
         }
