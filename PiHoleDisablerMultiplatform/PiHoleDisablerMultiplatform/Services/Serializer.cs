@@ -1,21 +1,21 @@
 ﻿using System;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using PiHoleDisablerMultiplatform.Models;
+using PiHoleDisablerMultiplatform.StaticPi;
 using Newtonsoft.Json;
 using System.IO;
 
 namespace PiHoleDisablerMultiplatform.Services
 {
-    public static class PiholeDataSerializer
+    public static class Serializer
     {
-        public static string file = "data.json";
-        public static string settingsFile = "settings.json";
-        public async static Task<bool> SerializeData(PiHoleData piHoleData) 
-        { 
-            
+        public async static Task<bool> SerializeData<T>(T data, string file)
+        {
+
             string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), file);
-            string json = JsonConvert.SerializeObject(piHoleData, Formatting.Indented);
+            string json = JsonConvert.SerializeObject(data, Formatting.Indented);
             byte[] bytes = Encoding.UTF8.GetBytes(json);
             try
             {
@@ -24,16 +24,44 @@ namespace PiHoleDisablerMultiplatform.Services
                 stream.Close();
                 return await Task.FromResult(true);
             }
-            catch (Exception er) 
+            catch (Exception er)
             {
                 Console.WriteLine(er + er.Message);
                 return await Task.FromResult(false);
             }
         }
 
-        public async static Task<PiHoleData> DeserializeData()
+        // I'm not happy with 2 DeserializeFunctions
+        // TODO use templates
+        public async static Task<object> DeserializeSettingsData()
         {
-            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), file);
+            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Constants.kSettingsFile);
+            if (File.Exists(path))
+            {
+                try
+                {
+                    FileStream stream = new FileStream(path, FileMode.Open);
+                    StreamReader reader = new StreamReader(stream);
+                    string unformattedString = await reader.ReadToEndAsync();
+                    Settings settings = JsonConvert.DeserializeObject<Settings>(unformattedString);
+                    return await Task.FromResult(settings);
+                }
+                catch (Exception er)
+                {
+                    File.Delete(path);
+                    Console.WriteLine(er + er.Message);
+                    return await Task.FromResult<object>(null);
+                }
+            }
+            else
+            {
+                return await Task.FromResult<object>(null);
+            }
+        }
+
+        public async static Task<PiHoleData> DeserializePiData()
+        {
+            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Constants.kPiDataFile);
             if (File.Exists(path))
             {
                 try
@@ -57,18 +85,18 @@ namespace PiHoleDisablerMultiplatform.Services
             }
         }
 
-        public async static Task<bool> DeleteData() 
+        public async static Task<bool> DeleteData(string file) 
         {
             try
             {
                 File.Delete(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), file));
-                return await Task<bool>.FromResult(true);
+                return await Task.FromResult(true);
             }
             catch(Exception e)
             {
                 Console.Error.WriteLine(e.Message);
             }
-            return await Task<bool>.FromResult(false);
+            return await Task.FromResult(false);
         }
     }
 

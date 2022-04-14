@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using PiHoleDisablerMultiplatform.Views;
 using PiHoleDisablerMultiplatform.Services;
 using PiHoleDisablerMultiplatform.StaticPi;
+using PiHoleDisablerMultiplatform.Models;
 
 
 namespace PiHoleDisablerMultiplatform.ViewModels
@@ -49,7 +50,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                 IsCurrentlyRefreshing = true;
                 if (CurrentPiData.piHoleData.Url == String.Empty)
                 {
-                    CurrentPiData.piHoleData = await PiholeDataSerializer.DeserializeData();
+                    CurrentPiData.piHoleData = await Serializer.DeserializePiData();
                     if (CurrentPiData.piHoleData.Token == "demo") 
                     {
                         CurrentPiData.DemoMode = true;

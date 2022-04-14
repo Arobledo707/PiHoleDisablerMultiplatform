@@ -138,7 +138,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
         {
             if (CurrentPiData.piHoleData.Url == String.Empty)
             {
-                CurrentPiData.piHoleData = await PiholeDataSerializer.DeserializeData();
+                CurrentPiData.piHoleData = await Serializer.DeserializePiData();
             }
             List<string> data = new List<string> {CurrentPiData.piHoleData.Url, CurrentPiData.piHoleData.Token};
             MessagingCenter.Send(this, Constants.requestedData, data);
@@ -171,7 +171,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                 savedToken.Text = String.Empty;
             }
 
-            bool cleared = await PiholeDataSerializer.DeleteData();
+            bool cleared = await Serializer.DeleteData(Constants.kPiDataFile);
             if (cleared)
             {
                 CurrentPiData.piHoleData.Url = String.Empty;
@@ -180,7 +180,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             }
             else
             {
-                MessagingCenter.Send(this, Constants.error, new List<string> { "IO Error", "Failed to delete file"});
+                MessagingCenter.Send(this, Constants.error, new List<string> { "IO Error", "Failed to delete " + Constants.kPiDataFile});
             }
         }
 
@@ -202,7 +202,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             if (isValidated) 
             {
                 CurrentPiData.piHoleData = new PiHoleData(address, token);
-                isSerialized = await PiholeDataSerializer.SerializeData(CurrentPiData.piHoleData);
+                isSerialized = await Serializer.SerializeData(CurrentPiData.piHoleData ,Constants.kPiDataFile);
             }
             if (!isSerialized && isValidated) 
             {
