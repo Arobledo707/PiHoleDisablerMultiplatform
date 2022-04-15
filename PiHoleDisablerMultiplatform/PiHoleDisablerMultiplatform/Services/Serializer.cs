@@ -11,7 +11,7 @@ namespace PiHoleDisablerMultiplatform.Services
 {
     public static class Serializer
     {
-        public async static Task<bool> SerializeData<T>(T data, string file)
+        public async static Task<bool> SerializeDataAsync<T>(T data, string file)
         {
 
             string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), file);
@@ -33,7 +33,7 @@ namespace PiHoleDisablerMultiplatform.Services
 
         // I'm not happy with 2 DeserializeFunctions
         // TODO use templates
-        public async static Task<object> DeserializeSettingsData()
+        public async static Task<object> DeserializeSettingsDataAsync()
         {
             string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Constants.kSettingsFile);
             if (File.Exists(path))
@@ -44,6 +44,8 @@ namespace PiHoleDisablerMultiplatform.Services
                     StreamReader reader = new StreamReader(stream);
                     string unformattedString = await reader.ReadToEndAsync();
                     Settings settings = JsonConvert.DeserializeObject<Settings>(unformattedString);
+                    reader.Close();
+                    stream.Close();
                     return await Task.FromResult(settings);
                 }
                 catch (Exception er)
@@ -70,6 +72,8 @@ namespace PiHoleDisablerMultiplatform.Services
                     StreamReader reader = new StreamReader(stream);
                     string unformattedString = await reader.ReadToEndAsync();
                     PiHoleData piHoleData = JsonConvert.DeserializeObject<PiHoleData>(unformattedString);
+                    reader.Close();
+                    stream.Close();
                     return await Task.FromResult(piHoleData);
                 }
                 catch (Exception er)

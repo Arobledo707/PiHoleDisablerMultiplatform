@@ -119,7 +119,7 @@ namespace PiHoleDisablerMultiplatform
 
         private async void LoadSettings() 
         {
-            Settings settings =  await Serializer.DeserializeSettingsData() as Settings;
+            Settings settings =  await Serializer.DeserializeSettingsDataAsync() as Settings;
             if (settings != null) 
             {
                 CurrentPiData.CurrentSettings = settings;

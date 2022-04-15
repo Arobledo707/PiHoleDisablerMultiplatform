@@ -174,7 +174,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                 queryCount = Convert.ToInt32(selection);
                 OnPropertyChanged("QueryCount");
                 CurrentPiData.CurrentSettings.QueryCount = queryCount;
-                bool result =  await Serializer.SerializeData(CurrentPiData.CurrentSettings, Constants.kSettingsFile);
+                bool result =  await Serializer.SerializeDataAsync(CurrentPiData.CurrentSettings, Constants.kSettingsFile);
                 if(!result)
                 {
                     await page.DisplayAlert("IO Error:", "Could not save settings", "Ok");

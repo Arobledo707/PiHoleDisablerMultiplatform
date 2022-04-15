@@ -169,7 +169,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             app.SetThemes();
             app.ChangeTheme();
 
-            bool result = await Serializer.SerializeData(CurrentPiData.CurrentSettings, Constants.kSettingsFile);
+            bool result = await Serializer.SerializeDataAsync(CurrentPiData.CurrentSettings, Constants.kSettingsFile);
             if (!result) 
             {
                 Console.WriteLine("Error: could not save settings");

@@ -202,7 +202,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             if (isValidated) 
             {
                 CurrentPiData.piHoleData = new PiHoleData(address, token);
-                isSerialized = await Serializer.SerializeData(CurrentPiData.piHoleData ,Constants.kPiDataFile);
+                isSerialized = await Serializer.SerializeDataAsync(CurrentPiData.piHoleData ,Constants.kPiDataFile);
             }
             if (!isSerialized && isValidated) 
             {
