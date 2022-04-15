@@ -24,6 +24,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
         private const double kDomainStacklayoutWidth = 120;
         private const double kClientStacklayoutWidth = 80;
         private const double kDefaultRightThickness = 10;
+        private const double kButtonWidthRequest = 90;
         private const int kSmallFontSize = 11;
         private const int kDateTimeIndex = 0;
         private const int kTypeIndex = 1;
@@ -348,6 +349,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                 button.Text = kBlacklist;
                 button.Command = BlackListCommand;
             }
+            button.WidthRequest = kButtonWidthRequest;
             button.FontSize = kSmallFontSize;
             button.HorizontalOptions = LayoutOptions.EndAndExpand;
             button.CommandParameter = parameter;
