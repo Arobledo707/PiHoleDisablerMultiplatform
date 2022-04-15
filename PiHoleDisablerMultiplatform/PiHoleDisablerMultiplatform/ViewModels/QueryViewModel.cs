@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Threading;
 using PiHoleDisablerMultiplatform.Services;
 using PiHoleDisablerMultiplatform.StaticPi;
 using PiHoleDisablerMultiplatform.Models;
@@ -24,7 +23,9 @@ namespace PiHoleDisablerMultiplatform.ViewModels
         private const double kDomainStacklayoutWidth = 120;
         private const double kClientStacklayoutWidth = 80;
         private const double kDefaultRightThickness = 10;
-        private const double kButtonWidthRequest = 90;
+        private readonly double kButtonWidthRequest;
+        private const double kAndroidButtonWidth = 90;
+        private const double kiOSButtonWidth = 80;
         private const int kSmallFontSize = 11;
         private const int kDateTimeIndex = 0;
         private const int kTypeIndex = 1;
@@ -33,7 +34,6 @@ namespace PiHoleDisablerMultiplatform.ViewModels
         private const int kStatusIndex = 4;
 
         private int queryCount = Constants.k30Queries;
-
 
         private bool isRefreshing = false;
         public bool IsCurrentlyRefreshing
@@ -52,6 +52,15 @@ namespace PiHoleDisablerMultiplatform.ViewModels
 
         public QueryViewModel()
         {
+            if (Device.RuntimePlatform == Device.Android)
+            {
+                kButtonWidthRequest = kAndroidButtonWidth;
+            }
+            else 
+            {
+                kButtonWidthRequest = kiOSButtonWidth;
+            }
+
             RefreshCommand = new Command(Refresh, canExecute:(object param) => { return !IsCurrentlyRefreshing; });
             WhiteListCommand = new Command(WhitelistButtonClick);
             BlackListCommand = new Command(BlacklistButtonClick);
@@ -61,7 +70,6 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             {
                 queryCount = CurrentPiData.CurrentSettings.QueryCount;
             }
-
             Title = kPageTitle;
         }
 
