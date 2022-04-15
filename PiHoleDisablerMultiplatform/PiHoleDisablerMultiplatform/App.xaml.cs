@@ -133,6 +133,7 @@ namespace PiHoleDisablerMultiplatform
             ChangeTheme();
         }
 
+
         protected override void OnSleep()
         {
         }

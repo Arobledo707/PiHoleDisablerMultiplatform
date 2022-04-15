@@ -18,6 +18,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
         private const string kPageTitle = "Queries";
         private const string kWhitelist = "whitelist";
         private const string kBlacklist = "blacklist";
+        private const string kScrollView = "scrollView";
         private const double kDateTimeStacklayoutWidth = 60.0f;
         private const double kTypeStacklayoutWidth = 50;
         private const double kDomainStacklayoutWidth = 120;
@@ -80,7 +81,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             ScrollView scrollView;
             if (page != null)
             {
-                scrollView = page.Content.FindByName<ScrollView>("scrollView");
+                scrollView = page.Content.FindByName<ScrollView>(kScrollView);
                 StackLayout stackLayout = (StackLayout)scrollView.Content;
                 return stackLayout;
             }
