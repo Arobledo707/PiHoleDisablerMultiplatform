@@ -33,7 +33,7 @@ namespace PiHoleDisablerMultiplatform.Services
 
         // I'm not happy with 2 DeserializeFunctions
         // TODO use templates
-        public async static Task<object> DeserializeSettingsDataAsync()
+        public static object DeserializeSettingsData()
         {
             string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Constants.kSettingsFile);
             if (File.Exists(path))
@@ -42,24 +42,25 @@ namespace PiHoleDisablerMultiplatform.Services
                 {
                     FileStream stream = new FileStream(path, FileMode.Open);
                     StreamReader reader = new StreamReader(stream);
-                    string unformattedString = await reader.ReadToEndAsync();
+                    string unformattedString = reader.ReadToEnd();
                     Settings settings = JsonConvert.DeserializeObject<Settings>(unformattedString);
                     reader.Close();
                     stream.Close();
-                    return await Task.FromResult(settings);
+                    return settings;
                 }
                 catch (Exception er)
                 {
                     File.Delete(path);
                     Console.WriteLine(er + er.Message);
-                    return await Task.FromResult<object>(null);
+                    return null;
                 }
             }
             else
             {
-                return await Task.FromResult<object>(null);
+                return null;
             }
         }
+
 
         public async static Task<PiHoleData> DeserializePiData()
         {

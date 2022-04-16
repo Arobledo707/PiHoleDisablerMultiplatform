@@ -25,7 +25,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
         private const double kClientStacklayoutWidth = 80;
         private const double kDefaultRightThickness = 10;
         private readonly double kButtonWidthRequest;
-        private const double kAndroidButtonWidth = 90;
+        private const double kAndroidButtonWidth = 85;
         private const double kiOSButtonWidth = 80;
         private const int kSmallFontSize = 11;
         private const int kDateTimeIndex = 0;
