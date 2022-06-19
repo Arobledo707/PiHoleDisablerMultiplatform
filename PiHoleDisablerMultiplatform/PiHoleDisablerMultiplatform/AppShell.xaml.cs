@@ -14,6 +14,7 @@ namespace PiHoleDisablerMultiplatform
         {
             InitializeComponent();
             Routing.RegisterRoute(nameof(HelpPage), typeof(HelpPage));
+            Routing.RegisterRoute(nameof(SettingsPage), typeof(SettingsPage));
         }
     }
 }

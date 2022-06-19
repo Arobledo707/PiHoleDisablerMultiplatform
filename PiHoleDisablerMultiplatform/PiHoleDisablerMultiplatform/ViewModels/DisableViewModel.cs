@@ -31,7 +31,10 @@ namespace PiHoleDisablerMultiplatform.ViewModels
         public Command ButtonClickCommand { get; }
         public Command RefreshCommand { get; }
 
+
         public Command ThemeCommand { get; }
+
+        public Command SettingsCommand { get; }
 
         private bool isRefreshing = false;
         public bool IsCurrentlyRefreshing
@@ -45,6 +48,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             Title = "Disable";
             ButtonClickCommand = new Command(OnButtonClicked);
             RefreshCommand = new Command(Refresh);
+            SettingsCommand = new Command(ShowSettingsPage);
             ThemeCommand = new Command(ToolBarClicked);
 
             MessagingCenter.Subscribe<DisablePage>(this, Constants.refresh, async (sender) =>
@@ -121,6 +125,10 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             }
         }
 
+        private async void ShowSettingsPage(object obj) 
+        {
+            await Shell.Current.GoToAsync($"{nameof(SettingsPage)}");
+        }
         private async void ToolBarClicked(object obj) 
         {
             Page page = obj as Page;

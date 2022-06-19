@@ -40,6 +40,6 @@
         </RefreshView>
     </ContentPage.Content>
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Theme" Command="{Binding ThemeCommand}" CommandParameter="{x:Reference Page}"/>
+        <ToolbarItem Command="{Binding SettingsCommand}" CommandParameter="{x:Reference Page}" IconImageSource="icon_gear.png"/>
     </ContentPage.ToolbarItems>
 </ContentPage>
