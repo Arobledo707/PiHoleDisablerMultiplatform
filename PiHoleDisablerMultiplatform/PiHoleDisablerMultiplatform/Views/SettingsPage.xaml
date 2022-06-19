@@ -5,11 +5,21 @@
              xmlns:UI="clr-namespace:PiHoleDisablerMultiplatform.UI"
              BackgroundColor="{DynamicResource PageBackgroundColor}">
     <ContentPage.Content>
-        <StackLayout>
-            <UI:DynamicLabel />
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <ScrollView>
+            <StackLayout Orientation="Horizontal" Spacing="100">
+                <StackLayout Orientation="Vertical" Spacing="30" Padding="10 0 0 30">
+                    <UI:DynamicLabel Text="Only Show Time"/>
+                    <UI:DynamicLabel Text="24 Hour Clock"/>
+                    <UI:DynamicLabel Text="Theme"/>
+                    <UI:DynamicLabel Text="Query Count" />
+                </StackLayout>
+                <StackLayout Orientation="Vertical" Spacing="20">
+                    <CheckBox/>
+                    <CheckBox />
+                    <UI:DynamicLabel Text="Default Theme" />
+                    <UI:DynamicLabel Text="30"/>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>
