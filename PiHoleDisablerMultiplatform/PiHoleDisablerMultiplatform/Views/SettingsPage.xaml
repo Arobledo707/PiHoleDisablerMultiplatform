@@ -2,21 +2,22 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PiHoleDisablerMultiplatform.Views.SettingsPage"
+             x:Name="Settings"
              xmlns:UI="clr-namespace:PiHoleDisablerMultiplatform.UI"
              BackgroundColor="{DynamicResource PageBackgroundColor}">
     <ContentPage.Content>
         <ScrollView>
             <StackLayout Orientation="Horizontal" Spacing="100">
-                <StackLayout Orientation="Vertical" Spacing="30" Padding="10 0 0 30">
+                <StackLayout Orientation="Vertical" Spacing="30">
                     <UI:DynamicLabel Text="Only Show Time"/>
                     <UI:DynamicLabel Text="24 Hour Clock"/>
                     <UI:DynamicLabel Text="Theme"/>
                     <UI:DynamicLabel Text="Query Count" />
                 </StackLayout>
-                <StackLayout Orientation="Vertical" Spacing="20">
-                    <CheckBox/>
-                    <CheckBox />
-                    <UI:DynamicLabel Text="Default Theme" />
+                <StackLayout Orientation="Vertical" Spacing="10">
+                    <CheckBox x:Name="timeOnlyCheckbox"/>
+                    <CheckBox x:Name="hourCheckBox"/>
+                    <UI:ThemeButton x:Name="themeButton" Text="Default" Command="{Binding ThemeCommand}" CommandParameter="{x:Reference Settings}" WidthRequest="85"/>
                     <UI:DynamicLabel Text="30"/>
                 </StackLayout>
             </StackLayout>

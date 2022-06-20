@@ -267,7 +267,19 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                                 {
                                     long epoch = long.Parse(text);
                                     DateTimeOffset dtOffset = DateTimeOffset.FromUnixTimeSeconds(long.Parse(text));
-                                    text = dtOffset.DateTime.ToLocalTime().ToString();
+                                    DateTime dt = dtOffset.DateTime;
+                                    dt = dt.ToLocalTime();
+                                    //if()
+                                    // if (true)
+                                    // {
+                                    string date;
+                                    date = dt.Month.ToString() + "/" + dt.Day.ToString() + "/" + (dt.Year - 2000).ToString();
+                                    text = date;
+                                    //}
+                                    //else
+                                    //{
+                                    //    text = dtOffset.DateTime.ToLocalTime().ToString();
+                                    //}
                                 }
                                 catch (Exception err)
                                 {

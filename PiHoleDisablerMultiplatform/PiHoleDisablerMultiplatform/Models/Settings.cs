@@ -18,5 +18,7 @@ namespace PiHoleDisablerMultiplatform.Models
         public bool OnlyShowTime { get; set; }
 
         public bool TwentyFourHourTime { get; set; }
+
+        public bool MonthDayYear { get; set; }
     }
 }
