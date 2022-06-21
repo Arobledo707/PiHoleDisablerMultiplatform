@@ -269,17 +269,37 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                                     DateTimeOffset dtOffset = DateTimeOffset.FromUnixTimeSeconds(long.Parse(text));
                                     DateTime dt = dtOffset.DateTime;
                                     dt = dt.ToLocalTime();
-                                    //if()
-                                    // if (true)
-                                    // {
+
                                     string date;
-                                    date = dt.Month.ToString() + "/" + dt.Day.ToString() + "/" + (dt.Year - 2000).ToString();
-                                    text = date;
-                                    //}
-                                    //else
-                                    //{
-                                    //    text = dtOffset.DateTime.ToLocalTime().ToString();
-                                    //}
+                                    string time;
+
+                                    if (CurrentPiData.CurrentSettings.TwentyFourHourTime)
+                                    {
+                                        time = dt.ToString("HH:mm");
+                                    }
+                                    else 
+                                    {
+                                        time = dt.ToShortTimeString();
+                                    }
+
+                                    if (CurrentPiData.CurrentSettings.OnlyShowTime)
+                                    {
+                                        text = time;
+                                    }
+                                    else 
+                                    {
+                                        if (CurrentPiData.CurrentSettings.MonthDayYear)
+                                        {
+                                            date = dt.Month.ToString() + "/" + dt.Day.ToString() + "/" + (dt.Year - 2000).ToString();
+                                        }
+                                        else 
+                                        {
+                                            date = dt.ToShortTimeString();
+                                        }
+                                        //date = dt.ToString("MM:dd:yy");
+                                        text = date + " " + time;
+                                    }
+     
                                 }
                                 catch (Exception err)
                                 {

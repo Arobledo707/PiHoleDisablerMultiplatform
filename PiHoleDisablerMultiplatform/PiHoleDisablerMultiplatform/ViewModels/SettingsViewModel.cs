@@ -13,17 +13,21 @@ namespace PiHoleDisablerMultiplatform.ViewModels
     {
         private const string kChooseTheme = "Choose Theme";
         public Command ThemeCommand { get; }
+        public Command Check24HourCommand { get; }
+        public Command CheckTimeOnlyCommand { get; }
         public SettingsViewModel() 
         {
             ThemeCommand = new Command(ThemeButtonClicked);
+            Check24HourCommand = new Command(TwentyFourHourTime);
+            CheckTimeOnlyCommand = new Command(ShowTimeOnly);
         }
 
         private async void ThemeButtonClicked(object obj) 
         {
             Page page = obj as Page;
             var result = await page.DisplayActionSheet(kChooseTheme, Constants.cancel, null,
-     Constants.Theme.Default.ToString(), Constants.Theme.Blue.ToString(), Constants.Theme.Green.ToString(),
-     Constants.Theme.Orange.ToString(), Constants.Theme.Purple.ToString());
+            Constants.Theme.Default.ToString(), Constants.Theme.Blue.ToString(), Constants.Theme.Green.ToString(),
+            Constants.Theme.Orange.ToString(), Constants.Theme.Purple.ToString());
 
             if (result != null)
             {
@@ -33,6 +37,25 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                     themeButton.Text = result;
                 }
                 DetectThemeChoice(result);
+            }
+        }
+
+        private void TwentyFourHourTime(object obj) 
+        {
+            CheckBox checkBox = obj as CheckBox;
+            if (checkBox != null) 
+            {
+                CurrentPiData.CurrentSettings.TwentyFourHourTime = checkBox.IsChecked;
+            }
+
+        }
+
+        private void ShowTimeOnly(object obj) 
+        {
+            CheckBox checkBox = obj as CheckBox;
+            if (checkBox != null)
+            {
+                CurrentPiData.CurrentSettings.OnlyShowTime = checkBox.IsChecked;
             }
         }
 
