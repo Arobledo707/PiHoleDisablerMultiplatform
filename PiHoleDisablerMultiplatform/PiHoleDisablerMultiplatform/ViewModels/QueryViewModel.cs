@@ -288,13 +288,13 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                                     }
                                     else 
                                     {
-                                        if (CurrentPiData.CurrentSettings.MonthDayYear)
+                                        if (CurrentPiData.CurrentSettings.DayMonthYear)
                                         {
                                             date = dt.Month.ToString() + "/" + dt.Day.ToString() + "/" + (dt.Year - 2000).ToString();
                                         }
                                         else 
                                         {
-                                            date = dt.ToShortTimeString();
+                                            date = dt.Day.ToString() + "/" + dt.Month.ToString() + "/" + (dt.Year - 2000).ToString();
                                         }
                                         //date = dt.ToString("MM:dd:yy");
                                         text = date + " " + time;

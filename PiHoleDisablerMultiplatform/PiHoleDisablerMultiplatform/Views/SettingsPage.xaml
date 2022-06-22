@@ -11,12 +11,15 @@
                 <StackLayout Orientation="Vertical" Spacing="30">
                     <UI:DynamicLabel Text="Only Show Time"/>
                     <UI:DynamicLabel Text="24 Hour Clock"/>
+                    <UI:DynamicLabel Text="Day/Month/Year"/>
+
                     <UI:DynamicLabel Text="Theme"/>
                     <UI:DynamicLabel Text="Query Count" />
                 </StackLayout>
                 <StackLayout Orientation="Vertical" Spacing="10">
                     <CheckBox x:Name="timeOnlyCheckbox" CheckedChanged="timeOnlyCheckbox_CheckedChanged"/>
                     <CheckBox x:Name="hourCheckBox" CheckedChanged="hourCheckBox_CheckedChanged"/>
+                    <CheckBox x:Name="dayMonthYear" CheckedChanged="dayMonthYear_CheckedChanged"/>
                     <UI:ThemeButton x:Name="themeButton" Text="Default" Command="{Binding ThemeCommand}" CommandParameter="{x:Reference Settings}" WidthRequest="85"/>
                     <UI:DynamicLabel Text="30"/>
                 </StackLayout>

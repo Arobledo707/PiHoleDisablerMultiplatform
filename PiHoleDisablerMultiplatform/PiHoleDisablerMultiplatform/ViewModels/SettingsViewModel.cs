@@ -15,11 +15,13 @@ namespace PiHoleDisablerMultiplatform.ViewModels
         public Command ThemeCommand { get; }
         public Command Check24HourCommand { get; }
         public Command CheckTimeOnlyCommand { get; }
+        public Command DateFormatCommand { get; }
         public SettingsViewModel() 
         {
             ThemeCommand = new Command(ThemeButtonClicked);
             Check24HourCommand = new Command(TwentyFourHourTime);
             CheckTimeOnlyCommand = new Command(ShowTimeOnly);
+            DateFormatCommand = new Command(DateFormat);
         }
 
         private async void ThemeButtonClicked(object obj) 
@@ -57,6 +59,16 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             {
                 CurrentPiData.CurrentSettings.OnlyShowTime = checkBox.IsChecked;
             }
+        }
+
+        private void DateFormat(object obj) 
+        {
+            CheckBox checkBox = obj as CheckBox;
+            if (checkBox != null)
+            {
+                CurrentPiData.CurrentSettings.DayMonthYear = checkBox.IsChecked;
+            }
+
         }
 
         private async void DetectThemeChoice(string themeString)

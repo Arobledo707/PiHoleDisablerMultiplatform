@@ -30,5 +30,15 @@ namespace PiHoleDisablerMultiplatform.Views
         {
             viewModel.CheckTimeOnlyCommand.Execute(sender);
         }
+
+        private void dayMonthYear_CheckedChanged(object sender, CheckedChangedEventArgs e)
+        {
+            viewModel.DateFormatCommand.Execute(sender);
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+        }
     }
 }
