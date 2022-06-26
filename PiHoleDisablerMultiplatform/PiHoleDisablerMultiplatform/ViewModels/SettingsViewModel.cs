@@ -16,12 +16,15 @@ namespace PiHoleDisablerMultiplatform.ViewModels
         public Command Check24HourCommand { get; }
         public Command CheckTimeOnlyCommand { get; }
         public Command DateFormatCommand { get; }
+        public Command OnAppearingCommand { get; }
+
         public SettingsViewModel() 
         {
             ThemeCommand = new Command(ThemeButtonClicked);
             Check24HourCommand = new Command(TwentyFourHourTime);
             CheckTimeOnlyCommand = new Command(ShowTimeOnly);
             DateFormatCommand = new Command(DateFormat);
+            OnAppearingCommand = new Command(OnAppear);
         }
 
         private async void ThemeButtonClicked(object obj) 
@@ -39,6 +42,38 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                     themeButton.Text = result;
                 }
                 DetectThemeChoice(result);
+            }
+        }
+
+        private void OnAppear(object obj) 
+        {
+            SettingsPage page = obj as SettingsPage;
+
+            if (page != null) 
+            {
+                CheckBox timeBox = page.FindByName<CheckBox>("timeOnlyCheckbox");
+                if (timeBox != null) 
+                {
+                    timeBox.IsChecked = CurrentPiData.CurrentSettings.OnlyShowTime;
+                }
+
+                CheckBox hourBox = page.FindByName<CheckBox>("hourCheckBox");
+                if (hourBox != null) 
+                {
+                    hourBox.IsChecked = CurrentPiData.CurrentSettings.TwentyFourHourTime;
+                }
+
+                CheckBox dateFormatBox = page.FindByName<CheckBox>("dayMonthYear");
+                if (dateFormatBox != null) 
+                {
+                    dateFormatBox.IsChecked = CurrentPiData.CurrentSettings.DayMonthYear;
+                }
+
+                Button themeButton = page.FindByName<Button>("themeButton");
+                if (themeButton != null) 
+                {
+                    themeButton.Text = CurrentPiData.CurrentSettings.Theme.ToString();
+                }
             }
         }
 

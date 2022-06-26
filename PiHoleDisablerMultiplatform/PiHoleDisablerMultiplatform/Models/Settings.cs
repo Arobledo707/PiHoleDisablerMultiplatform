@@ -10,6 +10,8 @@ namespace PiHoleDisablerMultiplatform.Models
             QueryCount = Constants.k30Queries;
             OnlyShowTime = false;
             TwentyFourHourTime = false;
+            DayMonthYear = false;
+            
 
         }
         public int QueryCount { get; set; }

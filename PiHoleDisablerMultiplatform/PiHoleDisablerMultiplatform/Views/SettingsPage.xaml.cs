@@ -38,6 +38,7 @@ namespace PiHoleDisablerMultiplatform.Views
 
         protected override void OnAppearing()
         {
+            viewModel.OnAppearingCommand.Execute(this);
             base.OnAppearing();
         }
     }

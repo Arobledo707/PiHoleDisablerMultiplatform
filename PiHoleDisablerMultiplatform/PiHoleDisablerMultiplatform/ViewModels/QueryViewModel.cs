@@ -48,7 +48,6 @@ namespace PiHoleDisablerMultiplatform.ViewModels
         public Command BlackListCommand { get; }
 
         public Command QueryCountCommand { get; }
-
         public int QueryCount { get { return queryCount; } }
 
         public QueryViewModel()
@@ -288,7 +287,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                                     }
                                     else 
                                     {
-                                        if (CurrentPiData.CurrentSettings.DayMonthYear)
+                                        if (!CurrentPiData.CurrentSettings.DayMonthYear)
                                         {
                                             date = dt.Month.ToString() + "/" + dt.Day.ToString() + "/" + (dt.Year - 2000).ToString();
                                         }
