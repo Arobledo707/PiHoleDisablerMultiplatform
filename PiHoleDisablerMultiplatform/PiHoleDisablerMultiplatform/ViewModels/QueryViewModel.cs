@@ -274,11 +274,11 @@ namespace PiHoleDisablerMultiplatform.ViewModels
 
                                     if (CurrentPiData.CurrentSettings.TwentyFourHourTime)
                                     {
-                                        time = dt.ToString("HH:mm");
+                                        time = dt.ToString("HH:mm:ss");
                                     }
                                     else 
                                     {
-                                        time = dt.ToShortTimeString();
+                                        time = dt.ToLongTimeString();
                                     }
 
                                     if (CurrentPiData.CurrentSettings.OnlyShowTime)
@@ -295,7 +295,6 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                                         {
                                             date = dt.Day.ToString() + "/" + dt.Month.ToString() + "/" + (dt.Year - 2000).ToString();
                                         }
-                                        //date = dt.ToString("MM:dd:yy");
                                         text = date + " " + time;
                                     }
      

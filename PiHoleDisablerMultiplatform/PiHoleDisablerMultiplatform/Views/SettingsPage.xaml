@@ -22,7 +22,7 @@
                     <UI:DynamicCheckBox x:Name="timeOnlyCheckbox" CheckedChanged="timeOnlyCheckbox_CheckedChanged" HeightRequest="25"/>
                     <UI:DynamicCheckBox x:Name="hourCheckBox" CheckedChanged="hourCheckBox_CheckedChanged" HeightRequest="40"/>
                     <UI:DynamicCheckBox x:Name="dayMonthYear" CheckedChanged="dayMonthYear_CheckedChanged" HeightRequest="30"/>
-                    <UI:DynamicLabel Text="30" Padding="10,8,0,0"/>
+                    <UI:ThemeButton Text="30" HorizontalOptions="StartAndExpand" WidthRequest="70" HeightRequest="32" Padding="-40,0,0,0"/>
                 </StackLayout>
             </StackLayout>
         </ScrollView>
