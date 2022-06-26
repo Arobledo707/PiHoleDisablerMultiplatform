@@ -9,7 +9,7 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout Orientation="Horizontal" Spacing="100">
-                <StackLayout Orientation="Vertical" Spacing="30">
+                <StackLayout Orientation="Vertical" Spacing="20">
                     <UI:DynamicLabel Text="Theme" Padding="0,15,0,0"/>
                     <UI:DynamicLabel Text="Only Show Time"/>
                     <UI:DynamicLabel Text="24 Hour Clock"/>
@@ -17,11 +17,12 @@
                     <UI:DynamicLabel Text="Query Count" />
                 </StackLayout>
                 <StackLayout Orientation="Vertical">
-                    <UI:ThemeButton x:Name="themeButton" Text="Default" Command="{Binding ThemeCommand}" CommandParameter="{x:Reference Settings}" WidthRequest="85"  Padding="-20,0,0,0"/>
-                    <UI:CheckBox x:Name="timeOnlyCheckbox" CheckedChanged="timeOnlyCheckbox_CheckedChanged"/>
-                    <UI:CheckBox x:Name="hourCheckBox" CheckedChanged="hourCheckBox_CheckedChanged"/>
-                    <UI:CheckBox x:Name="dayMonthYear" CheckedChanged="dayMonthYear_CheckedChanged"/>
-                    <UI:DynamicLabel Text="30" Padding="10,0,0,0"/>
+                    <UI:ThemeButton x:Name="themeButton" Text="Default" Command="{Binding ThemeCommand}" HorizontalOptions="StartAndExpand"
+                                    CommandParameter="{x:Reference Settings}" WidthRequest="85"  Padding="-40,4,0,0" HeightRequest="45"/>
+                    <UI:DynamicCheckBox x:Name="timeOnlyCheckbox" CheckedChanged="timeOnlyCheckbox_CheckedChanged" HeightRequest="25"/>
+                    <UI:DynamicCheckBox x:Name="hourCheckBox" CheckedChanged="hourCheckBox_CheckedChanged" HeightRequest="40"/>
+                    <UI:DynamicCheckBox x:Name="dayMonthYear" CheckedChanged="dayMonthYear_CheckedChanged" HeightRequest="30"/>
+                    <UI:DynamicLabel Text="30" Padding="10,8,0,0"/>
                 </StackLayout>
             </StackLayout>
         </ScrollView>

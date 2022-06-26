@@ -45,6 +45,14 @@
             </Setter>
         </Style>
 
+        <Style TargetType="UI:DynamicCheckBox">
+            <Setter Property="Color" Value="{DynamicResource PrimaryColor}"></Setter>
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+
         <Style TargetType="UI:WhitelistButton">
             <Setter Property="TextColor" Value="{DynamicResource SecondaryTextColor}"></Setter>
             <Setter Property="VisualStateManager.VisualStateGroups">
