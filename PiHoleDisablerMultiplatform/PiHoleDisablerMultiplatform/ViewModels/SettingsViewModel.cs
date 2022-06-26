@@ -77,31 +77,51 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             }
         }
 
-        private void TwentyFourHourTime(object obj) 
+        private async void TwentyFourHourTime(object obj) 
         {
             CheckBox checkBox = obj as CheckBox;
             if (checkBox != null) 
             {
                 CurrentPiData.CurrentSettings.TwentyFourHourTime = checkBox.IsChecked;
+
+                bool result = await Serializer.SerializeDataAsync(CurrentPiData.CurrentSettings, Constants.kSettingsFile);
+                if (!result)
+                {
+                    Console.WriteLine("Error: could not save settings");
+                }
+
             }
 
         }
 
-        private void ShowTimeOnly(object obj) 
+        private async void ShowTimeOnly(object obj) 
         {
             CheckBox checkBox = obj as CheckBox;
             if (checkBox != null)
             {
                 CurrentPiData.CurrentSettings.OnlyShowTime = checkBox.IsChecked;
+
+                bool result = await Serializer.SerializeDataAsync(CurrentPiData.CurrentSettings, Constants.kSettingsFile);
+                if (!result)
+                {
+                    Console.WriteLine("Error: could not save settings");
+                }
             }
         }
 
-        private void DateFormat(object obj) 
+        private async void DateFormat(object obj) 
         {
             CheckBox checkBox = obj as CheckBox;
             if (checkBox != null)
             {
                 CurrentPiData.CurrentSettings.DayMonthYear = checkBox.IsChecked;
+
+                bool result = await Serializer.SerializeDataAsync(CurrentPiData.CurrentSettings, Constants.kSettingsFile);
+                if (!result)
+                {
+                    Console.WriteLine("Error: could not save settings");
+                }
+
             }
 
         }
