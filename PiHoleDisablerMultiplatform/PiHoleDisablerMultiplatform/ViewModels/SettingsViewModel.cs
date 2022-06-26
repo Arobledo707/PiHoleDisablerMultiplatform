@@ -36,12 +36,12 @@ namespace PiHoleDisablerMultiplatform.ViewModels
 
             if (result != null)
             {
-                UI.ThemeButton themeButton = page.FindByName<UI.ThemeButton>("themeButton");
-                if (themeButton != null) 
-                {
-                    themeButton.Text = result;
-                }
                 DetectThemeChoice(result);
+                UI.ThemeButton themeButton = page.FindByName<UI.ThemeButton>("themeButton");
+                if (themeButton != null)
+                {
+                    themeButton.Text = CurrentPiData.CurrentSettings.Theme.ToString();
+                }
             }
         }
 
