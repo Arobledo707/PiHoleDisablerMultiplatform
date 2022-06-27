@@ -195,6 +195,12 @@ namespace PiHoleDisablerMultiplatform.ViewModels
 
         private async Task<bool> RefreshTask(object param) 
         {
+            if (queryCount != CurrentPiData.CurrentSettings.QueryCount) 
+            {
+                queryCount = CurrentPiData.CurrentSettings.QueryCount;
+                OnPropertyChanged("QueryCount");
+
+            }
             string contentString = String.Empty;
             if (!CurrentPiData.DemoMode)
             {

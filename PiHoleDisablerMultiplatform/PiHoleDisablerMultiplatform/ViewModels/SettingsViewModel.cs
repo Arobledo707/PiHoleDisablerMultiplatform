@@ -17,6 +17,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
         public Command CheckTimeOnlyCommand { get; }
         public Command DateFormatCommand { get; }
         public Command OnAppearingCommand { get; }
+        public Command QueryCountCommand { get; }
 
         public SettingsViewModel() 
         {
@@ -25,6 +26,7 @@ namespace PiHoleDisablerMultiplatform.ViewModels
             CheckTimeOnlyCommand = new Command(ShowTimeOnly);
             DateFormatCommand = new Command(DateFormat);
             OnAppearingCommand = new Command(OnAppear);
+            QueryCountCommand = new Command(QueryCountClicked);
         }
 
         private async void ThemeButtonClicked(object obj) 
@@ -43,6 +45,33 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                     themeButton.Text = CurrentPiData.CurrentSettings.Theme.ToString();
                 }
             }
+        }
+
+        private async void QueryCountClicked(object obj) 
+        {
+            Page page = obj as Page;
+            string selection = await page.DisplayActionSheet("Query Count:", Constants.cancel, null, Constants.k10Queries.ToString(),
+                Constants.k30Queries.ToString(), Constants.k50Queries.ToString(), Constants.k100Queries.ToString());
+
+            if (selection != Constants.cancel)
+            {
+                UI.ThemeButton queryButton = page.FindByName<UI.ThemeButton>("queryCountButton");
+                if (queryButton != null) 
+                {
+                    int queryCount = Convert.ToInt32(selection);
+                    queryButton.Text = selection;
+                    CurrentPiData.CurrentSettings.QueryCount = queryCount;
+
+                    bool result = await Serializer.SerializeDataAsync(CurrentPiData.CurrentSettings, Constants.kSettingsFile);
+                    if (!result)
+                    {
+                        await page.DisplayAlert("IO Error:", "Could not save settings", "Ok");
+                    }
+                }
+            }
+
+
+
         }
 
         private void OnAppear(object obj) 
@@ -73,6 +102,12 @@ namespace PiHoleDisablerMultiplatform.ViewModels
                 if (themeButton != null) 
                 {
                     themeButton.Text = CurrentPiData.CurrentSettings.Theme.ToString();
+                }
+
+                Button queryCountButton = page.FindByName<Button>("queryCountButton");
+                if (queryCountButton != null)
+                {
+                    queryCountButton.Text = CurrentPiData.CurrentSettings.QueryCount.ToString();
                 }
             }
         }
